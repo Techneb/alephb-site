@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AlephB</title>
-<meta name="description" content="Small apps and games by AlephB.">
+<meta name="description" content="AlephB: Compromise and The Ritz Affair.">
 <style>
 :root{--bg:#fbfbf9;--ink:#15191b;--muted:#5d6a6e;--line:#e2e6e6;--accent:#1d7f92;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#101415;--ink:#eef2f3;--muted:#98a8ac;--line:#243033;--accent:#4cc3dd;color-scheme:dark}}
@@ -12,11 +12,15 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif}
 main{max-width:640px;margin:0 auto;padding:64px 20px 48px}
 h1{font-size:30px;letter-spacing:-.01em;margin:0 0 6px}
-p.lede{color:var(--muted);margin:0 0 40px}
+blockquote{margin:14px 0 40px;padding:0;color:var(--muted);font-style:italic;max-width:34em}
+blockquote cite{display:block;margin-top:6px;font-style:normal;font-size:15px}
 ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-li{padding:18px 0;border-bottom:1px solid var(--line)}
+li{border-bottom:1px solid var(--line)}
+li a.project{display:flex;gap:16px;align-items:center;padding:16px 0;color:inherit}
+li a.project:hover{text-decoration:none}li a.project:hover b{text-decoration:underline}
+li img{width:56px;height:56px;border-radius:13px;flex:none;object-fit:cover}
+li b{color:var(--accent);font-size:19px}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-li a{font-weight:600;font-size:19px}
 li span{display:block;color:var(--muted)}
 footer{margin-top:40px;color:var(--muted);font-size:15px}
 </style>
@@ -24,10 +28,10 @@ footer{margin-top:40px;color:var(--muted);font-size:15px}
 <body>
 <main>
   <h1>AlephB</h1>
-  <p class="lede">Small apps and games.</p>
+  <blockquote>“It is not your duty to finish the work, but neither are you free to desist from it.”<cite>Rabbi Tarfon, Pirkei Avot 2:16</cite></blockquote>
   <ul>
-    <li><a href="https://compromise.alephb.uk">Compromise</a><span>An iOS app that finds a fair place to meet.</span></li>
-    <li><a href="https://mystery.alephb.uk">The Ritz Affair</a><span>A mystery you solve with SQL, in the browser.</span></li>
+    <li><a class="project" href="https://compromise.alephb.uk"><img src="logos/compromise.png" alt=""><div><b>Compromise</b><span>An iOS app that finds a fair place to meet.</span></div></a></li>
+    <li><a class="project" href="https://mystery.alephb.uk"><img src="logos/mystery.jpg" alt=""><div><b>The Ritz Affair</b><span>A mystery you solve with SQL, in the browser.</span></div></a></li>
   </ul>
   <footer>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></footer>
 </main>
