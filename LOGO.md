@@ -22,7 +22,7 @@ python tools/logo.py "NotoSerifHebrew[wdth,wght].ttf" 650 "PlayfairDisplay[wght]
 python tools/export.py
 ```
 
-The fonts are not in this repo. If you change `logo.svg`, paste the new `<svg>` into the `<h1>` in `index.html` too.
+The fonts are not in this repo. If you change `logo.svg`, paste the new `<svg>` into the `<h1>` of `index.html` and `privacy.html` too.
 
 ## Licences
 
