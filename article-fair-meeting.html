@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>Fair means time, not distance · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Why meeting halfway on the map is rarely fair, and how comparing real travel times finds a fairer place to meet.">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="articles.html">Articles</a></p>
+  <h2 class="page-title">Fair means time, not distance</h2>
+  <p class="status">11 October 2026 · About <a href="https://compromise.alephb.uk">Compromise</a></p>
+
+  <p>When friends who live in different parts of a city want to meet, someone usually suggests "somewhere in the middle". It sounds fair: draw a line between the two addresses, find its midpoint, pick a bar nearby. In practice the midpoint is often one of the least fair places you could choose.</p>
+  <p>This article explains why, and what a fairer meeting point looks like. It is the idea behind <a href="https://compromise.alephb.uk">Compromise</a>, an iPhone app that finds a place to meet.</p>
+
+  <h2>Why the middle of the map fails</h2>
+  <p>A map measures distance. People experience time. The two are related only loosely, and in a city the gap between them can be enormous.</p>
+  <ul class="plain">
+    <li><b>Transport is not uniform.</b> One kilometre along a metro line takes two minutes; one kilometre across it, with a change and a walk to the platform, can take twenty-five. The midpoint might sit between two lines, convenient for nobody.</li>
+    <li><b>People travel differently.</b> If one friend walks, one takes the metro and one cycles, the same distance means three different journey times. A point equidistant from all three is not equally far for all three.</li>
+    <li><b>Geography gets in the way.</b> Rivers, railways, parks and one-way systems all bend journeys. A point that is close as the crow flies can be a long detour on the ground.</li>
+    <li><b>The middle may be empty.</b> The geometric centre of a group is often a residential street, a cemetery or a ring road, with nowhere to sit down.</li>
+  </ul>
+  <p>The result is the familiar outcome of "meeting halfway": one person arrives after a short walk, the other after a long trip with two changes, and the evening starts with one of them already tired.</p>
+
+  <h2>A fairer definition</h2>
+  <p>A fair meeting place is one where everyone's journey takes about the same time, each person travelling the way they actually travel. Not the same distance, not the same straight line: the same number of minutes from door to table.</p>
+  <p>That definition changes how the problem is solved. Instead of computing a single central point, you take the real candidates, the bars, cafés and restaurants that are actually open and somewhere you would want to go, and for each one you estimate every person's journey time by their own mode of transport. Then you compare the times.</p>
+
+  <h2>Fairest or quickest?</h2>
+  <p>Once every candidate has a journey time per person, there is more than one reasonable way to rank them, and they do not always agree.</p>
+  <ul class="plain">
+    <li><b>The fairest place</b> is the one where the journey times are closest to each other. If one person needs 18 minutes and another 22, the place is very fair, even if somewhere else would be quicker for both.</li>
+    <li><b>The quickest place</b> is the one where the total, or the average, travel time is lowest. It wastes the least time overall, but may ask one person to travel much longer than the others.</li>
+    <li><b>A limit</b> on the longest journey rules out places that are fair only because everyone has a long trip. Nobody wants a perfectly balanced hour each way.</li>
+  </ul>
+  <p>In practice the best answer is usually a balance: places that are close in time for everyone, without being far for anyone. Compromise shows the fairest places first, lets you switch to the quickest, and lets you cap how long anyone should travel.</p>
+
+  <h2>An example</h2>
+  <p>Take two friends. The point halfway between their homes on the map, by their own way of travelling, is 35 minutes for one and 12 minutes for the other: 23 minutes apart. A café a little off-centre, but on the first friend's line, is 18 minutes for one and 22 for the other: four minutes apart. It is not in the middle of the map, but it is in the middle of their evening.</p>
+  <p>With three or four people the difference grows. Each new person adds a journey that a map's midpoint ignores, and the chance that the geometric centre suits everyone gets smaller.</p>
+
+  <h2>Time depends on when</h2>
+  <p>Journey times change during the day. Transit runs less often late in the evening, roads are slower at rush hour, and some lines stop at night. A place that is fair at six may not be fair at midnight. So a fair meeting point has to be computed for the time you plan to leave, not for an abstract average.</p>
+  <p>The same goes for where you sit. On a summer evening, a terrace that is in the sun when you arrive is worth a few extra minutes of travel, and one that fell into shade an hour ago is not. Compromise takes the surrounding buildings into account to say how long each terrace stays in the sun.</p>
+
+  <h2>Privacy, by design</h2>
+  <p>Working out everyone's journey needs everyone's starting point, which is personal information. Compromise keeps those addresses on the phone that entered them, with no account and no tracking, and one tap clears them. A meeting place should not cost anyone their privacy.</p>
+  <p>The next time someone suggests meeting in the middle, ask the middle of what. The fair answer is measured in minutes. Compromise is in testing now and coming to the App Store; more on <a href="https://compromise.alephb.uk">compromise.alephb.uk</a>.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>

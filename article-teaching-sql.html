@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>Teaching SQL with a detective story · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Why a detective story makes SQL students read their results, and how to build one around a course without losing the course.">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="articles.html">Articles</a></p>
+  <h2 class="page-title">Teaching SQL with a detective story</h2>
+  <p class="status">11 October 2026 · About <a href="ritz-affair.html">The Ritz Affair</a></p>
+
+  <p>Every SQL course reaches the same moment. The syntax is on the board, the students can write a SELECT with a WHERE, and the exercises begin: list the employees of the sales department, find the three most expensive products, count the orders per customer. The queries are correct, the results come back, and nobody looks at them twice.</p>
+  <p>That last part is the problem. Writing a query is half the skill. The other half is reading what comes back and asking whether it is right. A classic exercise does not train that half, because the student has no reason to care what the answer is. They only care whether it matches the correction.</p>
+  <p>The Ritz Affair started as an attempt to give the results a meaning. This article explains the reasoning behind it, and what it takes to turn a database course into a story without losing the course.</p>
+
+  <h2>Results you want to read</h2>
+  <p>In a detective story, every row is a witness. A query that returns forty rows is not "the output of exercise 4": it is forty possible leads, one of which matters. The student scrolls through them, notices that most look alike, wonders about the few that do not, and adds a condition. Nobody had to tell them to look at their data. The story did.</p>
+  <p>This changes the rhythm of a session. Instead of one query per question, students write five or six, each a little narrower than the last, and they talk about the rows between attempts. That conversation, "this one can't be him, he was at the opera", is exactly the reasoning an analyst does with real data, carried by characters instead of column names.</p>
+
+  <h2>One construct per chapter</h2>
+  <p>A story can easily swallow a course. If the plot needs a recursive query in chapter two, the students who have just learnt WHERE are lost, and the story becomes a puzzle for the few who already know SQL.</p>
+  <p>So the course comes first. The chapters follow the order in which the constructs are taught: filtering, sorting, pattern matching, grouping, joins, then CASE, window functions and common table expressions. Each chapter is written around exactly one of them, and the story's question is shaped so that the new construct is the natural way to answer it. A chapter about grouping asks a question like "who came back more than three times that month?", which is awkward with what the student knew before and simple with GROUP BY and HAVING.</p>
+  <p>The tables arrive with the story, too. The first chapter shows two of them, not the whole archive. Each new chapter reveals the tables it needs in the schema beside the terminal, so the diagram grows with the student's knowledge instead of overwhelming them on day one.</p>
+
+  <h2>An answer, not a query</h2>
+  <p>A detail that matters more than it seems: each chapter is solved by typing a fact, not by submitting SQL. The answer is a date, a name, an address. Any query that finds it is accepted.</p>
+  <p>Checking queries automatically is fragile. Two correct queries can look nothing alike, and a checker that compares text punishes the student who found another way. Checking the answer instead lets students write the query their way, and it matches how the work is judged outside a classroom: nobody reviews an analyst's SQL if the number is wrong, and nobody minds a clumsy query if the number is right.</p>
+  <p>It also means the game has to make sure the answer can only be found with the right query. That is a design problem of its own, described in <a href="article-guessing.html">How to stop students guessing the answer</a>.</p>
+
+  <h2>Help that does not solve the chapter</h2>
+  <p>A stuck student needs a push, not the solution. The game avoids hints that give away the answer. What it offers instead is the name of the construct the chapter practises, the tables that just appeared, and a handbook, The Clerk's Handbook, that explains each construct with worked examples on a separate, deliberately unrelated database: a bakery with customers, products and orders.</p>
+  <p>Keeping the handbook's examples away from the game's tables is deliberate. A student can read how GROUP BY works, run the example, understand it, and still have to think about how it applies to the case. The handbook teaches the tool; the chapter asks them to use it.</p>
+
+  <h2>Alone or as a class</h2>
+  <p>Played alone, the game is self-paced homework. Progress stays in the browser, a wrong answer costs nothing, and a student can stop after any chapter and come back the next day.</p>
+  <p>Played as a class, it becomes an event. The teacher opens a session, every team's clock starts at the same moment, and a leaderboard on the projector shows who has solved what. Wrong answers cost time, so guessing is discouraged. Each session can use a different version of the database, with the same story but every piece of evidence redrawn, so the answers from one class are useless to the next.</p>
+  <p>The competitive version is honour-based: answers are checked in the browser, and a determined student could find ways around that. It is a game, not an exam, and it should not count towards a grade.</p>
+
+  <h2>What a story costs</h2>
+  <p>None of this is free. A story-driven course takes far longer to build than a list of exercises. Every chapter needs a plot that fits its construct, data that hides the answer among plausible noise, and checks that the answer is still reachable after every change. In The Ritz Affair a Python script generates the whole database and refuses to finish if any chapter's solution stops returning exactly its answer.</p>
+  <p>The payoff is a course students talk about outside the classroom, and a set of queries they wrote because they wanted to know who did it. If you teach SQL, <a href="https://mystery.alephb.uk">the game is free to use</a>, in class or as homework.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>
