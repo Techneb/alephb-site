@@ -29,3 +29,5 @@ div.project b{color:var(--ink)}
 ul+p{margin-top:24px}
 ul.plain b{font-size:inherit;color:var(--ink)}
 h2+p.status,p+p.status{margin-top:-8px}
+h2.page-title{display:flex;align-items:center;gap:14px;font-size:28px;margin:24px 0 6px}
+.page-logo{width:56px;height:56px;border-radius:13px;flex:none}

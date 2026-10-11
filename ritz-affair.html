@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>The Ritz Affair · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="The Ritz Affair is a detective game you play by writing SQL: why it was made, how a chapter teaches one construct, how a class plays it, and how the puzzles are kept honest.">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a></p>
+  <h2 class="page-title"><img src="logos/mystery.svg" alt="" class="page-logo">The Ritz Affair</h2>
+  <p class="status">A mystery you solve with SQL, in the browser · <a href="https://mystery.alephb.uk">Play it</a></p>
+
+  <p>Paris, May 1912. The Blue Star, a famous sapphire, disappears from a suite at the Hotel Ritz, and Inspector Ganimard has more paper than men. You are his new clerk. You have no badge and no gun, only the archives: police reports, the hotel register, cab rides, telegrams, bank transfers. And the archives are a database.</p>
+  <p>The Ritz Affair is a detective story told in twelve chapters, where every step of the investigation is a query you write yourself. It runs entirely in the browser, needs no account and costs nothing.</p>
+
+  <h2>Why a mystery</h2>
+  <p>Most first SQL exercises ask a question whose answer nobody cares about: the average salary of a department that does not exist, the third most expensive product of an invented shop. Students write the query, check it against the correction, and forget it.</p>
+  <p>A mystery changes what a result means. When a query returns three rows instead of one, a student no longer asks "is this what the teacher wanted?" but "which of these three is lying?" They read their results, they doubt them, they refine the filter. That is the habit an analyst needs, and a story gives a reason to practise it.</p>
+  <p>The game also keeps the answer out of reach of guessing. Each chapter ends with a single fact to type in: a date, a name, a number plate, an address. Nothing is multiple choice, and the database holds some ninety thousand rows, so the only reliable way to the answer is the query.</p>
+
+  <h2>One construct per chapter</h2>
+  <p>The chapters follow the order of a first SQL course. Each one is built around a single construct, and the story is written so that this construct is the natural tool for the question it asks.</p>
+  <ul class="plain">
+    <li><b>Part I, chapters I to VIII:</b> filtering with WHERE, sorting with ORDER BY and LIMIT, pattern matching with LIKE, grouping with GROUP BY and HAVING, then joins, sums across several tables, CASE expressions and a first window function.</li>
+    <li><b>Part II, chapters IX to XII:</b> the case continues after dark, in a night edition of the paper, with common table expressions, a self-join, LAG() and finally a recursive query.</li>
+  </ul>
+  <p>New tables appear in the schema beside the terminal as the story needs them. A student who starts the game sees two tables, not twenty, and the diagram grows chapter by chapter, with its keys and relationships drawn so the joins can be read off the picture.</p>
+  <p>When a student is stuck, the game does not give hints that hand out the answer. It names the chapter's construct and points at the tables just revealed, and <a href="https://mystery.alephb.uk/learn/">The Clerk's Handbook</a> explains each construct on a separate example database, a small bakery with customers, products and orders, so the explanations never spoil the plot.</p>
+
+  <h2>Keeping the puzzles honest</h2>
+  <p>A detective game is only as good as its clues, and a database makes cheating easy: sort by the newest row, search for the victim's name, try the obvious guess. A lot of the work on The Ritz Affair went into closing those doors.</p>
+  <ul class="plain">
+    <li><b>The database is generated.</b> A Python script writes the story's evidence into thousands of ordinary rows, and the plot's rows are scattered among them so that their ids give nothing away.</li>
+    <li><b>Every chapter is checked for shortcuts</b> before it ships: the keywords the story offers, the first filter a student would try, the small result that is tempting to eyeball, the plausible guess. Each shortcut found becomes a decoy in the data.</li>
+    <li><b>The build is the test.</b> Every time the database is rebuilt, each chapter's reference solution must return exactly its answer, and each known shortcut must return something else. If a change to the story breaks a clue, the build fails.</li>
+    <li><b>Answers are never in the page.</b> The browser only holds fingerprints of the answers, so reading the page's source does not solve the case.</li>
+  </ul>
+  <p>The rows that are not evidence are not dull either. Among the hotel guests, cab fares and telegrams are references to films, novels and games, and a set of badges rewards the students who find them.</p>
+
+  <h2>In class</h2>
+  <p>The game has two modes. In <b>learning mode</b> a student plays alone at their own pace; progress is kept in their browser, a wrong answer costs nothing, and the twelve chapters make a good homework series or a self-study course.</p>
+  <p>In <b>compete mode</b> a teacher runs a timed session for the whole class. From a small admin page, the teacher creates a season and shares a link or a QR code. Each team picks a pseudonym and joins, and when the teacher opens the session every clock starts at once. A leaderboard, made to be shown on a projector, ranks the teams as they solve each chapter, with a time penalty for wrong answers.</p>
+  <p>Each season plays its own version of the database: the same story and the same tables, but every piece of evidence redrawn and a different question in each chapter, so a class that played an earlier season cannot pass its answers on.</p>
+
+  <h2>Privacy</h2>
+  <p>In learning mode nothing you type leaves your browser: the database is downloaded once and every query runs on your own machine. Compete mode sends only what the leaderboard needs, a pseudonym and the time each chapter was solved. Anonymous statistics are collected only if you agree to them. The details are in the game's <a href="https://mystery.alephb.uk/privacy.html">privacy policy</a>.</p>
+
+  <h2>The story</h2>
+  <p>The detective and the thief are borrowed from Maurice Leblanc: Ganimard, the patient inspector, and Arsène Lupin, the gentleman burglar who has made a fool of him for years. Everyone else is invented, and every name, sum and timetable in the archives is fiction. The pages look like a 1912 Paris newspaper, the suspects have painted portraits, and each part closes with a short film.</p>
+  <p>The game is free and needs nothing but a recent browser. <a href="https://mystery.alephb.uk">Open the case at mystery.alephb.uk</a>.</p>
+
+  <footer>
+    <nav><a href="./">Home</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>
