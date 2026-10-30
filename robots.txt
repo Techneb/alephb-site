@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alephb.uk/sitemap.xml
+Sitemap: https://alephb.uk/learn/sitemap.xml

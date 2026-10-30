@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twenty SQL exercises with solutions -- The Ritz Affair</title>
+<meta name="description" content="Twenty graded SQL exercises on one small bakery database, from SELECT and WHERE to joins, subqueries, set operations, window functions and recursive CTEs, each with a hidden worked solution and its real result.">
+<link rel="canonical" href="https://alephb.uk/learn/exercises.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Ritz Affair">
+<meta property="og:title" content="Twenty SQL exercises with solutions -- The Ritz Affair">
+<meta property="og:description" content="Twenty graded SQL exercises on one small bakery database, from SELECT and WHERE to joins, subqueries, set operations, window functions and recursive CTEs, each with a hidden worked solution and its real result.">
+<meta property="og:url" content="https://alephb.uk/learn/exercises.html">
+<meta property="og:image" content="https://mystery.alephb.uk/landing-pillow.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"SQL exercises with solutions","description":"Twenty graded SQL exercises on one small bakery database, from SELECT and WHERE to joins, subqueries, set operations, window functions and recursive CTEs, each with a hidden worked solution and its real result.","url":"https://alephb.uk/learn/exercises.html","image":"https://mystery.alephb.uk/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Practice exercise","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"The Ritz Affair","url":"https://mystery.alephb.uk/"}}</script>
+<link rel="icon" href="lib/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/style.css?v=873f5e0">
+<link rel="stylesheet" href="learn.css?v=873f5e0">
+<script src="theme.js?v=873f5e0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js" integrity="sha384-DJiKBv+LC78e5InEB+MvFIAH079ynMK/ERTtFUCpDzXhH1Bht7aVfpg3yOVsuYl9" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="corners">
+<button id="btn-feedback" class="quiet feedback-corner" title="Send feedback" aria-label="Send feedback"><svg class="icon mail" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5L8 9L14 4.5"/></svg><span class="btn-text">Feedback</span></button>
+<button id="btn-theme" class="quiet theme-corner" title="Night edition" aria-label="Night edition"><svg class="icon moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8.53A6 6 0 1 1 7.47 2A4.67 4.67 0 0 0 14 8.53Z"/></svg><span class="btn-text">Night edition</span></button>
+</div>
+<header class="masthead">
+  <div class="mast-title">LE PETIT JOURNAL</div>
+  <div class="mast-sub">THE CLERK'S HANDBOOK</div>
+  <nav class="learn-nav muted"><a href="https://mystery.alephb.uk/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
+</header>
+<!-- menu: colour_learn.mjs -->
+<nav class="learn-menu"><a href="index.html">Index</a> &middot;
+  <details class="learn-chapters"><summary>Learning chapters</summary><ol>
+    <li><a href="database.html">1. Database</a></li>
+    <li><a href="schema.html">2. Schema</a></li>
+    <li><a href="select-where.html">3. SELECT</a></li>
+    <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+    <li><a href="like.html">5. LIKE</a></li>
+    <li><a href="dates-times.html">6. Dates</a></li>
+    <li><a href="group-by-having.html">7. GROUP BY</a></li>
+    <li><a href="joins.html">8. JOIN</a></li>
+    <li><a href="nulls.html">9. NULL</a></li>
+    <li><a href="case-when.html">10. CASE</a></li>
+    <li><a href="subqueries.html">11. Subqueries</a></li>
+    <li><a href="set-operations.html">12. UNION</a></li>
+    <li><a href="window-functions.html">13. Windows</a></li>
+    <li><a href="ctes.html">14. CTEs</a></li>
+  </ol></details> &middot;
+  <span class="current" aria-current="page">Exercises</span> &middot;
+  <a href="grammar.html">Grammar</a></nav>
+<!-- /menu -->
+<main class="learn">
+<h1>SQL exercises with solutions</h1>
+
+<details class="howto"><summary class="label">HOW TO USE THIS PAGE</summary>
+<ol>
+<li>Pick a level, <b>Warm-up</b>, <b>Practice</b> or <b>Challenge</b>, then a question from the list.</li>
+<li>Write your query in the terminal and press <b>Run</b> (Ctrl+Enter; Tab completes a name, Ctrl+F tidies the layout). The schema shows the tables and their keys; its button enlarges it.</li>
+<li>The page checks every result: the same rows and values as the solution, whatever you name the columns. Order counts only when the question asks for one. A solved question gets a tick, kept in this browser.</li>
+<li>Stuck? <b>Show solution</b> opens the worked answer. A refused query says why and links to the rule it broke: the terminal follows PostgreSQL's rules.</li>
+<li>To work elsewhere, the <a href="database.html">bakery database page</a> has the script that recreates the data in any SQLite tool (write <code>lower(name) LIKE</code> there instead of <code>ILIKE</code>).</li>
+</ol>
+</details>
+
+<section id="workbench" class="workbench" hidden aria-label="Exercise terminal">
+  <div class="wb-schema">
+    <div class="label-row"><span class="label">SCHEMA</span><button type="button" id="btn-erd" class="quiet" title="Enlarge the schema" aria-label="Enlarge the schema"></button><span class="erd-legend muted wb-legend">
+      <span><svg width="16" height="10" viewBox="0 0 16 10" class="key pk"><circle cx="4" cy="5" r="2.8"/><path d="M7 5H15M12 5V8M14.5 5V7.5"/></svg>primary key</span>
+      <span><svg width="16" height="10" viewBox="0 0 16 10" class="key fk"><circle cx="4" cy="5" r="2.8"/><path d="M7 5H15M12 5V8M14.5 5V7.5"/></svg>foreign key</span>
+      <span><svg width="46" height="16" viewBox="0 0 46 16"><path class="rel" d="M4 12H42"/><circle class="rel-dot" cx="4" cy="12" r="2.4"/><circle class="rel-dot" cx="42" cy="12" r="2.4"/><text class="rel-t" x="8" y="8">1</text><text class="rel-t" x="33" y="8">N</text></svg>one-to-many</span>
+    </span></div>
+    <div class="erd bakery-erd" role="img" aria-label="Schema of the bakery database: customer, product, orders and order_item, their keys and the links between them">
+<!-- bakery schema: erd.py -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 402" width="480" height="402">
+<defs><symbol id="erd-key" viewBox="0 0 16 10"><circle cx="4" cy="5" r="2.8"/><path d="M7 5H15M12 5V8M14.5 5V7.5"/></symbol></defs>
+<g class="fk" data-from="order_item.product_id" data-to="product"><path class="rel" d="M401.4 232 L401.4 275 Q401.4 283 393.4 283 L337.333 283 Q329.333 283 329.333 291 L329.333 306"/><circle cx="401.4" cy="233" r="2.6"/><circle cx="329.333" cy="305" r="2.6"/><text x="406.4" y="243">1</text><text x="334.333" y="302">N</text></g>
+<g class="fk" data-from="order_item.order_id" data-to="orders"><path class="rel" d="M172.133 246 L172.133 261 Q172.133 269 180.133 269 L299.867 269 Q307.867 269 307.867 277 L307.867 306"/><circle cx="172.133" cy="247" r="2.6"/><circle cx="307.867" cy="305" r="2.6"/><text x="177.133" y="257">1</text><text x="312.867" y="302">N</text></g>
+<g class="fk" data-from="orders.staff_id" data-to="staff"><path class="rel" d="M401.4 72 L401.4 125.5 Q401.4 133.5 393.4 133.5 L97.3333 133.5 Q89.3333 133.5 89.3333 141.5 L89.3333 160"/><circle cx="401.4" cy="73" r="2.6"/><circle cx="89.3333" cy="159" r="2.6"/><text x="406.4" y="83">1</text><text x="94.3333" y="156">N</text></g>
+<g class="fk" data-from="orders.customer_id" data-to="customer"><path class="rel" d="M161.4 100 L161.4 118.5 Q161.4 126.5 153.4 126.5 L75.8667 126.5 Q67.8667 126.5 67.8667 134.5 L67.8667 160"/><circle cx="161.4" cy="101" r="2.6"/><circle cx="67.8667" cy="159" r="2.6"/><text x="166.4" y="111">1</text><text x="72.8667" y="156">N</text></g>
+<g class="fk" data-from="refund.order_id" data-to="orders"><path class="rel" d="M150.667 246 L150.667 268 Q150.667 276 142.667 276 L86.6 276 Q78.6 276 78.6 284 L78.6 306"/><circle cx="150.667" cy="247" r="2.6"/><circle cx="78.6" cy="305" r="2.6"/><text x="155.667" y="257">1</text><text x="83.6" y="302">N</text></g>
+<g class="fk" data-from="customer.referred_by" data-to="customer"><path class="rel" d="M212 79 L222 79 Q230 79 230 71 L230 31 Q230 23 222 23 L212 23"/><circle cx="213" cy="79" r="2.6"/><circle cx="213" cy="23" r="2.6"/><text x="216" y="90">N</text><text x="216" y="19">1</text></g>
+<g class="fk" data-from="staff.manager_id" data-to="staff"><path class="rel" d="M452 65 L462 65 Q470 65 470 57 L470 31 Q470 23 462 23 L452 23"/><circle cx="453" cy="65" r="2.6"/><circle cx="453" cy="23" r="2.6"/><text x="456" y="76">N</text><text x="456" y="19">1</text></g>
+<g class="table" data-table="customer" transform="translate(28,0)">
+<rect width="184" height="100" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">customer</text>
+<use href="#erd-key" class="key pk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="41">name</text>
+<text class="type" x="178" y="41" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="55">town</text>
+<text class="type" x="178" y="55" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="69">joined</text>
+<text class="type" x="178" y="69" text-anchor="end">TEXT</text>
+<use href="#erd-key" class="key fk" x="4" y="75" width="14" height="9"/>
+<text class="col" x="21" y="83">referred_by</text>
+<text class="type" x="178" y="83" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="97">email</text>
+<text class="type" x="178" y="97" text-anchor="end">TEXT</text></g>
+<g class="table" data-table="order_item" transform="translate(268,306)">
+<rect width="184" height="72" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">order_item</text>
+<use href="#erd-key" class="key fk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">order_id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<use href="#erd-key" class="key fk" x="4" y="33" width="14" height="9"/>
+<text class="col" x="21" y="41">product_id</text>
+<text class="type" x="178" y="41" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="55">quantity</text>
+<text class="type" x="178" y="55" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="69">unit_price</text>
+<text class="type" x="178" y="69" text-anchor="end">REAL</text></g>
+<g class="table" data-table="orders" transform="translate(28,160)">
+<rect width="184" height="86" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">orders</text>
+<use href="#erd-key" class="key pk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<use href="#erd-key" class="key fk" x="4" y="33" width="14" height="9"/>
+<text class="col" x="21" y="41">customer_id</text>
+<text class="type" x="178" y="41" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="55">day</text>
+<text class="type" x="178" y="55" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="69">time</text>
+<text class="type" x="178" y="69" text-anchor="end">TEXT</text>
+<use href="#erd-key" class="key fk" x="4" y="75" width="14" height="9"/>
+<text class="col" x="21" y="83">staff_id</text>
+<text class="type" x="178" y="83" text-anchor="end">INTEGER</text></g>
+<g class="table" data-table="product" transform="translate(268,160)">
+<rect width="184" height="72" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">product</text>
+<use href="#erd-key" class="key pk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="41">name</text>
+<text class="type" x="178" y="41" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="55">category</text>
+<text class="type" x="178" y="55" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="69">price</text>
+<text class="type" x="178" y="69" text-anchor="end">REAL</text></g>
+<g class="table" data-table="refund" transform="translate(28,306)">
+<rect width="184" height="86" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">refund</text>
+<use href="#erd-key" class="key pk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<use href="#erd-key" class="key fk" x="4" y="33" width="14" height="9"/>
+<text class="col" x="21" y="41">order_id</text>
+<text class="type" x="178" y="41" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="55">day</text>
+<text class="type" x="178" y="55" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="69">amount</text>
+<text class="type" x="178" y="69" text-anchor="end">REAL</text>
+<text class="col" x="21" y="83">reason</text>
+<text class="type" x="178" y="83" text-anchor="end">TEXT</text></g>
+<g class="table" data-table="staff" transform="translate(268,0)">
+<rect width="184" height="72" rx="4"/>
+<path class="head" d="M0 16 V4 A4 4 0 0 1 4 0 H180 A4 4 0 0 1 184 4 V16 Z"/>
+<text class="tname" x="6" y="12">staff</text>
+<use href="#erd-key" class="key pk" x="4" y="19" width="14" height="9"/>
+<text class="col" x="21" y="27">id</text>
+<text class="type" x="178" y="27" text-anchor="end">INTEGER</text>
+<text class="col" x="21" y="41">name</text>
+<text class="type" x="178" y="41" text-anchor="end">TEXT</text>
+<text class="col" x="21" y="55">role</text>
+<text class="type" x="178" y="55" text-anchor="end">TEXT</text>
+<use href="#erd-key" class="key fk" x="4" y="61" width="14" height="9"/>
+<text class="col" x="21" y="69">manager_id</text>
+<text class="type" x="178" y="69" text-anchor="end">INTEGER</text></g>
+</svg>
+<!-- /bakery schema -->
+</div>
+    <!-- The game's ad box (index.html), the only one in the handbook (owner, 2026-10-19); exercises.js runs app.js's initAds. -->
+    <details id="press-box" class="press-box" open>
+      <summary class="label">ADVERTISEMENTS</summary>
+      <div class="press-slot">
+        <a class="press-notice" href="./"><img class="day" src="lib/handbook-ad.jpg" width="880" height="659" loading="lazy" alt="The Clerk's Handbook: every query the Inspector expects of you. From SELECT to WITH RECURSIVE. Twenty graded exercises, answers enclosed. Free of charge. Open it now."><img class="night" src="lib/handbook-ad-night.jpg" width="880" height="659" loading="lazy" alt=""></a>
+      </div>
+    </details>
+  </div>
+  <div class="wb-terminal">
+    <div class="label-row"><span class="label">TERMINAL</span><span class="term-meta"><span class="muted keys"><span class="kgrp"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd> run</span><span class="kgrp"><kbd>Tab</kbd> complete</span><span class="kgrp"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd> format</span></span><a class="dialect" href="grammar.html" title="This terminal follows PostgreSQL's rules: The Grammar of SQL">PostgreSQL</a></span></div>
+    <div class="editor"><pre id="sql-hl" class="sql-hl" aria-hidden="true"></pre><textarea id="sql" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="SQL query" placeholder="SELECT * FROM product"></textarea></div>
+    <div class="row"><button id="ex-run"><svg class="icon play" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 2.5L13 8L4.5 13.5Z"/></svg><span class="btn-text">Run</span></button><span id="ex-info" class="muted" aria-live="polite">Loading the SQL engine...</span></div>
+    <div id="ex-results" class="results" aria-live="polite"></div>
+    <details class="ex-history"><summary class="label">HISTORY</summary><ol id="history"></ol></details>
+  </div>
+  <div class="wb-question">
+    <div class="label-row"><label class="label" for="ex-pick">QUESTION</label><span id="ex-solved" class="ex-solved" hidden>&#x2713; Solved</span></div>
+    <div id="ex-levels" class="ex-levels" role="group" aria-label="Level"></div>
+    <select id="ex-pick"></select>
+    <div id="ex-question"></div>
+    <p id="ex-tables" class="muted"></p>
+    <p id="ex-status" class="ex-status" aria-live="polite" hidden></p>
+  </div>
+</section>
+
+<div id="ex-static">
+<h2>Warm-up</h2>
+<p class="exercise" id="the-cheap-shelf" data-ordered><b>1. The cheap shelf.</b> List the name and price of every product that costs less than 2, cheapest first. (<a href="select-where.html">SELECT and WHERE</a>, <a href="order-by-limit.html">ORDER BY</a>) &middot; Expected: 5 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">price</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">price</span> &lt; <span class="sql-num">2</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">price</span>, <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>price</th></tr>
+<tr><td>Baguette</td><td>1.2</td></tr>
+<tr><td>Croissant</td><td>1.4</td></tr>
+<tr><td>Hot cross bun</td><td>1.5</td></tr>
+<tr><td>Pain au chocolat</td><td>1.6</td></tr>
+<tr><td>Apple turnover</td><td>1.9</td></tr>
+</table>
+<p>The <code>id</code> after <code>price</code> breaks ties. There are none here, but a second key costs nothing and keeps the order fixed if a new product ever shares a price.</p>
+</details>
+
+<p class="exercise" id="early-customers" data-ordered data-need="0,1"><b>2. Early customers.</b> Which customers joined before June 2024, and from which town? Show the most recent first. (<a href="dates-times.html">Dates and times</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">town</span>, <span class="sql-id">joined</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">joined</span> &lt; <span class="sql-str">'2024-06-01'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">joined</span> <span class="sql-kw">DESC</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>town</th><th>joined</th></tr>
+<tr><td>Farid Haddad</td><td>Old Town</td><td>2024-05-19</td></tr>
+<tr><td>Emma Novak</td><td>Hillcrest</td><td>2024-04-02</td></tr>
+<tr><td>David Chen</td><td>Old Town</td><td>2024-03-11</td></tr>
+<tr><td>Chloe Martin</td><td>Riverside</td><td>2024-02-20</td></tr>
+<tr><td>Ben Okafor</td><td>Hillcrest</td><td>2024-02-03</td></tr>
+<tr><td>Alice Turner</td><td>Riverside</td><td>2024-01-15</td></tr>
+</table>
+<p>"Before June" means before the first of June, so the comparison is a strict <code>&lt;</code> against <code>'2024-06-01'</code>, written in the column's own ISO shape. <code>joined &lt;= '2024-05-31'</code> gives the same rows here.</p>
+</details>
+
+<p class="exercise" id="every-croissant" data-need="1"><b>3. Every croissant.</b> Find the products whose name contains the letters croissant anywhere, on their own or inside a longer word, whatever their case. (<a href="like.html">LIKE</a>) &middot; Expected: 2 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">name</span> <span class="sql-kw">ILIKE</span> <span class="sql-str">'%croissant%'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>id</th><th>name</th></tr>
+<tr><td>4</td><td>Croissant</td></tr>
+<tr><td>6</td><td>Almond croissant</td></tr>
+</table>
+<p><code>LIKE '%croissant%'</code> would miss the plain Croissant, whose capital C does not match a small c: <code>LIKE</code> is case-sensitive (see <a href="like.html#like-ilike">LIKE and ILIKE</a>). The wildcard at the front is what finds the almond one.</p>
+</details>
+
+<p class="exercise" id="untidy-emails"><b>4. Untidy emails.</b> Some emails were typed with capital letters, or with a stray space at the start or the end. List the name and the email, exactly as stored, of every customer whose email is not written all in small letters with no space at either end. Customers with no email are left out. (<a href="like.html">LIKE</a>, <a href="nulls.html">NULL</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">email</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">email</span> &lt;&gt; <span class="sql-fn">lower</span>(<span class="sql-fn">trim</span>(<span class="sql-id">email</span>))
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>email</th></tr>
+<tr><td>Ben Okafor</td><td>Ben.Okafor@Mail.com</td></tr>
+<tr><td>Emma Novak</td><td>emma.novak@post.net </td></tr>
+<tr><td>Farid Haddad</td><td>FARID.HADDAD@MAIL.COM</td></tr>
+<tr><td>Rosa Weber</td><td>Rosa.Weber@Post.Net</td></tr>
+<tr><td>Tara Rossi</td><td>tara.rossi@webmail.org </td></tr>
+<tr><td>Yusuf Eriksen</td><td> yusuf.eriksen@mail.com</td></tr>
+</table>
+<p><code>trim</code> removes the spaces at both ends and <code>lower</code> the capitals, so a tidy email equals its own cleaned copy and an untidy one does not. A customer with no email has a NULL, and a comparison with NULL is never true, so those rows drop out without being asked: <code>WHERE email IS NOT NULL</code> would change nothing. Three <code>LIKE</code> tests (<code>email &lt;&gt; lower(email) OR email LIKE ' %' OR email LIKE '% '</code>) find the same six.</p>
+</details>
+
+<p class="exercise" id="the-counter-by-category"><b>5. The counter by category.</b> For each category, show how many products it has and the price of the dearest one. (<a href="group-by-having.html">GROUP BY</a>) &middot; Expected: 3 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">category</span>, <span class="sql-fn">COUNT</span>(*) <span class="sql-kw">AS</span> <span class="sql-id">products</span>, <span class="sql-fn">MAX</span>(<span class="sql-id">price</span>) <span class="sql-kw">AS</span> <span class="sql-id">dearest</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span>;</code></pre>
+<table class="result">
+<tr><th>category</th><th>products</th><th>dearest</th></tr>
+<tr><td>bread</td><td>6</td><td>4.5</td></tr>
+<tr><td>cake</td><td>7</td><td>4.1</td></tr>
+<tr><td>pastry</td><td>7</td><td>2.6</td></tr>
+</table>
+<p>Asking for the <i>name</i> of the dearest product is a different and harder question: <code>name</code> is neither grouped nor aggregated, so it cannot simply be added to this <code>SELECT</code>. Exercise 17 shows the pattern, with a window function.</p>
+</details>
+
+<h2>Practice</h2>
+<p class="exercise" id="orders-by-town" data-ordered><b>6. Orders by town.</b> How many orders did the customers of each town place? List only the towns with at least one order, busiest town first. (<a href="joins.html">JOIN</a>, <a href="group-by-having.html">GROUP BY</a>) &middot; Expected: 3 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">c</span>.<span class="sql-id">town</span>, <span class="sql-fn">COUNT</span>(*) <span class="sql-kw">AS</span> <span class="sql-id">orders</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span> <span class="sql-kw">ON</span> <span class="sql-id">c</span>.<span class="sql-id">id</span> = <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">c</span>.<span class="sql-id">town</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">orders</span> <span class="sql-kw">DESC</span>, <span class="sql-id">c</span>.<span class="sql-id">town</span>;</code></pre>
+<table class="result">
+<tr><th>town</th><th>orders</th></tr>
+<tr><td>Old Town</td><td>120</td></tr>
+<tr><td>Riverside</td><td>109</td></tr>
+<tr><td>Hillcrest</td><td>74</td></tr>
+</table>
+<p>The town lives in <code>customer</code> and the orders in <code>orders</code>, so the join comes first and the grouping after it. Each row of the join is one order, which is why <code>COUNT(*)</code> counts orders.</p>
+</details>
+
+<p class="exercise" id="takings-per-day"><b>7. Takings per day.</b> For each day from Monday 23 to Sunday 29 March that had orders, how much did that day's order lines come to (each line's quantity times the price paid on it, refunds aside)? Round each day's total to two decimal places. (<a href="joins.html">JOIN</a>, <a href="group-by-having.html">GROUP BY</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>, <span class="sql-fn">ROUND</span>(<span class="sql-fn">SUM</span>(<span class="sql-id">oi</span>.<span class="sql-id">quantity</span> * <span class="sql-id">oi</span>.<span class="sql-id">unit_price</span>), <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">takings</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">order_id</span> = <span class="sql-id">o</span>.<span class="sql-id">id</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">o</span>.<span class="sql-id">day</span> <span class="sql-kw">BETWEEN</span> <span class="sql-str">'2026-03-23'</span> <span class="sql-kw">AND</span> <span class="sql-str">'2026-03-29'</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>;</code></pre>
+<table class="result">
+<tr><th>day</th><th>takings</th></tr>
+<tr><td>2026-03-23</td><td>125.8</td></tr>
+<tr><td>2026-03-24</td><td>100.7</td></tr>
+<tr><td>2026-03-25</td><td>95.5</td></tr>
+<tr><td>2026-03-26</td><td>125.5</td></tr>
+<tr><td>2026-03-28</td><td>138.2</td></tr>
+<tr><td>2026-03-29</td><td>159.0</td></tr>
+</table>
+<p>The money of a line is its quantity times <code>unit_price</code>, the price paid on that line, so <code>product</code> is not needed. Friday 27 March is missing because the bakery is closed on Fridays and nobody ordered: a group needs rows. The <a href="ctes.html">CTE page</a> builds a calendar that shows such a day with zero, and exercise 19 uses one.</p>
+</details>
+
+<p class="exercise" id="the-price-rise"><b>8. The price rise.</b> On some order lines, the price paid differs from the product's current price in the catalogue. Which products, and for each, the price paid on those lines and the current price? Give one row per product and price paid. (<a href="joins.html">JOIN</a>, <a href="select-where.html">SELECT and WHERE</a>) &middot; Expected: 3 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-kw">DISTINCT</span> <span class="sql-id">p</span>.<span class="sql-id">name</span>, <span class="sql-id">oi</span>.<span class="sql-id">unit_price</span> <span class="sql-kw">AS</span> <span class="sql-id">paid</span>, <span class="sql-id">p</span>.<span class="sql-id">price</span> <span class="sql-kw">AS</span> <span class="sql-id">current_price</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">product</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span> <span class="sql-kw">ON</span> <span class="sql-id">p</span>.<span class="sql-id">id</span> = <span class="sql-id">oi</span>.<span class="sql-id">product_id</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">oi</span>.<span class="sql-id">unit_price</span> &lt;&gt; <span class="sql-id">p</span>.<span class="sql-id">price</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">p</span>.<span class="sql-id">name</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>paid</th><th>current_price</th></tr>
+<tr><td>Cheesecake slice</td><td>3.5</td><td>3.8</td></tr>
+<tr><td>Cinnamon roll</td><td>2.4</td><td>2.6</td></tr>
+<tr><td>Focaccia</td><td>3.4</td><td>3.6</td></tr>
+</table>
+<p>Three products went up on Monday 16 March. <code>product.price</code> holds only today's price; the line keeps what the customer really paid, which is why takings are computed from <code>unit_price</code>: the catalogue price would overstate the first two weeks. <code>DISTINCT</code> folds the many lines sold at the old price into one row per product.</p>
+</details>
+
+<p class="exercise" id="busy-hours" data-ordered><b>9. Busy hours.</b> Take an order's hour as the first two characters of its time ('07' for 07:20). Which hours had at least 25 orders over the four weeks? Busiest first, and hours with the same count in clock order. (<a href="dates-times.html">Dates and times</a>, <a href="group-by-having.html">HAVING</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-fn">substr</span>(<span class="sql-id">time</span>, <span class="sql-num">1</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">hour</span>, <span class="sql-fn">COUNT</span>(*) <span class="sql-kw">AS</span> <span class="sql-id">orders</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">orders</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">hour</span>
+<span class="sql-kw">HAVING</span> <span class="sql-fn">COUNT</span>(*) &gt;= <span class="sql-num">25</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">orders</span> <span class="sql-kw">DESC</span>, <span class="sql-id">hour</span>;</code></pre>
+<table class="result">
+<tr><th>hour</th><th>orders</th></tr>
+<tr><td>08</td><td>48</td></tr>
+<tr><td>07</td><td>47</td></tr>
+<tr><td>09</td><td>32</td></tr>
+<tr><td>10</td><td>28</td></tr>
+<tr><td>12</td><td>28</td></tr>
+<tr><td>17</td><td>27</td></tr>
+</table>
+<p>The hour is the first two characters of the time. Keeping it as text is fine for grouping and sorting, because every hour has two digits; a <code>CAST</code> would only be needed for arithmetic. Two hours share a count, which is why the question says how to order them, and why <code>hour</code> follows <code>orders DESC</code> in the <code>ORDER BY</code>.</p>
+</details>
+
+<p class="exercise" id="referred-from-afar"><b>10. Referred from afar.</b> Among the customers who joined in 2026, list those who were referred by someone living in a different town, with both towns. (<a href="joins.html">Self-joins</a>) &middot; Expected: 4 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">newcomer</span>.<span class="sql-id">name</span>, <span class="sql-id">newcomer</span>.<span class="sql-id">town</span>, <span class="sql-id">referrer</span>.<span class="sql-id">name</span> <span class="sql-kw">AS</span> <span class="sql-id">referrer</span>, <span class="sql-id">referrer</span>.<span class="sql-id">town</span> <span class="sql-kw">AS</span> <span class="sql-id">referrer_town</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">newcomer</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">referrer</span> <span class="sql-kw">ON</span> <span class="sql-id">referrer</span>.<span class="sql-id">id</span> = <span class="sql-id">newcomer</span>.<span class="sql-id">referred_by</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">newcomer</span>.<span class="sql-id">town</span> &lt;&gt; <span class="sql-id">referrer</span>.<span class="sql-id">town</span>
+  <span class="sql-kw">AND</span> <span class="sql-id">newcomer</span>.<span class="sql-id">joined</span> &gt;= <span class="sql-str">'2026-01-01'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">newcomer</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>town</th><th>referrer</th><th>referrer_town</th></tr>
+<tr><td>Marco Costa</td><td>Hillcrest</td><td>Chloe Martin</td><td>Riverside</td></tr>
+<tr><td>Lena Schmidt</td><td>Old Town</td><td>Grace Lee</td><td>Riverside</td></tr>
+<tr><td>Vera Tanaka</td><td>Old Town</td><td>Kofi Tanaka</td><td>Hillcrest</td></tr>
+<tr><td>Quentin Jensen</td><td>Riverside</td><td>Hassan Ivanova</td><td>Old Town</td></tr>
+</table>
+<p>The same table plays two parts under two aliases. The inner join leaves out the customers who were not referred at all, which is right here: they have no referrer whose town could differ.</p>
+</details>
+
+<p class="exercise" id="the-staff-room"><b>11. The staff room.</b> List every member of staff with the name of their manager (left empty, NULL, for the owner, who has none) and the number of orders they served, 0 for anyone who served none. (<a href="joins.html#left-join">LEFT JOIN</a>, <a href="joins.html">Self-joins</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">s</span>.<span class="sql-id">name</span>, <span class="sql-id">m</span>.<span class="sql-id">name</span> <span class="sql-kw">AS</span> <span class="sql-id">manager</span>, <span class="sql-fn">COUNT</span>(<span class="sql-id">o</span>.<span class="sql-id">id</span>) <span class="sql-kw">AS</span> <span class="sql-id">served</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">staff</span> <span class="sql-kw">AS</span> <span class="sql-id">s</span>
+<span class="sql-kw">LEFT</span> <span class="sql-kw">JOIN</span> <span class="sql-id">staff</span> <span class="sql-kw">AS</span> <span class="sql-id">m</span> <span class="sql-kw">ON</span> <span class="sql-id">m</span>.<span class="sql-id">id</span> = <span class="sql-id">s</span>.<span class="sql-id">manager_id</span>
+<span class="sql-kw">LEFT</span> <span class="sql-kw">JOIN</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span> <span class="sql-kw">ON</span> <span class="sql-id">o</span>.<span class="sql-id">staff_id</span> = <span class="sql-id">s</span>.<span class="sql-id">id</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">s</span>.<span class="sql-id">id</span>, <span class="sql-id">s</span>.<span class="sql-id">name</span>, <span class="sql-id">m</span>.<span class="sql-id">name</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">s</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>manager</th><th>served</th></tr>
+<tr><td>Margaret Hale</td><td>NULL</td><td>23</td></tr>
+<tr><td>Tom Becker</td><td>Margaret Hale</td><td>9</td></tr>
+<tr><td>Nina Patel</td><td>Tom Becker</td><td>91</td></tr>
+<tr><td>Omar Reyes</td><td>Tom Becker</td><td>71</td></tr>
+<tr><td>Lucy Brandt</td><td>Tom Becker</td><td>109</td></tr>
+<tr><td>Sam Ito</td><td>Tom Becker</td><td>0</td></tr>
+</table>
+<p>Both joins have to be <code>LEFT</code>: an inner join to the manager would drop the owner, and an inner join to the orders would drop the baker who never serves. <code>COUNT(o.id)</code> counts only the rows where an order was found, so the baker's row counts 0, where <code>COUNT(*)</code> would say 1.</p>
+</details>
+
+<p class="exercise" id="morning-people"><b>12. Morning people.</b> For each town, show the number of orders its customers placed before nine o'clock and the number placed at nine o'clock or later, side by side. (<a href="case-when.html">CASE WHEN</a>) &middot; Expected: 3 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">c</span>.<span class="sql-id">town</span>,
+       <span class="sql-fn">SUM</span>(<span class="sql-kw">CASE</span> <span class="sql-kw">WHEN</span> <span class="sql-id">o</span>.<span class="sql-id">time</span> &lt; <span class="sql-str">'09:00'</span> <span class="sql-kw">THEN</span> <span class="sql-num">1</span> <span class="sql-kw">ELSE</span> <span class="sql-num">0</span> <span class="sql-kw">END</span>) <span class="sql-kw">AS</span> <span class="sql-id">before_nine</span>,
+       <span class="sql-fn">SUM</span>(<span class="sql-kw">CASE</span> <span class="sql-kw">WHEN</span> <span class="sql-id">o</span>.<span class="sql-id">time</span> &gt;= <span class="sql-str">'09:00'</span> <span class="sql-kw">THEN</span> <span class="sql-num">1</span> <span class="sql-kw">ELSE</span> <span class="sql-num">0</span> <span class="sql-kw">END</span>) <span class="sql-kw">AS</span> <span class="sql-id">later</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span> <span class="sql-kw">ON</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span> = <span class="sql-id">c</span>.<span class="sql-id">id</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">c</span>.<span class="sql-id">town</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">c</span>.<span class="sql-id">town</span>;</code></pre>
+<table class="result">
+<tr><th>town</th><th>before_nine</th><th>later</th></tr>
+<tr><td>Hillcrest</td><td>22</td><td>52</td></tr>
+<tr><td>Old Town</td><td>33</td><td>87</td></tr>
+<tr><td>Riverside</td><td>40</td><td>69</td></tr>
+</table>
+<p>Each <code>CASE</code> turns an order into a 1 or a 0, and the <code>SUM</code> counts the ones. Writing the second condition as <code>&gt;= '09:00'</code> rather than <code>&gt; '09:00'</code> matters: three orders were placed at exactly nine, and they belong in the later column, each counted once.</p>
+</details>
+
+<p class="exercise" id="above-their-category" data-need="0,3" data-tolerance="0.01"><b>13. Above their category.</b> Which products cost at least 0.50 more than the average price of their own category? Show that average too. (<a href="subqueries.html">Subqueries</a>, <a href="ctes.html">CTEs</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">category_average</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">category</span>, <span class="sql-fn">AVG</span>(<span class="sql-id">price</span>) <span class="sql-kw">AS</span> <span class="sql-id">average</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">p</span>.<span class="sql-id">name</span>, <span class="sql-id">p</span>.<span class="sql-id">category</span>, <span class="sql-id">p</span>.<span class="sql-id">price</span>, <span class="sql-fn">ROUND</span>(<span class="sql-id">a</span>.<span class="sql-id">average</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">average</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">category_average</span> <span class="sql-kw">AS</span> <span class="sql-id">a</span> <span class="sql-kw">ON</span> <span class="sql-id">a</span>.<span class="sql-id">category</span> = <span class="sql-id">p</span>.<span class="sql-id">category</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">p</span>.<span class="sql-id">price</span> &gt;= <span class="sql-id">a</span>.<span class="sql-id">average</span> + <span class="sql-num">0.5</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">p</span>.<span class="sql-id">category</span>, <span class="sql-id">p</span>.<span class="sql-id">price</span> <span class="sql-kw">DESC</span>, <span class="sql-id">p</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>category</th><th>price</th><th>average</th></tr>
+<tr><td>Sourdough loaf</td><td>bread</td><td>4.5</td><td>3.52</td></tr>
+<tr><td>Walnut bread</td><td>bread</td><td>4.2</td><td>3.52</td></tr>
+<tr><td>Raspberry tart</td><td>cake</td><td>4.1</td><td>3.29</td></tr>
+<tr><td>Lemon tart</td><td>cake</td><td>3.9</td><td>3.29</td></tr>
+<tr><td>Cheesecake slice</td><td>cake</td><td>3.8</td><td>3.29</td></tr>
+<tr><td>Cinnamon roll</td><td>pastry</td><td>2.6</td><td>1.9</td></tr>
+</table>
+<p>A correlated subquery in <code>WHERE</code> finds the same products, but showing the average as well would mean writing it twice. A CTE computes each category's average once and joins it like a table.</p>
+</details>
+
+<p class="exercise" id="not-on-the-weekend-menu"><b>14. Not on the weekend menu.</b> Which products were never bought on the weekend of Saturday 21 and Sunday 22 March? Include the products nobody bought at all. Answer with a set operation. (<a href="set-operations.html">EXCEPT</a>) &middot; Expected: 2 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">EXCEPT</span>
+<span class="sql-kw">SELECT</span> <span class="sql-id">p</span>.<span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">product_id</span> = <span class="sql-id">p</span>.<span class="sql-id">id</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span> <span class="sql-kw">ON</span> <span class="sql-id">o</span>.<span class="sql-id">id</span> = <span class="sql-id">oi</span>.<span class="sql-id">order_id</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">o</span>.<span class="sql-id">day</span> <span class="sql-kw">IN</span> (<span class="sql-str">'2026-03-21'</span>, <span class="sql-str">'2026-03-22'</span>)
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">name</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Coffee eclair</td></tr>
+<tr><td>Pistachio financier</td></tr>
+</table>
+<p>Every product, minus the ones sold that weekend. The first half reads <code>product</code> alone, so the pistachio financier, which nobody bought all month, is in the answer too; a join on its own could never show it. Both days are named: <code>o.day &gt;= '2026-03-21'</code> would also take in the last weekend, and the coffee eclair, sold then, would drop out. Comparing names works because no two products share one; with a column that can repeat, compare the ids. Exercise 15 asks the same kind of question with <code>NOT EXISTS</code>.</p>
+</details>
+
+<h2>Challenge</h2>
+<p class="exercise" id="no-bread-thank-you"><b>15. No bread, thank you.</b> Which customers have never bought any bread? Include anyone who has never bought anything. (<a href="subqueries.html">Subqueries</a>) &middot; Expected: 5 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">c</span>.<span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span>
+<span class="sql-kw">WHERE</span> <span class="sql-kw">NOT</span> <span class="sql-kw">EXISTS</span> (<span class="sql-kw">SELECT</span> <span class="sql-num">1</span>
+                  <span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+                  <span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">order_id</span> = <span class="sql-id">o</span>.<span class="sql-id">id</span>
+                  <span class="sql-kw">JOIN</span> <span class="sql-id">product</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span> <span class="sql-kw">ON</span> <span class="sql-id">p</span>.<span class="sql-id">id</span> = <span class="sql-id">oi</span>.<span class="sql-id">product_id</span>
+                  <span class="sql-kw">WHERE</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span> = <span class="sql-id">c</span>.<span class="sql-id">id</span>
+                    <span class="sql-kw">AND</span> <span class="sql-id">p</span>.<span class="sql-id">category</span> = <span class="sql-str">'bread'</span>)
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">c</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Hugo Silva</td></tr>
+<tr><td>Marco Olsen</td></tr>
+<tr><td>Greta Rossi</td></tr>
+<tr><td>Marco Costa</td></tr>
+<tr><td>Vera Tanaka</td></tr>
+</table>
+<p>The tempting answer joins everything and filters <code>WHERE p.category &lt;&gt; 'bread'</code>, but that lists the customers who bought something that is not bread, which includes bread buyers who also took a croissant, and drops Hugo Silva and the others who bought nothing. The question is about the absence of a row, which is what <code>NOT EXISTS</code> asks.</p>
+</details>
+
+<p class="exercise" id="money-back"><b>16. Money back.</b> For each day from Monday 16 to Sunday 22 March that had orders, show what that day's order lines came to (at the price paid), the refunds paid out that day (a refund counts on its own day, whatever the day of its order; 0 when there were none) and what was left. Round every amount to two decimal places. (<a href="ctes.html">CTEs</a>, <a href="nulls.html#coalesce">COALESCE</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">sold</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>, <span class="sql-fn">SUM</span>(<span class="sql-id">oi</span>.<span class="sql-id">quantity</span> * <span class="sql-id">oi</span>.<span class="sql-id">unit_price</span>) <span class="sql-kw">AS</span> <span class="sql-id">sold</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">order_id</span> = <span class="sql-id">o</span>.<span class="sql-id">id</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>
+),
+<span class="sql-id">refunded</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">day</span>, <span class="sql-fn">SUM</span>(<span class="sql-id">amount</span>) <span class="sql-kw">AS</span> <span class="sql-id">refunded</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">refund</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">day</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">s</span>.<span class="sql-id">day</span>,
+       <span class="sql-fn">ROUND</span>(<span class="sql-id">s</span>.<span class="sql-id">sold</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">sold</span>,
+       <span class="sql-fn">ROUND</span>(<span class="sql-fn">COALESCE</span>(<span class="sql-id">r</span>.<span class="sql-id">refunded</span>, <span class="sql-num">0</span>), <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">refunded</span>,
+       <span class="sql-fn">ROUND</span>(<span class="sql-id">s</span>.<span class="sql-id">sold</span> - <span class="sql-fn">COALESCE</span>(<span class="sql-id">r</span>.<span class="sql-id">refunded</span>, <span class="sql-num">0</span>), <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">kept</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">sold</span> <span class="sql-kw">AS</span> <span class="sql-id">s</span>
+<span class="sql-kw">LEFT</span> <span class="sql-kw">JOIN</span> <span class="sql-id">refunded</span> <span class="sql-kw">AS</span> <span class="sql-id">r</span> <span class="sql-kw">ON</span> <span class="sql-id">r</span>.<span class="sql-id">day</span> = <span class="sql-id">s</span>.<span class="sql-id">day</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">s</span>.<span class="sql-id">day</span> <span class="sql-kw">BETWEEN</span> <span class="sql-str">'2026-03-16'</span> <span class="sql-kw">AND</span> <span class="sql-str">'2026-03-22'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">s</span>.<span class="sql-id">day</span>;</code></pre>
+<table class="result">
+<tr><th>day</th><th>sold</th><th>refunded</th><th>kept</th></tr>
+<tr><td>2026-03-16</td><td>111.5</td><td>2.2</td><td>109.3</td></tr>
+<tr><td>2026-03-17</td><td>105.5</td><td>1.2</td><td>104.3</td></tr>
+<tr><td>2026-03-18</td><td>137.1</td><td>3.6</td><td>133.5</td></tr>
+<tr><td>2026-03-19</td><td>158.1</td><td>3.9</td><td>154.2</td></tr>
+<tr><td>2026-03-21</td><td>129.2</td><td>1.9</td><td>127.3</td></tr>
+<tr><td>2026-03-22</td><td>128.6</td><td>0.0</td><td>128.6</td></tr>
+</table>
+<p>Joining the lines and the refunds in one query multiplies them: every refund of a day is repeated on every line of that day, and its sum comes out many times too big. Adding up each table on its own first, one row per day in each CTE, and only then joining the two keeps both totals right. The join is a <code>LEFT JOIN</code> because Sunday 22 March had no refund, and <code>COALESCE</code> turns its missing total into 0, so the subtraction does not give NULL.</p>
+</details>
+
+<p class="exercise" id="best-seller-of-each-category" data-need="1"><b>17. Best seller of each category.</b> For each category, which of the products that sold at least once sold the most pieces over the four weeks? Keep ties, if there are any. (<a href="window-functions.html">Window functions</a>) &middot; Expected: 4 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">sold</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">p</span>.<span class="sql-id">category</span>, <span class="sql-id">p</span>.<span class="sql-id">name</span>, <span class="sql-fn">SUM</span>(<span class="sql-id">oi</span>.<span class="sql-id">quantity</span>) <span class="sql-kw">AS</span> <span class="sql-id">pieces</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">product</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">product_id</span> = <span class="sql-id">p</span>.<span class="sql-id">id</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">p</span>.<span class="sql-id">id</span>, <span class="sql-id">p</span>.<span class="sql-id">category</span>, <span class="sql-id">p</span>.<span class="sql-id">name</span>
+),
+<span class="sql-id">ranked</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">category</span>, <span class="sql-id">name</span>, <span class="sql-id">pieces</span>,
+         <span class="sql-fn">RANK</span>() <span class="sql-kw">OVER</span> (<span class="sql-kw">PARTITION</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span> <span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">pieces</span> <span class="sql-kw">DESC</span>) <span class="sql-kw">AS</span> <span class="sql-id">rk</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">sold</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">category</span>, <span class="sql-id">name</span>, <span class="sql-id">pieces</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">ranked</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">rk</span> = <span class="sql-num">1</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span>, <span class="sql-id">name</span>;</code></pre>
+<table class="result">
+<tr><th>category</th><th>name</th><th>pieces</th></tr>
+<tr><td>bread</td><td>Baguette</td><td>87</td></tr>
+<tr><td>cake</td><td>Lemon tart</td><td>58</td></tr>
+<tr><td>pastry</td><td>Cinnamon roll</td><td>58</td></tr>
+<tr><td>pastry</td><td>Croissant</td><td>58</td></tr>
+</table>
+<p>Three steps: add up the pieces per product, rank the products within each category, keep the first. <code>RANK</code> gives tied products the same rank 1, so the two pastries that sold the same number both show; <code>ROW_NUMBER</code> would keep just one, chosen arbitrarily. The filter has to sit outside the CTE, because a window function cannot appear in <code>WHERE</code>.</p>
+</details>
+
+<p class="exercise" id="back-again" data-need="0,2"><b>18. Back again.</b> Put each customer's orders in sequence by day, then time. For every order placed on Wednesday 4 March that is not its customer's first order, show the order's id and the day of that customer's previous order in the sequence. (<a href="window-functions.html">Window functions</a>, <a href="nulls.html">NULL</a>) &middot; Expected: 7 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">visits</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">customer_id</span>, <span class="sql-id">day</span>, <span class="sql-id">time</span>,
+         <span class="sql-fn">LAG</span>(<span class="sql-id">day</span>) <span class="sql-kw">OVER</span> (<span class="sql-kw">PARTITION</span> <span class="sql-kw">BY</span> <span class="sql-id">customer_id</span> <span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">day</span>, <span class="sql-id">time</span>) <span class="sql-kw">AS</span> <span class="sql-id">previous_day</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">orders</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">customer_id</span>, <span class="sql-id">previous_day</span>, <span class="sql-id">day</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">visits</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">day</span> = <span class="sql-str">'2026-03-04'</span>
+  <span class="sql-kw">AND</span> <span class="sql-id">previous_day</span> <span class="sql-kw">IS</span> <span class="sql-kw">NOT</span> <span class="sql-kw">NULL</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">customer_id</span>, <span class="sql-id">time</span>;</code></pre>
+<table class="result">
+<tr><th>id</th><th>customer_id</th><th>previous_day</th><th>day</th></tr>
+<tr><td>24</td><td>1</td><td>2026-03-02</td><td>2026-03-04</td></tr>
+<tr><td>27</td><td>1</td><td>2026-03-04</td><td>2026-03-04</td></tr>
+<tr><td>32</td><td>5</td><td>2026-03-02</td><td>2026-03-04</td></tr>
+<tr><td>33</td><td>5</td><td>2026-03-04</td><td>2026-03-04</td></tr>
+<tr><td>30</td><td>6</td><td>2026-03-02</td><td>2026-03-04</td></tr>
+<tr><td>28</td><td>12</td><td>2026-03-02</td><td>2026-03-04</td></tr>
+<tr><td>29</td><td>28</td><td>2026-03-03</td><td>2026-03-04</td></tr>
+</table>
+<p>A customer's first order has no previous row, so <code>LAG</code> returns NULL for it, and <code>IS NOT NULL</code> drops exactly those orders. The day is chosen outside the CTE, after <code>LAG</code> has seen every order: filtered inside it, the window would see only that Wednesday, and an order whose previous visit was on the Monday would look like a first. Ordering the window by <code>day, time</code> rather than <code>day</code> alone keeps two orders on the same day in their real order.</p>
+</details>
+
+<p class="exercise" id="shutters-down"><b>19. Shutters down.</b> On which days from Monday 2 to Sunday 29 March 2026 did no customer from Hillcrest place an order? The dates you list cannot come from <code>orders</code>, so build them. (<a href="ctes.html">WITH RECURSIVE</a>, <a href="subqueries.html">Subqueries</a>) &middot; Expected: 6 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-kw">RECURSIVE</span> <span class="sql-fn">calendar</span>(<span class="sql-id">n</span>, <span class="sql-id">day</span>) <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-num">2</span>, <span class="sql-str">'2026-03-02'</span>
+  <span class="sql-kw">UNION</span> <span class="sql-kw">ALL</span>
+  <span class="sql-kw">SELECT</span> <span class="sql-id">n</span> + <span class="sql-num">1</span>, <span class="sql-str">'2026-03-'</span> || <span class="sql-kw">RIGHT</span>(<span class="sql-str">'0'</span> || (<span class="sql-id">n</span> + <span class="sql-num">1</span>), <span class="sql-num">2</span>)
+  <span class="sql-kw">FROM</span> <span class="sql-id">calendar</span>
+  <span class="sql-kw">WHERE</span> <span class="sql-id">n</span> &lt; <span class="sql-num">29</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">day</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">calendar</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">day</span> <span class="sql-kw">NOT</span> <span class="sql-kw">IN</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">o</span>.<span class="sql-id">day</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span> <span class="sql-kw">ON</span> <span class="sql-id">c</span>.<span class="sql-id">id</span> = <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>
+  <span class="sql-kw">WHERE</span> <span class="sql-id">c</span>.<span class="sql-id">town</span> = <span class="sql-str">'Hillcrest'</span>
+)
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">day</span>;</code></pre>
+<table class="result">
+<tr><th>day</th></tr>
+<tr><td>2026-03-03</td></tr>
+<tr><td>2026-03-06</td></tr>
+<tr><td>2026-03-07</td></tr>
+<tr><td>2026-03-13</td></tr>
+<tr><td>2026-03-20</td></tr>
+<tr><td>2026-03-27</td></tr>
+</table>
+<p>A missing day has no row anywhere, so no query on <code>orders</code> alone can list it. The recursive CTE writes out every date of the period, one row per round, and <code>NOT IN</code> keeps those that no Hillcrest order carries: the four Fridays, when the shop is closed, and two more days, Tuesday 3 and Saturday 7 March, that only the calendar reveals. <code>NOT IN</code> is safe here because <code>orders.day</code> is never NULL; a <code>LEFT JOIN</code> with <code>WHERE o.id IS NULL</code> gives the same rows.</p>
+</details>
+
+<p class="exercise" id="word-of-mouth"><b>20. Word of mouth.</b> Customers who walked in on their own (no referrer) brought others, who brought others in turn. How many customers does each walk-in account for, directly or down the chain, not counting the walk-in themself? A walk-in who brought nobody counts 0. (<a href="ctes.html">WITH RECURSIVE</a>) &middot; Expected: 7 rows.</p>
+<details class="solution"><summary>Solution</summary>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-kw">RECURSIVE</span> <span class="sql-fn">chain</span>(<span class="sql-id">root_id</span>, <span class="sql-id">id</span>) <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">id</span> <span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">WHERE</span> <span class="sql-id">referred_by</span> <span class="sql-kw">IS</span> <span class="sql-kw">NULL</span>
+  <span class="sql-kw">UNION</span> <span class="sql-kw">ALL</span>
+  <span class="sql-kw">SELECT</span> <span class="sql-id">ch</span>.<span class="sql-id">root_id</span>, <span class="sql-id">c</span>.<span class="sql-id">id</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">chain</span> <span class="sql-kw">AS</span> <span class="sql-id">ch</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span> <span class="sql-kw">ON</span> <span class="sql-id">c</span>.<span class="sql-id">referred_by</span> = <span class="sql-id">ch</span>.<span class="sql-id">id</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">r</span>.<span class="sql-id">name</span>, <span class="sql-fn">COUNT</span>(*) - <span class="sql-num">1</span> <span class="sql-kw">AS</span> <span class="sql-id">brought</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">chain</span> <span class="sql-kw">AS</span> <span class="sql-id">ch</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">r</span> <span class="sql-kw">ON</span> <span class="sql-id">r</span>.<span class="sql-id">id</span> = <span class="sql-id">ch</span>.<span class="sql-id">root_id</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">r</span>.<span class="sql-id">id</span>, <span class="sql-id">r</span>.<span class="sql-id">name</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">brought</span> <span class="sql-kw">DESC</span>, <span class="sql-id">r</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>brought</th></tr>
+<tr><td>Alice Turner</td><td>23</td></tr>
+<tr><td>Kofi Tanaka</td><td>7</td></tr>
+<tr><td>Zoe Garcia</td><td>3</td></tr>
+<tr><td>David Chen</td><td>0</td></tr>
+<tr><td>Hugo Silva</td><td>0</td></tr>
+<tr><td>Stefan Lambert</td><td>0</td></tr>
+<tr><td>Iris Costa</td><td>0</td></tr>
+</table>
+<p>The anchor starts one chain per walk-in, carrying the walk-in's id as <code>root_id</code>; each round adds the customers referred by the newest members and passes the same <code>root_id</code> down. Every chain contains its walk-in too, hence the <code>- 1</code>. Because the walk-ins start their own chains, a walk-in who brought nobody still appears, with 0.</p>
+</details>
+</div>
+
+<!-- pager: colour_learn.mjs -->
+<nav class="learn-pager"><a class="prev" href="ctes.html">Previous: CTEs and WITH RECURSIVE</a><a class="next" href="grammar.html">Next: The Grammar of SQL</a></nav>
+<!-- /pager -->
+</main>
+<footer class="learn-foot muted"><a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="https://mystery.alephb.uk/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
+<div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
+  <span>Help improve the course: allow anonymous usage statistics?</span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a></span>
+</div>
+<script type="module" src="handbook.js?v=873f5e0"></script>
+<script type="module" src="exercises.js?v=873f5e0"></script>
+</body>
+</html>

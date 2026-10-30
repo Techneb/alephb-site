@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL CTEs and WITH RECURSIVE, with examples -- The Ritz Affair</title>
+<meta name="description" content="Common table expressions in SQL: naming a step with WITH, chaining several steps, joining a CTE, and following chains or generating rows with WITH RECURSIVE. A beginner&#x27;s guide with SQLite examples.">
+<link rel="canonical" href="https://alephb.uk/learn/ctes.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Ritz Affair">
+<meta property="og:title" content="SQL CTEs and WITH RECURSIVE, with examples -- The Ritz Affair">
+<meta property="og:description" content="Common table expressions in SQL: naming a step with WITH, chaining several steps, joining a CTE, and following chains or generating rows with WITH RECURSIVE. A beginner&#x27;s guide with SQLite examples.">
+<meta property="og:url" content="https://alephb.uk/learn/ctes.html">
+<meta property="og:image" content="https://mystery.alephb.uk/landing-pillow.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"CTEs and WITH RECURSIVE","description":"Common table expressions in SQL: naming a step with WITH, chaining several steps, joining a CTE, and following chains or generating rows with WITH RECURSIVE. A beginner's guide with SQLite examples.","url":"https://alephb.uk/learn/ctes.html","image":"https://mystery.alephb.uk/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Tutorial","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"The Ritz Affair","url":"https://mystery.alephb.uk/"}}</script>
+<link rel="icon" href="lib/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/style.css?v=873f5e0">
+<link rel="stylesheet" href="learn.css?v=873f5e0">
+<script src="theme.js?v=873f5e0"></script>
+</head>
+<body>
+<div class="corners">
+<button id="btn-feedback" class="quiet feedback-corner" title="Send feedback" aria-label="Send feedback"><svg class="icon mail" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5L8 9L14 4.5"/></svg><span class="btn-text">Feedback</span></button>
+<button id="btn-theme" class="quiet theme-corner" title="Night edition" aria-label="Night edition"><svg class="icon moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8.53A6 6 0 1 1 7.47 2A4.67 4.67 0 0 0 14 8.53Z"/></svg><span class="btn-text">Night edition</span></button>
+</div>
+<header class="masthead">
+  <div class="mast-title">LE PETIT JOURNAL</div>
+  <div class="mast-sub">THE CLERK'S HANDBOOK</div>
+  <nav class="learn-nav muted"><a href="https://mystery.alephb.uk/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
+</header>
+<!-- menu: colour_learn.mjs -->
+<nav class="learn-menu"><a href="index.html">Index</a> &middot;
+  <details class="learn-chapters"><summary class="current">Learning chapters: 14. CTEs</summary><ol>
+    <li><a href="database.html">1. Database</a></li>
+    <li><a href="schema.html">2. Schema</a></li>
+    <li><a href="select-where.html">3. SELECT</a></li>
+    <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+    <li><a href="like.html">5. LIKE</a></li>
+    <li><a href="dates-times.html">6. Dates</a></li>
+    <li><a href="group-by-having.html">7. GROUP BY</a></li>
+    <li><a href="joins.html">8. JOIN</a></li>
+    <li><a href="nulls.html">9. NULL</a></li>
+    <li><a href="case-when.html">10. CASE</a></li>
+    <li><a href="subqueries.html">11. Subqueries</a></li>
+    <li><a href="set-operations.html">12. UNION</a></li>
+    <li><a href="window-functions.html">13. Windows</a></li>
+    <li><span class="current" aria-current="page">14. CTEs</span></li>
+  </ol></details> &middot;
+  <a href="exercises.html">Exercises</a> &middot;
+  <a href="grammar.html">Grammar</a></nav>
+<!-- /menu -->
+<main class="learn with-side">
+<!-- side menu: colour_learn.mjs -->
+<nav class="side-menu" aria-label="Learning chapters"><ol>
+  <li><a href="database.html">1. Database</a></li>
+  <li><a href="schema.html">2. Schema</a></li>
+  <li><a href="select-where.html">3. SELECT</a></li>
+  <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+  <li><a href="like.html">5. LIKE</a></li>
+  <li><a href="dates-times.html">6. Dates</a></li>
+  <li><a href="group-by-having.html">7. GROUP BY</a></li>
+  <li><a href="joins.html">8. JOIN</a></li>
+  <li><a href="nulls.html">9. NULL</a></li>
+  <li><a href="case-when.html">10. CASE</a></li>
+  <li><a href="subqueries.html">11. Subqueries</a></li>
+  <li><a href="set-operations.html">12. UNION</a></li>
+  <li><a href="window-functions.html">13. Windows</a></li>
+  <li class="here"><span aria-current="page">14. CTEs</span>
+    <ol>
+      <li><a href="#with-naming-a-result">WITH: naming a result</a></li>
+      <li><a href="#several-steps-and-joining-a-cte">Several steps, and joining a CTE</a></li>
+      <li><a href="#with-recursive-following-a-chain">WITH RECURSIVE: following a chain</a></li>
+      <li><a href="#with-recursive-generating-rows">WITH RECURSIVE: generating rows</a></li>
+      <li><a href="#ctes-common-mistakes">Common mistakes</a></li>
+    </ol>
+  </li>
+</ol></nav>
+<!-- /side menu -->
+<h1>CTEs and WITH RECURSIVE</h1>
+<p class="game-label">Game: chapters <a href="https://mystery.alephb.uk/">VIII</a>, <a href="https://mystery.alephb.uk/">IX</a> and <a href="https://mystery.alephb.uk/">XII</a></p>
+<p class="lede">Long queries are easier to write, read and check when they are built in named steps. A CTE is a named step.</p>
+
+<h2 id="with-naming-a-result">WITH: naming a result</h2>
+<p>A <b>common table expression</b>, or CTE, is a query given a name at the top of a statement with <code>WITH name AS (...)</code>. The rest of the statement can then use that name as if it were a table. Nothing is stored: the CTE exists only for the duration of the query. What it buys you is readability: instead of a subquery buried three levels deep, you get a list of steps, each with a name that says what it holds.</p>
+<p>The examples use the bakery database from the <a href="database.html">bakery database page</a>. Here the first step computes the value of each order line, its quantity times <code>unit_price</code>, the price paid on that line, and the main query adds those values up per order and keeps the orders of 20 or more.</p>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">line</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">order_id</span>, <span class="sql-id">quantity</span> * <span class="sql-id">unit_price</span> <span class="sql-kw">AS</span> <span class="sql-id">amount</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">order_item</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">order_id</span>, <span class="sql-fn">ROUND</span>(<span class="sql-fn">SUM</span>(<span class="sql-id">amount</span>), <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">total</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">line</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">order_id</span>
+<span class="sql-kw">HAVING</span> <span class="sql-fn">SUM</span>(<span class="sql-id">amount</span>) &gt;= <span class="sql-num">20</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">total</span> <span class="sql-kw">DESC</span>, <span class="sql-id">order_id</span>;</code></pre>
+<table class="result">
+<tr><th>order_id</th><th>total</th></tr>
+<tr><td>95</td><td>24.7</td></tr>
+<tr><td>182</td><td>24.2</td></tr>
+<tr><td>247</td><td>23.3</td></tr>
+<tr><td>249</td><td>22.5</td></tr>
+<tr><td>10</td><td>21.9</td></tr>
+<tr><td>216</td><td>21.6</td></tr>
+<tr><td>31</td><td>21.4</td></tr>
+<tr><td>186</td><td>20.7</td></tr>
+<tr><td>67</td><td>20.2</td></tr>
+</table>
+<p>The line's price, not today's. Three products cost more from Monday 16 March, and <code>product.price</code> holds only the current price, so a step that joined <code>product</code> and multiplied by <code>p.price</code> would value the earlier lines at a price nobody paid: order 10 would read 22.10 instead of 21.90, and order 12, which came to 19.60, would join the list at 20.00.</p>
+
+<h2 id="several-steps-and-joining-a-cte">Several steps, and joining a CTE</h2>
+<p>Separate several CTEs with commas, under a single <code>WITH</code>. Each step can use the ones defined before it, and the final query can join them like ordinary tables. This is how a question with several parts becomes manageable: compute one fact per step, check each step on its own by selecting from it, then combine. What did each customer who had a refund pay over the four weeks, get back, and keep?</p>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-id">paid</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>, <span class="sql-fn">SUM</span>(<span class="sql-id">oi</span>.<span class="sql-id">quantity</span> * <span class="sql-id">oi</span>.<span class="sql-id">unit_price</span>) <span class="sql-kw">AS</span> <span class="sql-id">paid</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">order_item</span> <span class="sql-kw">AS</span> <span class="sql-id">oi</span> <span class="sql-kw">ON</span> <span class="sql-id">oi</span>.<span class="sql-id">order_id</span> = <span class="sql-id">o</span>.<span class="sql-id">id</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>
+),
+<span class="sql-id">refunded</span> <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>, <span class="sql-fn">SUM</span>(<span class="sql-id">r</span>.<span class="sql-id">amount</span>) <span class="sql-kw">AS</span> <span class="sql-id">refunded</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">refund</span> <span class="sql-kw">AS</span> <span class="sql-id">r</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span> <span class="sql-kw">ON</span> <span class="sql-id">o</span>.<span class="sql-id">id</span> = <span class="sql-id">r</span>.<span class="sql-id">order_id</span>
+  <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">o</span>.<span class="sql-id">customer_id</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">c</span>.<span class="sql-id">name</span>, <span class="sql-fn">ROUND</span>(<span class="sql-id">p</span>.<span class="sql-id">paid</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">paid</span>, <span class="sql-fn">ROUND</span>(<span class="sql-id">r</span>.<span class="sql-id">refunded</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">refunded</span>,
+       <span class="sql-fn">ROUND</span>(<span class="sql-id">p</span>.<span class="sql-id">paid</span> - <span class="sql-id">r</span>.<span class="sql-id">refunded</span>, <span class="sql-num">2</span>) <span class="sql-kw">AS</span> <span class="sql-id">net</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">refunded</span> <span class="sql-kw">AS</span> <span class="sql-id">r</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">paid</span> <span class="sql-kw">AS</span> <span class="sql-id">p</span> <span class="sql-kw">ON</span> <span class="sql-id">p</span>.<span class="sql-id">customer_id</span> = <span class="sql-id">r</span>.<span class="sql-id">customer_id</span>
+<span class="sql-kw">JOIN</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span> <span class="sql-kw">ON</span> <span class="sql-id">c</span>.<span class="sql-id">id</span> = <span class="sql-id">r</span>.<span class="sql-id">customer_id</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">c</span>.<span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>paid</th><th>refunded</th><th>net</th></tr>
+<tr><td>Alice Turner</td><td>178.5</td><td>1.2</td><td>177.3</td></tr>
+<tr><td>Chloe Martin</td><td>120.6</td><td>5.1</td><td>115.5</td></tr>
+<tr><td>Emma Novak</td><td>144.0</td><td>1.9</td><td>142.1</td></tr>
+<tr><td>Oscar Nakamura</td><td>44.3</td><td>3.2</td><td>41.1</td></tr>
+<tr><td>Jonas Eriksen</td><td>90.4</td><td>3.6</td><td>86.8</td></tr>
+<tr><td>Vera Bianchi</td><td>229.2</td><td>2.2</td><td>227.0</td></tr>
+<tr><td>Felix Bianchi</td><td>154.9</td><td>3.9</td><td>151.0</td></tr>
+</table>
+<p>Each step adds up one table per customer: what they paid, from the order lines, and what they were given back, from <code>refund</code>. Joining the two only at the end is what keeps the figures right. Written as one query, with <code>orders</code> joined to both <code>order_item</code> and <code>refund</code>, every refund would repeat once per line of its order and every line once per refund of its order: Chloe Martin's refunds, 5.10, would add up to 10.20, and her payments to 129.60 instead of 120.60. With one row per customer in each step, the final join has nothing to multiply. It starts from <code>refunded</code>, so only the seven refunded customers appear; a <code>LEFT JOIN</code> from <code>paid</code> with <code>COALESCE(r.refunded, 0)</code> would list every customer who ordered.</p>
+<p>To debug such a query, replace the final <code>SELECT</code> with <code>SELECT * FROM paid</code> and look at the intermediate result. Then do the same with the next step. A mistake usually shows up at the first step whose rows look wrong.</p>
+<p>CTEs pair naturally with <a href="window-functions.html">window functions</a>: compute a rank or a previous value in a CTE, then filter on it outside, since a window function cannot appear in <code>WHERE</code> (see <a href="grammar.html#order-of-execution">Order of execution</a>).</p>
+
+<h2 id="with-recursive-following-a-chain">WITH RECURSIVE: following a chain</h2>
+<p>Some questions have no fixed number of steps. "Who brought this customer to the shop, and who brought that one, and so on, all the way up?" might take one join or ten. A recursive CTE handles that. It has two parts joined by <code>UNION ALL</code>: an <b>anchor</b>, which produces the starting rows, and a <b>recursive part</b>, which refers to the CTE itself and produces the next rows from the previous ones. The database runs the anchor, then runs the recursive part again and again on the newest rows until it produces nothing.</p>
+<p>In the bakery, <code>customer.referred_by</code> points to the customer who recommended the shop. Who brought Wen Petrov (id 12)? The anchor is Wen alone. Each round joins the customer whose <code>id</code> is the previous row's <code>referred_by</code>, one step further up, and the recursion stops at a customer who came on their own: a NULL <code>referred_by</code> matches no one, so the round adds no row.</p>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-kw">RECURSIVE</span> <span class="sql-fn">chain</span>(<span class="sql-id">id</span>, <span class="sql-id">name</span>, <span class="sql-id">referred_by</span>, <span class="sql-id">steps</span>) <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">name</span>, <span class="sql-id">referred_by</span>, <span class="sql-num">0</span> <span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">WHERE</span> <span class="sql-id">id</span> = <span class="sql-num">12</span>
+  <span class="sql-kw">UNION</span> <span class="sql-kw">ALL</span>
+  <span class="sql-kw">SELECT</span> <span class="sql-id">c</span>.<span class="sql-id">id</span>, <span class="sql-id">c</span>.<span class="sql-id">name</span>, <span class="sql-id">c</span>.<span class="sql-id">referred_by</span>, <span class="sql-id">ch</span>.<span class="sql-id">steps</span> + <span class="sql-num">1</span>
+  <span class="sql-kw">FROM</span> <span class="sql-id">customer</span> <span class="sql-kw">AS</span> <span class="sql-id">c</span>
+  <span class="sql-kw">JOIN</span> <span class="sql-id">chain</span> <span class="sql-kw">AS</span> <span class="sql-id">ch</span> <span class="sql-kw">ON</span> <span class="sql-id">c</span>.<span class="sql-id">id</span> = <span class="sql-id">ch</span>.<span class="sql-id">referred_by</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">steps</span> <span class="sql-kw">FROM</span> <span class="sql-id">chain</span> <span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">steps</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>steps</th></tr>
+<tr><td>Wen Petrov</td><td>0</td></tr>
+<tr><td>Farid Haddad</td><td>1</td></tr>
+<tr><td>Emma Novak</td><td>2</td></tr>
+<tr><td>Chloe Martin</td><td>3</td></tr>
+<tr><td>Alice Turner</td><td>4</td></tr>
+</table>
+<p>Four steps lead from Wen Petrov back to Alice Turner, the longest chain in the shop. To walk the other way, all the way down, turn the join round: <code>c.referred_by = ch.id</code> adds, each round, the customers the previous ones brought in. Started from Emma Novak, it finds Farid Haddad and Ugo Dubois, then Wen Petrov. The staff table holds the same kind of chain in <code>staff.manager_id</code>, three levels deep from the owner down to the counter.</p>
+<p>Carrying extra columns through the recursion is a useful trick. A counter such as <code>steps</code> tells you how far each row is from the start, and a text column built up with <code>||</code> can record the whole path, which is often the answer you actually want.</p>
+
+<h2 id="with-recursive-generating-rows">WITH RECURSIVE: generating rows</h2>
+<p>A recursive CTE does not need a table at all. It can count, or produce every date of a period, which is handy for finding days that are missing from the data. The anchor gives the first day, the recursive part adds one to the day of the month and writes the date out as text (<code>RIGHT('0' || n, 2)</code> pads it to two digits), and a condition in its <code>WHERE</code> stops the recursion. Counting the day of the month only works within one month; real date arithmetic differs from one database to the next (PostgreSQL's <code>CAST(day AS DATE) + 1</code> or <code>generate_series</code>, SQLite's <code>date(day, '+1 day')</code>), and the game's terminal refuses it (see <a href="dates-times.html#date-functions">Dates, substr and CAST</a>).</p>
+<pre><code><span class="sql-kw">WITH</span> <span class="sql-kw">RECURSIVE</span> <span class="sql-fn">calendar</span>(<span class="sql-id">n</span>, <span class="sql-id">day</span>) <span class="sql-kw">AS</span> (
+  <span class="sql-kw">SELECT</span> <span class="sql-num">2</span>, <span class="sql-str">'2026-03-02'</span>
+  <span class="sql-kw">UNION</span> <span class="sql-kw">ALL</span>
+  <span class="sql-kw">SELECT</span> <span class="sql-id">n</span> + <span class="sql-num">1</span>, <span class="sql-str">'2026-03-'</span> || <span class="sql-kw">RIGHT</span>(<span class="sql-str">'0'</span> || (<span class="sql-id">n</span> + <span class="sql-num">1</span>), <span class="sql-num">2</span>) <span class="sql-kw">FROM</span> <span class="sql-id">calendar</span> <span class="sql-kw">WHERE</span> <span class="sql-id">n</span> &lt; <span class="sql-num">8</span>
+)
+<span class="sql-kw">SELECT</span> <span class="sql-id">cal</span>.<span class="sql-id">day</span>, <span class="sql-fn">COUNT</span>(<span class="sql-id">o</span>.<span class="sql-id">id</span>) <span class="sql-kw">AS</span> <span class="sql-id">orders</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">calendar</span> <span class="sql-kw">AS</span> <span class="sql-id">cal</span>
+<span class="sql-kw">LEFT</span> <span class="sql-kw">JOIN</span> <span class="sql-id">orders</span> <span class="sql-kw">AS</span> <span class="sql-id">o</span> <span class="sql-kw">ON</span> <span class="sql-id">o</span>.<span class="sql-id">day</span> = <span class="sql-id">cal</span>.<span class="sql-id">day</span>
+<span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">cal</span>.<span class="sql-id">day</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">cal</span>.<span class="sql-id">day</span>;</code></pre>
+<table class="result">
+<tr><th>day</th><th>orders</th></tr>
+<tr><td>2026-03-02</td><td>13</td></tr>
+<tr><td>2026-03-03</td><td>10</td></tr>
+<tr><td>2026-03-04</td><td>10</td></tr>
+<tr><td>2026-03-05</td><td>11</td></tr>
+<tr><td>2026-03-06</td><td>0</td></tr>
+<tr><td>2026-03-07</td><td>14</td></tr>
+<tr><td>2026-03-08</td><td>16</td></tr>
+</table>
+<p>The left join keeps Friday 6 March, when the shop was closed, with a count of zero; grouping the <code>orders</code> table alone would simply have skipped it.</p>
+
+<h2 id="ctes-common-mistakes" class="mistakes">Common mistakes</h2>
+<p>Forgetting the stop condition, so that the recursion never ends: always make sure each round moves towards a limit, and while experimenting add a depth counter with a condition such as <code>WHERE steps &lt; 20</code>. Following a chain that loops back on itself, which also never ends unless the path is tracked. Using <code>UNION</code> where <code>UNION ALL</code> is meant, or the reverse, without thinking about duplicates (see <a href="set-operations.html">UNION, INTERSECT and EXCEPT</a>). Putting the recursive reference in a subquery or an aggregate, which SQLite does not allow. Writing the anchor and the recursive part with a different number of columns.</p>
+
+<p class="try-it"><b>Try it:</b> <a href="exercises.html#above-their-category">Above their category</a>, <a href="exercises.html#word-of-mouth">Word of mouth</a>, <a href="exercises.html#money-back">Money back</a> and <a href="exercises.html#shutters-down">Shutters down</a>, on the exercises page.</p>
+<p class="in-game"><b>In the game:</b> Chapter VIII, <i>The First Order Before Dawn</i>, and Chapter IX, <i>The Trunk</i>, use a CTE; Chapter XII, <i>Follow the Money</i>, practises <code>WITH RECURSIVE</code>.</p>
+<!-- pager: colour_learn.mjs -->
+<nav class="learn-pager"><a class="prev" href="window-functions.html">Previous: Window functions: RANK and LAG</a><a class="next" href="exercises.html">Next: SQL exercises with solutions</a></nav>
+<!-- /pager -->
+</main>
+<footer class="learn-foot muted"><a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="https://mystery.alephb.uk/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
+<div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
+  <span>Help improve the course: allow anonymous usage statistics?</span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a></span>
+</div>
+<script type="module" src="handbook.js?v=873f5e0"></script>
+</body>
+</html>

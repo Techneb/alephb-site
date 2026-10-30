@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL SELECT and WHERE for beginners -- The Ritz Affair</title>
+<meta name="description" content="A beginner&#x27;s guide to SELECT and WHERE in SQL: choosing columns, filtering rows with comparisons, AND, OR, IN, BETWEEN and IS NULL, with examples you can run in SQLite.">
+<link rel="canonical" href="https://alephb.uk/learn/select-where.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Ritz Affair">
+<meta property="og:title" content="SQL SELECT and WHERE for beginners -- The Ritz Affair">
+<meta property="og:description" content="A beginner&#x27;s guide to SELECT and WHERE in SQL: choosing columns, filtering rows with comparisons, AND, OR, IN, BETWEEN and IS NULL, with examples you can run in SQLite.">
+<meta property="og:url" content="https://alephb.uk/learn/select-where.html">
+<meta property="og:image" content="https://mystery.alephb.uk/landing-pillow.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"SELECT and WHERE","description":"A beginner's guide to SELECT and WHERE in SQL: choosing columns, filtering rows with comparisons, AND, OR, IN, BETWEEN and IS NULL, with examples you can run in SQLite.","url":"https://alephb.uk/learn/select-where.html","image":"https://mystery.alephb.uk/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Tutorial","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"The Ritz Affair","url":"https://mystery.alephb.uk/"}}</script>
+<link rel="icon" href="lib/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/style.css?v=873f5e0">
+<link rel="stylesheet" href="learn.css?v=873f5e0">
+<script src="theme.js?v=873f5e0"></script>
+</head>
+<body>
+<div class="corners">
+<button id="btn-feedback" class="quiet feedback-corner" title="Send feedback" aria-label="Send feedback"><svg class="icon mail" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5L8 9L14 4.5"/></svg><span class="btn-text">Feedback</span></button>
+<button id="btn-theme" class="quiet theme-corner" title="Night edition" aria-label="Night edition"><svg class="icon moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8.53A6 6 0 1 1 7.47 2A4.67 4.67 0 0 0 14 8.53Z"/></svg><span class="btn-text">Night edition</span></button>
+</div>
+<header class="masthead">
+  <div class="mast-title">LE PETIT JOURNAL</div>
+  <div class="mast-sub">THE CLERK'S HANDBOOK</div>
+  <nav class="learn-nav muted"><a href="https://mystery.alephb.uk/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
+</header>
+<!-- menu: colour_learn.mjs -->
+<nav class="learn-menu"><a href="index.html">Index</a> &middot;
+  <details class="learn-chapters"><summary class="current">Learning chapters: 3. SELECT</summary><ol>
+    <li><a href="database.html">1. Database</a></li>
+    <li><a href="schema.html">2. Schema</a></li>
+    <li><span class="current" aria-current="page">3. SELECT</span></li>
+    <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+    <li><a href="like.html">5. LIKE</a></li>
+    <li><a href="dates-times.html">6. Dates</a></li>
+    <li><a href="group-by-having.html">7. GROUP BY</a></li>
+    <li><a href="joins.html">8. JOIN</a></li>
+    <li><a href="nulls.html">9. NULL</a></li>
+    <li><a href="case-when.html">10. CASE</a></li>
+    <li><a href="subqueries.html">11. Subqueries</a></li>
+    <li><a href="set-operations.html">12. UNION</a></li>
+    <li><a href="window-functions.html">13. Windows</a></li>
+    <li><a href="ctes.html">14. CTEs</a></li>
+  </ol></details> &middot;
+  <a href="exercises.html">Exercises</a> &middot;
+  <a href="grammar.html">Grammar</a></nav>
+<!-- /menu -->
+<main class="learn with-side">
+<!-- side menu: colour_learn.mjs -->
+<nav class="side-menu" aria-label="Learning chapters"><ol>
+  <li><a href="database.html">1. Database</a></li>
+  <li><a href="schema.html">2. Schema</a></li>
+  <li class="here"><span aria-current="page">3. SELECT</span>
+    <ol>
+      <li><a href="#reading-a-table">Reading a table</a></li>
+      <li><a href="#keeping-only-some-rows-where">Keeping only some rows: WHERE</a></li>
+      <li><a href="#combining-conditions">Combining conditions</a></li>
+      <li><a href="#missing-values-is-null">Missing values: IS NULL</a></li>
+      <li><a href="#a-way-of-working">A way of working</a></li>
+      <li><a href="#double-quotes">Grammar: double quotes</a></li>
+      <li><a href="#double-equals">Grammar: one equals sign</a></li>
+      <li><a href="#types">Grammar: types</a></li>
+      <li><a href="#aliases">Grammar: aliases in WHERE and HAVING</a></li>
+      <li><a href="#boolean">Grammar: conditions</a></li>
+      <li><a href="#select-where-common-mistakes">Common mistakes</a></li>
+    </ol>
+  </li>
+  <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+  <li><a href="like.html">5. LIKE</a></li>
+  <li><a href="dates-times.html">6. Dates</a></li>
+  <li><a href="group-by-having.html">7. GROUP BY</a></li>
+  <li><a href="joins.html">8. JOIN</a></li>
+  <li><a href="nulls.html">9. NULL</a></li>
+  <li><a href="case-when.html">10. CASE</a></li>
+  <li><a href="subqueries.html">11. Subqueries</a></li>
+  <li><a href="set-operations.html">12. UNION</a></li>
+  <li><a href="window-functions.html">13. Windows</a></li>
+  <li><a href="ctes.html">14. CTEs</a></li>
+</ol></nav>
+<!-- /side menu -->
+<h1>SELECT and WHERE</h1>
+<p class="game-label">Game: chapter <a href="https://mystery.alephb.uk/">I</a></p>
+<p class="lede">Every SQL query starts here: say which columns you want, from which table, and which rows to keep.</p>
+
+<h2 id="reading-a-table">Reading a table</h2>
+<p>A relational database stores its data in tables. A table has named columns, and each row is one record: one customer, one product, one order. To read a table you write a <code>SELECT</code> statement. The words after <code>SELECT</code> name the columns you want back, and the word <code>FROM</code> names the table they come from. The star, <code>*</code>, means every column, in the order the table defines them.</p>
+<p>The examples on this page, like every page of the handbook, run on the small bakery database described on the <a href="database.html">bakery database page</a>. Its <code>staff</code> table lists the six people who work there. Each example ends with <code>ORDER BY id</code>, which lists the rows in id order; without it the database may return them in any order, as the <a href="order-by-limit.html">ORDER BY page</a> explains.</p>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">role</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">staff</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>role</th></tr>
+<tr><td>Margaret Hale</td><td>owner</td></tr>
+<tr><td>Tom Becker</td><td>head baker</td></tr>
+<tr><td>Nina Patel</td><td>counter</td></tr>
+<tr><td>Omar Reyes</td><td>counter</td></tr>
+<tr><td>Lucy Brandt</td><td>counter</td></tr>
+<tr><td>Sam Ito</td><td>baker</td></tr>
+</table>
+<p>The order of the columns in the result is the order you wrote them, not the order in the table.</p>
+
+<h2 id="keeping-only-some-rows-where">Keeping only some rows: WHERE</h2>
+<p>Most of the time you do not want the whole table. The <code>WHERE</code> clause sets a condition, and the database keeps only the rows for which the condition is true. A <b>condition</b> compares a column with a value or with another column, using <code>=</code>, <code>&lt;&gt;</code> (not equal; <code>!=</code> also works), <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> and <code>&gt;=</code>. Text values go between single quotes; numbers do not.</p>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">price</span>, <span class="sql-id">price</span> * <span class="sql-num">2</span> <span class="sql-kw">AS</span> <span class="sql-id">two_of_them</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">category</span> = <span class="sql-str">'pastry'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>price</th><th>two_of_them</th></tr>
+<tr><td>Croissant</td><td>1.4</td><td>2.8</td></tr>
+<tr><td>Pain au chocolat</td><td>1.6</td><td>3.2</td></tr>
+<tr><td>Almond croissant</td><td>2.2</td><td>4.4</td></tr>
+<tr><td>Brioche</td><td>2.1</td><td>4.2</td></tr>
+<tr><td>Cinnamon roll</td><td>2.6</td><td>5.2</td></tr>
+<tr><td>Apple turnover</td><td>1.9</td><td>3.8</td></tr>
+<tr><td>Hot cross bun</td><td>1.5</td><td>3.0</td></tr>
+</table>
+<p>Notice that the database reads <code>FROM</code> first, then <code>WHERE</code>, and only then <code>SELECT</code>. That is why the condition can use any column of the table, even one you do not display. The example also computes a new column, <code>price * 2</code>, and names it with <code>AS</code>: the name is an <b>alias</b>, which labels the column in the result and changes nothing in the table.</p>
+
+<h2 id="combining-conditions">Combining conditions</h2>
+<p>Conditions combine with <code>AND</code> (both must be true) and <code>OR</code> (at least one must be true), and <code>NOT</code> turns a condition around. <code>AND</code> binds more tightly than <code>OR</code>, exactly as multiplication binds more tightly than addition, so when you mix them, add parentheses to say what you mean. Two shortcuts save typing: <code>IN (...)</code> tests against a list of values, and <code>BETWEEN a AND b</code> tests a range that includes both ends.</p>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">category</span>, <span class="sql-id">price</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> (<span class="sql-id">category</span> = <span class="sql-str">'bread'</span> <span class="sql-kw">OR</span> <span class="sql-id">category</span> = <span class="sql-str">'cake'</span>)
+  <span class="sql-kw">AND</span> <span class="sql-id">price</span> <span class="sql-kw">BETWEEN</span> <span class="sql-num">3.2</span> <span class="sql-kw">AND</span> <span class="sql-num">3.9</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>category</th><th>price</th></tr>
+<tr><td>Rye loaf</td><td>bread</td><td>3.8</td></tr>
+<tr><td>Lemon tart</td><td>cake</td><td>3.9</td></tr>
+<tr><td>Carrot cake slice</td><td>cake</td><td>3.2</td></tr>
+<tr><td>Seeded rolls</td><td>bread</td><td>3.8</td></tr>
+<tr><td>Focaccia</td><td>bread</td><td>3.6</td></tr>
+<tr><td>Cheesecake slice</td><td>cake</td><td>3.8</td></tr>
+</table>
+<p>The Carrot cake slice (3.2) and the Lemon tart (3.9) sit exactly on the bounds, and both are kept.</p>
+<p>Dates in SQLite are usually stored as text in the form <code>YYYY-MM-DD</code>. Because that form sorts in calendar order, you can compare dates as ordinary text: <code>day &gt;= '2026-03-05'</code> keeps every order from the fifth of March onwards. The same is true of times written <code>HH:MM</code> with a leading zero; the <a href="dates-times.html">dates and times page</a> explains why. The query below keeps the orders of the first weekend, Saturday 7 and Sunday 8 March, taken before nine in the morning.</p>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">id</span>, <span class="sql-id">customer_id</span>, <span class="sql-id">day</span>, <span class="sql-id">time</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">orders</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">day</span> <span class="sql-kw">IN</span> (<span class="sql-str">'2026-03-07'</span>, <span class="sql-str">'2026-03-08'</span>)
+  <span class="sql-kw">AND</span> <span class="sql-id">time</span> &lt; <span class="sql-str">'09:00'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>id</th><th>customer_id</th><th>day</th><th>time</th></tr>
+<tr><td>45</td><td>1</td><td>2026-03-07</td><td>07:10</td></tr>
+<tr><td>46</td><td>11</td><td>2026-03-07</td><td>08:10</td></tr>
+<tr><td>47</td><td>18</td><td>2026-03-07</td><td>08:20</td></tr>
+<tr><td>48</td><td>16</td><td>2026-03-07</td><td>08:50</td></tr>
+<tr><td>59</td><td>37</td><td>2026-03-08</td><td>07:45</td></tr>
+<tr><td>60</td><td>3</td><td>2026-03-08</td><td>08:05</td></tr>
+<tr><td>61</td><td>23</td><td>2026-03-08</td><td>08:30</td></tr>
+<tr><td>62</td><td>34</td><td>2026-03-08</td><td>08:40</td></tr>
+</table>
+
+<h2 id="missing-values-is-null">Missing values: IS NULL</h2>
+<p>A column may hold no value at all. SQL writes that as <code>NULL</code>, which means "unknown" rather than zero or an empty string. Nothing is ever equal to <code>NULL</code>, not even another <code>NULL</code>, so <code>email = NULL</code> keeps no rows. To find missing values, write <code>IS NULL</code>; to exclude them, <code>IS NOT NULL</code>. In the bakery, a customer who never gave an email has no <code>email</code>. The <a href="nulls.html">NULL page</a> covers the rest of the rules.</p>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">town</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">email</span> <span class="sql-kw">IS</span> <span class="sql-kw">NULL</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>town</th></tr>
+<tr><td>David Chen</td><td>Old Town</td></tr>
+<tr><td>Hugo Silva</td><td>Hillcrest</td></tr>
+<tr><td>Kofi Tanaka</td><td>Hillcrest</td></tr>
+<tr><td>Quentin Schmidt</td><td>Riverside</td></tr>
+<tr><td>Wen Petrov</td><td>Old Town</td></tr>
+<tr><td>Iris Costa</td><td>Old Town</td></tr>
+<tr><td>Vera Bianchi</td><td>Old Town</td></tr>
+<tr><td>Felix Bianchi</td><td>Old Town</td></tr>
+<tr><td>Iris Olsen</td><td>Riverside</td></tr>
+<tr><td>Vera Tanaka</td><td>Old Town</td></tr>
+</table>
+
+<h2 id="a-way-of-working">A way of working</h2>
+<p>Start wide and narrow down. Look at a few rows of the table first, then add one condition at a time and check that each one removes what you expected. When a result is empty, remove the last condition and look at what was there before it. Reading the result after every step is faster than writing a long query and wondering why it returns nothing.</p>
+
+<h2 id="double-quotes" class="rule">Grammar: double quotes</h2>
+<p>A query with a red edge is one the game's terminal refuses: the answer under it is the terminal's own, and the query after it is the correct version.</p>
+<p>Single quotes make a text value: <code>'bread'</code>. Double quotes make a name, of a column or a table: <code>"category"</code>. So <code>"bread"</code> asks for a column called bread, and there is none. Names in double quotes also keep their exact case, so <code>"Category"</code> is not <code>category</code>.</p>
+<pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">category</span> = <span class="sql-str">"bread"</span>;</code></pre>
+<div class="refusal"><code>ERROR: column "bread" does not exist</code> "bread" in double quotes is the name of a column, and there is none: a text value takes single quotes, 'bread'.</div>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">category</span> = <span class="sql-str">'bread'</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Baguette</td></tr>
+<tr><td>Sourdough loaf</td></tr>
+<tr><td>Rye loaf</td></tr>
+<tr><td>Seeded rolls</td></tr>
+<tr><td>Focaccia</td></tr>
+<tr><td>Walnut bread</td></tr>
+</table>
+<p>The same goes for aliases: an alias is a name, so write <code>AS total</code>, or <code>AS "Total"</code> to keep a capital or a space, never <code>AS 'total'</code>. Names are quoted with double quotes only, not with backticks or square brackets.</p>
+
+<h2 id="double-equals" class="rule">Grammar: one equals sign</h2>
+<p>SQL compares with a single <code>=</code>. The double <code>==</code> belongs to programming languages, not to SQL.</p>
+<pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">id</span> == <span class="sql-num">4</span>;</code></pre>
+<div class="refusal"><code>ERROR: operator does not exist: integer == integer</code> SQL compares with a single equals sign: write id = 4.</div>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">id</span> = <span class="sql-num">4</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Croissant</td></tr>
+</table>
+<p>Not equal is <code>&lt;&gt;</code> or <code>!=</code>; both are accepted.</p>
+
+<h2 id="types" class="rule">Grammar: types</h2>
+<p>Every column has a type, written in the schema: whole numbers (<code>INTEGER</code>), decimals (<code>REAL</code>), text (<code>TEXT</code>). A number is compared with a number, text with text; a comparison of two different kinds is an error. So a number is written without quotes, a text value with them, and <code>LIKE</code> only works on text. <code>SUM</code> and <code>AVG</code> need numbers too.</p>
+<p>The example below is this terminal's own rule, not PostgreSQL's: PostgreSQL would read the quoted <code>'1'</code> as the number 1 and run the query. The terminal refuses it on purpose, so that a number is always written as a number and its type shows in the query.</p>
+<pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">referred_by</span> = <span class="sql-str">'1'</span>;</code></pre>
+<div class="refusal"><code>ERROR: operator does not exist: integer = text</code> referred_by holds numbers and '1' is quoted text: drop the quotes, as in referred_by = 1.</div>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">customer</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">referred_by</span> = <span class="sql-num">1</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Ben Okafor</td></tr>
+<tr><td>Chloe Martin</td></tr>
+<tr><td>Vera Bianchi</td></tr>
+</table>
+<p>The other way round, a text column against a number, such as <code>day = 20260302</code>, is just as wrong: <code>day</code> holds text, so write <code>day = '2026-03-02'</code>, in the column's own format. To use digits stored as text as a number, convert them first with <code>CAST(... AS INTEGER)</code>. And <code>||</code> joins text: on two numbers, as in <code>2 || 3</code>, it is refused; add them with <code>+</code>, or make one of them text first, <code>CAST(2 AS TEXT) || 3</code>.</p>
+
+<h2 id="aliases" class="rule">Grammar: aliases in WHERE and HAVING</h2>
+<p>An alias given in <code>SELECT</code> (<code>AS double_price</code>) names a column of the result. <code>WHERE</code> and <code>HAVING</code> are worked out before the result exists (see <a href="grammar.html#order-of-execution">Order of execution</a>), so they cannot use it: repeat the expression instead. <code>ORDER BY</code> and <code>GROUP BY</code> may use an alias, but only on its own, not inside a larger expression (for <code>GROUP BY</code>, which runs before <code>SELECT</code>, this is a PostgreSQL extension to the order of execution).</p>
+<pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">price</span> * <span class="sql-num">2</span> <span class="sql-kw">AS</span> <span class="sql-id">double_price</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">double_price</span> &gt; <span class="sql-num">7</span>;</code></pre>
+<div class="refusal"><code>ERROR: column "double_price" does not exist</code> double_price is a name given in SELECT, and WHERE is worked out before SELECT, so the name does not exist there yet: repeat the expression itself, price * 2.</div>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>, <span class="sql-id">price</span> * <span class="sql-num">2</span> <span class="sql-kw">AS</span> <span class="sql-id">double_price</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">product</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">price</span> * <span class="sql-num">2</span> &gt; <span class="sql-num">7</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">double_price</span> <span class="sql-kw">DESC</span>, <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th><th>double_price</th></tr>
+<tr><td>Sourdough loaf</td><td>9.0</td></tr>
+<tr><td>Walnut bread</td><td>8.4</td></tr>
+<tr><td>Raspberry tart</td><td>8.2</td></tr>
+<tr><td>Lemon tart</td><td>7.8</td></tr>
+<tr><td>Rye loaf</td><td>7.6</td></tr>
+<tr><td>Seeded rolls</td><td>7.6</td></tr>
+<tr><td>Cheesecake slice</td><td>7.6</td></tr>
+<tr><td>Focaccia</td><td>7.2</td></tr>
+</table>
+
+<h2 id="boolean" class="rule">Grammar: conditions</h2>
+<p><code>WHERE</code>, <code>HAVING</code>, <code>ON</code> and each <code>WHEN</code> of a <code>CASE WHEN</code> need a condition, something true or false. A bare column such as <code>WHERE manager_id</code> is a value, not a condition: write the comparison out. The same holds for each side of <code>AND</code> and <code>OR</code>, and for <code>NOT</code>.</p>
+<pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">staff</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">manager_id</span>;</code></pre>
+<div class="refusal"><code>ERROR: argument of WHERE must be type boolean, not type integer</code> WHERE needs a condition that is true or false, and manager_id is a number: compare it with something, as in manager_id = ... or manager_id IS NOT NULL.</div>
+<pre><code><span class="sql-kw">SELECT</span> <span class="sql-id">name</span>
+<span class="sql-kw">FROM</span> <span class="sql-id">staff</span>
+<span class="sql-kw">WHERE</span> <span class="sql-id">manager_id</span> <span class="sql-kw">IS</span> <span class="sql-kw">NOT</span> <span class="sql-kw">NULL</span>
+<span class="sql-kw">ORDER</span> <span class="sql-kw">BY</span> <span class="sql-id">id</span>;</code></pre>
+<table class="result">
+<tr><th>name</th></tr>
+<tr><td>Tom Becker</td></tr>
+<tr><td>Nina Patel</td></tr>
+<tr><td>Omar Reyes</td></tr>
+<tr><td>Lucy Brandt</td></tr>
+<tr><td>Sam Ito</td></tr>
+</table>
+
+
+<h2 id="select-where-common-mistakes" class="mistakes">Common mistakes</h2>
+<p>Using double quotes around text: in SQL, <code>'bread'</code> is a value, while <code>"bread"</code> is the name of a column, so <code>"bread"</code> asks for a column called bread (see <a href="#double-quotes">Grammar: double quotes</a>). Writing <code>= NULL</code> instead of <code>IS NULL</code>. Forgetting parentheses when mixing <code>AND</code> and <code>OR</code>, which silently changes the meaning. Comparing text with the wrong case: <code>'Bread'</code> is not equal to <code>'bread'</code>. Writing a date in another form, such as <code>'5/3/2026'</code>, which compares as text and matches nothing.</p>
+
+<p class="try-it"><b>Try it:</b> <a href="exercises.html#the-cheap-shelf">The cheap shelf</a>, on the exercises page.</p>
+<p class="in-game"><b>In the game:</b> Chapter I, <i>The Night of the 17th</i>, practises <code>SELECT</code> and <code>WHERE</code>.</p>
+<!-- pager: colour_learn.mjs -->
+<nav class="learn-pager"><a class="prev" href="schema.html">Previous: Tables, keys and the schema</a><a class="next" href="order-by-limit.html">Next: ORDER BY and LIMIT</a></nav>
+<!-- /pager -->
+</main>
+<footer class="learn-foot muted"><a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="https://mystery.alephb.uk/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
+<div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
+  <span>Help improve the course: allow anonymous usage statistics?</span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a></span>
+</div>
+<script type="module" src="handbook.js?v=873f5e0"></script>
+</body>
+</html>

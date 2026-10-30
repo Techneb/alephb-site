@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Grammar of SQL: common mistakes and fixes -- The Ritz Affair</title>
+<meta name="description" content="How to write SQL correctly: the order in which a query is worked out, GROUP BY and aggregates, HAVING, ORDER BY after grouping, quotes, one equals sign, types, aliases, conditions, standard syntax, and LIKE against ILIKE. A wrong and a right query for each, with real results.">
+<link rel="canonical" href="https://alephb.uk/learn/grammar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Ritz Affair">
+<meta property="og:title" content="The Grammar of SQL: common mistakes and fixes -- The Ritz Affair">
+<meta property="og:description" content="How to write SQL correctly: the order in which a query is worked out, GROUP BY and aggregates, HAVING, ORDER BY after grouping, quotes, one equals sign, types, aliases, conditions, standard syntax, and LIKE against ILIKE. A wrong and a right query for each, with real results.">
+<meta property="og:url" content="https://alephb.uk/learn/grammar.html">
+<meta property="og:image" content="https://mystery.alephb.uk/landing-pillow.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"The Grammar of SQL","description":"How to write SQL correctly: the order in which a query is worked out, GROUP BY and aggregates, HAVING, ORDER BY after grouping, quotes, one equals sign, types, aliases, conditions, standard syntax, and LIKE against ILIKE. A wrong and a right query for each, with real results.","url":"https://alephb.uk/learn/grammar.html","image":"https://mystery.alephb.uk/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Tutorial","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"The Ritz Affair","url":"https://mystery.alephb.uk/"}}</script>
+<link rel="icon" href="lib/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="lib/style.css?v=873f5e0">
+<link rel="stylesheet" href="learn.css?v=873f5e0">
+<script src="theme.js?v=873f5e0"></script>
+</head>
+<body>
+<div class="corners">
+<button id="btn-feedback" class="quiet feedback-corner" title="Send feedback" aria-label="Send feedback"><svg class="icon mail" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5L8 9L14 4.5"/></svg><span class="btn-text">Feedback</span></button>
+<button id="btn-theme" class="quiet theme-corner" title="Night edition" aria-label="Night edition"><svg class="icon moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8.53A6 6 0 1 1 7.47 2A4.67 4.67 0 0 0 14 8.53Z"/></svg><span class="btn-text">Night edition</span></button>
+</div>
+<header class="masthead">
+  <div class="mast-title">LE PETIT JOURNAL</div>
+  <div class="mast-sub">THE CLERK'S HANDBOOK</div>
+  <nav class="learn-nav muted"><a href="https://mystery.alephb.uk/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
+</header>
+<!-- menu: colour_learn.mjs -->
+<nav class="learn-menu"><a href="index.html">Index</a> &middot;
+  <details class="learn-chapters"><summary>Learning chapters</summary><ol>
+    <li><a href="database.html">1. Database</a></li>
+    <li><a href="schema.html">2. Schema</a></li>
+    <li><a href="select-where.html">3. SELECT</a></li>
+    <li><a href="order-by-limit.html">4. ORDER BY</a></li>
+    <li><a href="like.html">5. LIKE</a></li>
+    <li><a href="dates-times.html">6. Dates</a></li>
+    <li><a href="group-by-having.html">7. GROUP BY</a></li>
+    <li><a href="joins.html">8. JOIN</a></li>
+    <li><a href="nulls.html">9. NULL</a></li>
+    <li><a href="case-when.html">10. CASE</a></li>
+    <li><a href="subqueries.html">11. Subqueries</a></li>
+    <li><a href="set-operations.html">12. UNION</a></li>
+    <li><a href="window-functions.html">13. Windows</a></li>
+    <li><a href="ctes.html">14. CTEs</a></li>
+  </ol></details> &middot;
+  <a href="exercises.html">Exercises</a> &middot;
+  <span class="current" aria-current="page">Grammar</span></nav>
+<!-- /menu -->
+<main class="learn">
+<h1>The Grammar of SQL</h1>
+<p class="game-label">Game: the terminal of every <a href="https://mystery.alephb.uk/">chapter</a></p>
+<p class="lede">A handful of rules that every correct query follows: what a grouped query may show, how text and names are quoted, how values of different types are compared, what makes a condition.</p>
+<p>The game's terminal follows PostgreSQL's rules, and on types it adds one rule of its own: a query that breaks one <b>does not run</b>, and the terminal answers with an error line in PostgreSQL's words and a sentence on how to fix it. The query still counts, but it is not kept in the History list. This page gives the order in which a query is worked out, from which most of the rules follow, then lists every rule with a link to the page that explains it, with examples on the <a href="database.html">bakery database</a>.</p>
+
+<h2 id="order-of-execution">Order of execution</h2>
+<p>A query is written starting with <code>SELECT</code>, but it is not worked out in that order. Logically, the database takes the clauses in this order, and each step sees only what the step before it produced:</p>
+<ol class="steps">
+<li><b><code>FROM</code> and <code>JOIN</code></b><span>gathers the rows of the tables and pairs them up</span></li>
+<li><b><code>WHERE</code></b><span>keeps the rows whose condition is true</span></li>
+<li><b><code>GROUP BY</code></b><span>gathers the remaining rows into groups</span></li>
+<li><b><code>HAVING</code></b><span>keeps the groups whose condition is true</span></li>
+<li><b><code>SELECT</code></b><span>works out the columns of the result, window functions included, and names them</span></li>
+<li><b><code>DISTINCT</code></b><span>removes the rows of the result that repeat</span></li>
+<li><b><code>ORDER BY</code></b><span>sorts the result</span></li>
+<li><b><code>LIMIT</code> and <code>OFFSET</code></b><span>keeps a slice of the sorted rows</span></li>
+</ol>
+<p>Most of the rules on this page follow from that order. An alias is a name given at step 5, so <code>WHERE</code> and <code>HAVING</code>, at steps 2 and 4, run before it exists and cannot use it (see <a href="select-where.html#aliases">Aliases in WHERE and HAVING</a>), while <code>ORDER BY</code>, at step 7, can (PostgreSQL also lets <code>GROUP BY</code> name an alias, an exception to this order). A window function is computed at step 5 too, which is why it cannot be filtered in <code>WHERE</code>: compute it in a <a href="ctes.html">CTE</a> and filter outside. After step 3 each row is a group, so steps 4 to 7 may only use grouped columns and aggregates, plus, in <code>ORDER BY</code>, the result's own column names. And <code>LIMIT</code> comes last, so it keeps the first rows of the sorted result, never a sample taken before sorting. With <a href="set-operations.html">UNION, INTERSECT or EXCEPT</a>, each half runs steps 1 to 6 on its own, the two results are combined, and the one <code>ORDER BY</code> and <code>LIMIT</code> apply to the combination. The database may take shortcuts when it actually runs a query, but the result is always the one this order gives.</p>
+
+<h2 id="the-rules">The rules, and where each is explained</h2>
+<p>Each rule sits on the page of the construct it belongs to, with a query that breaks it, the terminal's answer, and the correct version. The terminal's own error messages link to the same sections.</p>
+<div class="rule-groups">
+<section><h3><a href="select-where.html">SELECT and WHERE</a></h3>
+<ul class="rules">
+<li><a href="select-where.html#double-quotes">Double quotes</a><span><code>'text'</code> is a value, <code>"name"</code> a name, and a quoted name keeps its case.</span></li>
+<li><a href="select-where.html#double-equals">One equals sign</a><span>SQL compares with <code>=</code>, never <code>==</code>.</span></li>
+<li><a href="select-where.html#types">Types</a><span>A number against a number, text against text, <code>||</code> on text.</span></li>
+<li><a href="select-where.html#aliases">Aliases in WHERE and HAVING</a><span>A <code>SELECT</code> name does not exist there yet.</span></li>
+<li><a href="select-where.html#boolean">Conditions</a><span><code>WHERE</code>, <code>HAVING</code>, <code>ON</code> and <code>WHEN</code> need something true or false.</span></li>
+</ul></section>
+<section><h3><a href="order-by-limit.html">ORDER BY and LIMIT</a></h3>
+<ul class="rules">
+<li><a href="order-by-limit.html#distinct-order">DISTINCT and ORDER BY</a><span>Sort by what was selected.</span></li>
+<li><a href="order-by-limit.html#limit-offset">LIMIT and OFFSET</a><span><code>LIMIT 3 OFFSET 2</code>, not <code>LIMIT 2, 3</code>.</span></li>
+</ul></section>
+<section><h3><a href="like.html">LIKE and text patterns</a></h3>
+<ul class="rules">
+<li><a href="like.html#like-ilike">LIKE and ILIKE</a><span>The only pattern matches, case-sensitive or not.</span></li>
+</ul></section>
+<section><h3><a href="dates-times.html">Dates and times</a></h3>
+<ul class="rules">
+<li><a href="dates-times.html#date-functions">Dates, substr and CAST</a><span>Comparisons, <code>substr</code> and <code>CAST</code>, not <code>strftime</code> or <code>date(d, '+1 day')</code>.</span></li>
+</ul></section>
+<section><h3><a href="group-by-having.html">GROUP BY, aggregates and HAVING</a></h3>
+<ul class="rules">
+<li><a href="group-by-having.html#group-by">GROUP BY</a><span>Every column grouped or aggregated.</span></li>
+<li><a href="group-by-having.html#having">HAVING without GROUP BY</a><span>Aggregates only.</span></li>
+<li><a href="group-by-having.html#order-by-grouped">ORDER BY after GROUP BY</a><span>Grouped columns, aggregates or aliases.</span></li>
+<li><a href="group-by-having.html#group-concat">string_agg and SUM</a><span>Not <code>GROUP_CONCAT</code> or <code>TOTAL</code>.</span></li>
+</ul></section>
+<section><h3><a href="nulls.html">NULL and missing values</a></h3>
+<ul class="rules">
+<li><a href="nulls.html#coalesce">COALESCE and IS</a><span>Not <code>IFNULL</code>; <code>IS</code> only with <code>NULL</code>, <code>TRUE</code> or <code>FALSE</code>.</span></li>
+</ul></section>
+<section><h3><a href="case-when.html">CASE WHEN</a></h3>
+<ul class="rules">
+<li><a href="case-when.html#iif">CASE, not IIF</a><span>No <code>IIF</code>, and no <code>MAX</code> or <code>MIN</code> of two values.</span></li>
+</ul></section>
+<section><h3>On this page</h3>
+<ul class="rules">
+<li><a href="#sqlite-only">Other shorthands</a><span><code>printf</code>, <code>randomblob</code>, <code>likely</code>: what to write instead.</span></li>
+</ul></section>
+</div>
+
+<h2 id="sqlite-only">Other shorthands</h2>
+<p>A few more functions are not standard SQL either. Write these instead:</p>
+<table class="result shorthands">
+<tr><th>Instead of</th><th>Write</th></tr>
+<tr><td><code>printf(...)</code></td><td><code>format(...)</code></td></tr>
+<tr><td><code>randomblob(n)</code></td><td><code>random()</code></td></tr>
+<tr><td><code>likely(c)</code>, <code>unlikely(c)</code></td><td>the condition <code>c</code> alone</td></tr>
+</table>
+
+<p class="in-game"><b>In the game:</b> every chapter's terminal follows these rules, in both the investigation and the timed sessions.</p>
+<!-- pager: colour_learn.mjs -->
+<nav class="learn-pager"><a class="prev" href="exercises.html">Previous: SQL exercises with solutions</a></nav>
+<!-- /pager -->
+</main>
+<footer class="learn-foot muted"><a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="https://mystery.alephb.uk/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
+<div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
+  <span>Help improve the course: allow anonymous usage statistics?</span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a></span>
+</div>
+<script type="module" src="handbook.js?v=873f5e0"></script>
+</body>
+</html>

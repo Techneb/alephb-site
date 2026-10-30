@@ -1,0 +1,192 @@
+/* The Clerk's Handbook (site/learn/): article layout over ../style.css. The night edition follows the system setting
+   until the reader presses the Day/Night button (theme.js, the game's ritz.theme key): a choice sets data-mood on <html>,
+   so "night" takes style.css's :root[data-mood="night"] tokens and "day" switches the media query below off. */
+/* a solved question's mark (exercises.html), text and colour: about 5.5:1 on the day paper, 9:1 on the night one */
+:root { --ok: #2d6a2f; }
+:root[data-mood="night"] { --ok: #8fd18f; }
+@media (prefers-color-scheme: dark) {
+  /* the same values as style.css's :root[data-mood="night"] */
+  :root:not([data-mood="day"]) { --rel: #e0806f; --paper: #131820; --ink: #e6dfcb; --card: #1d2531; --rule: #33404f; --shade: #232c39; --term: #0a0e14; --term-text: #9fc0ee; --accent: #3f6fb5;
+    --sql-kw: #f0c46e; --sql-fn: #b9a8f2; --sql-str: #9fd69c; --sql-num: #e7a0c6; --sql-com: #8a98aa; --ok: #8fd18f; }
+  /* exercises.html's house ad: its night print with the night palette (a night choice swaps it through style.css) */
+  :root:not([data-mood="day"]) .press-notice .day { display: none; }
+  :root:not([data-mood="day"]) .press-notice .night { display: block; }
+}
+/* the same line as the landing's .landing-foot (.muted: 13px Cormorant, middle dots, underlined links) */
+.learn-nav { margin-top: 6px; }
+.learn-nav a, .learn-foot a, .learn a { color: inherit; }
+.learn { max-width: 720px; margin: 0 auto; padding: 8px 16px 32px; font-size: 18px; line-height: 1.5; }
+.learn h1 { font: 900 32px/1.15 "Playfair Display", serif; text-align: center; margin: 24px 0 6px; }
+.learn h2 { font: 700 20px/1.2 "Playfair Display", serif; margin: 28px 0 6px; border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+.learn .lede { font-style: italic; text-align: center; margin-bottom: 20px; }
+.learn code { font: 15px "Special Elite", monospace; }
+.learn pre { background: var(--term); color: var(--term-text); border-radius: var(--r-panel); padding: 10px 12px; overflow-x: auto; margin: 12px 0 6px; }
+.learn pre code { font: 14px/1.45 "Special Elite", monospace; white-space: pre; }
+/* any learn page: a query the terminal refuses, then its refusal (written by colour_learn.mjs) */
+.learn pre.wrong { border-left: 4px solid var(--rel); }
+.learn .refusal { margin: 0 0 14px; padding: 6px 10px; border: 1px solid var(--rel); border-radius: var(--r-box); font-size: 15px; }
+.learn .refusal code { display: block; color: var(--rel); font: 13px/1.4 "Special Elite", monospace; margin-bottom: 2px; }
+.learn table.result { border-collapse: collapse; margin: 4px 0 16px; font-size: 15px; text-align: left; }
+.learn .result th { font: 700 11px "Cormorant Garamond", Georgia, serif; letter-spacing: .08em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding: 2px 12px 2px 0; }
+.learn .result td { border-bottom: 1px solid var(--rule); padding: 3px 12px 3px 0; vertical-align: top; }
+.learn .in-game { border-top: 2px solid var(--ink); margin-top: 28px; padding-top: 8px; }
+.learn details.script summary { cursor: pointer; font-weight: 700; }
+/* exercises.html: each solution hidden in a <details> until opened (no JavaScript) */
+.learn .exercise { margin: 18px 0 4px; }
+.learn details.solution { margin: 0 0 12px; padding: 4px 10px; border-left: 2px solid var(--rule); }
+.learn details.solution summary { cursor: pointer; font-weight: 700; }
+.learn .toc li { margin: 4px 0; }
+/* page menu (Index . Learning chapters . Exercises . Grammar) and previous/next links: copied by hand on every page,
+   test_site.mjs checks they agree. Learning chapters is a native <details> dropdown, so it works without JavaScript. */
+.learn-menu { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 2px 8px; font: 13px "Special Elite", monospace; padding: 8px 16px; border-bottom: 1px solid var(--rule); }
+.learn-chapters { position: relative; }
+.learn-chapters summary { cursor: pointer; list-style: none; }
+.learn-chapters summary::-webkit-details-marker { display: none; }
+.learn-chapters summary::after { content: " \25BE"; }
+.learn-chapters[open] summary::after { content: " \25B4"; }
+.learn-chapters summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.learn-chapters ol { position: absolute; z-index: 10; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); min-width: 13em; margin: 0; padding: 6px 0;
+  list-style: none; text-align: left; background: var(--card); border: 1px solid var(--ink); border-radius: var(--r-panel); box-shadow: 0 4px 10px rgba(0, 0, 0, .18); }
+.learn-chapters li > * { display: block; padding: 4px 14px; white-space: nowrap; }
+.learn-chapters li a:hover, .learn-chapters li a:focus-visible { background: var(--shade); }
+.learn .game-label { font: 700 13px/1.2 "Playfair Display", serif; font-variant: small-caps; letter-spacing: 1px; text-align: center; margin: 0 0 6px; }
+.learn .byline { text-align: center; margin: 0 0 12px; }
+/* the index's painted vignette (a book, pen and inkwell; decorative, alt=""), transparent so both palettes work */
+.learn .vignette { display: block; width: 220px; max-width: 60%; height: auto; margin: 0 auto 14px; }
+.learn-menu a { color: inherit; }
+.learn-menu .current { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.learn-pager { display: flex; justify-content: space-between; gap: 16px; border-top: 1px solid var(--rule); margin-top: 28px; padding-top: 10px; font-size: 16px; }
+.learn-pager .next { text-align: right; margin-left: auto; }
+.learn-foot { text-align: center; border-top: 1px solid var(--rule); padding: 12px 16px 24px; }
+@media (max-width: 600px) {
+  .learn { font-size: 17px; }
+  .learn h1 { font-size: 26px; }
+  .learn table.result { display: block; overflow-x: auto; }
+}
+/* the bakery schema (erd.py, inlined by generate_db.py) in the game's look (style.css .erd), scaled to its box */
+.bakery-erd { max-height: none; padding: 6px; }
+.bakery-erd svg { width: 100%; max-width: 480px; }
+.learn > .bakery-erd { max-width: 480px; margin: 12px auto 0; }
+.learn > .erd-legend { justify-content: center; }
+/* exercises.html with JavaScript (exercises.js): the game's three columns, schema / terminal / question, wider
+   than the article; on a phone the question first, then the terminal, the schema last */
+/* the whole window's width (owner, 2026-10-25): the article drops its max width while the workbench shows, keeping its
+   16 px gutters; the pager stays at reading width */
+.learn:has(> .workbench:not([hidden])) { max-width: none; }
+.learn:has(> .workbench:not([hidden])) > .learn-pager { max-width: 688px; margin-left: auto; margin-right: auto; }
+.learn .workbench { display: grid; grid-template-columns: minmax(0, 480px) minmax(0, 1fr) minmax(0, 400px); gap: 10px; align-items: start;
+  font-size: 16px; margin: 4px 0 28px; }   /* tight under the menu row (owner, 2026-10-20) */
+.learn .workbench[hidden] { display: none; }
+.learn .editor pre.sql-hl { margin: 0; padding: 8px 10px; background: none; border-radius: 0; overflow: hidden; }   /* not .learn pre: it sits exactly under the textarea */
+.learn .workbench #sql { min-height: 140px; }
+.wb-question select { width: 100%; font: 15px "Special Elite", monospace; padding: 4px 6px; background: var(--card); color: var(--ink); border: 1px solid var(--ink); border-radius: var(--r-box); }
+.wb-question .exercise { margin: 10px 0 6px; }
+#ex-tables { font-size: 14px; margin: 4px 0; }
+#ex-run svg { vertical-align: -3px; margin-right: 5px; }
+.ex-status { margin: 8px 0; padding: 6px 10px; border: 1px solid var(--rule); border-radius: var(--r-box); }
+.ex-status.wrong { border-color: var(--rel); }
+@media (max-width: 900px) {
+  .learn .workbench { grid-template-columns: minmax(0, 1fr); }
+  .wb-question { order: 1; } .wb-terminal { order: 2; } .wb-schema { order: 3; }
+}
+/* exercises.html: How to use this page, closed; the level buttons; the solved mark; History under the terminal */
+.learn details.howto { margin: 24px 0 8px; }
+/* index.html: chapters, exercises and grammar as three groups; the exercises as a card */
+.toc-groups .toc-head { margin: 28px 0 2px; }
+.toc-groups .toc-what { margin: 0 0 8px; }
+.toc-card { display: block; border: 2px solid var(--ink); border-radius: var(--r-card); padding: 12px 16px; color: var(--ink); text-decoration: none; background: var(--card); }
+.toc-card b { display: block; font: 700 19px/1.25 "Playfair Display", serif; margin-bottom: 4px; text-decoration: underline; text-underline-offset: 3px; }
+.toc-card:hover, .toc-card:focus-visible { border-color: var(--accent); }
+.wb-question details.howto { margin: 0 0 14px; }
+.learn .wb-question h1.wb-title { font: 700 23px/1.2 "Playfair Display", serif; text-align: left; margin: 0 0 6px; }
+.bakery-erd.large { display: flex; align-items: center; justify-content: center; padding: 24px; }
+.bakery-erd.large svg { width: 100%; height: 100%; max-width: 1100px; max-height: calc(100vh - 80px); }
+.learn details.howto summary { cursor: pointer; }   /* a .label, like HISTORY */
+.learn details.howto ol { margin: 8px 0 0; padding-left: 1.3em; }
+.learn details.howto li { margin: 0 0 6px; }
+.ex-levels { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.ex-levels button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.ex-solved { color: var(--ok); font-weight: 700; font-size: 14px; }
+.ex-solved[hidden] { display: none; }
+.ex-history { margin-top: 10px; }
+.ex-history summary { cursor: pointer; }
+/* the three columns' first rows (SCHEMA, TERMINAL, HOW TO USE THIS PAGE) share one 28 px line, centred like the schema's Enlarge button */
+.learn .workbench .label-row { min-height: 28px; align-items: center; }
+.wb-question details.howto > summary { line-height: 28px; }
+/* the schema legend sits on the SCHEMA row, between the label and the Enlarge button (owner, 2026-10-20) */
+.wb-schema .label-row { justify-content: flex-start; gap: 8px; }
+.wb-schema .label-row .wb-legend { flex: 1; justify-content: flex-end; flex-wrap: nowrap; gap: 10px; margin: 0 0 0 8px; }
+@media (max-width: 600px) { .wb-schema .label-row .wb-legend { flex-wrap: wrap; gap: 2px 10px; } }
+.wb-schema .press-box { margin-top: 6px; }   /* close under the schema (owner, 2026-10-20) */
+/* learning chapter pages: the side menu (all fourteen chapters, the current one with its sections; written by
+   colour_learn.mjs, the section read marked aria-current by handbook.js). Wide screens only: under 1000 px the
+   menu row's Learning chapters dropdown is enough. The article moves right to make room, never by transform. */
+.side-menu { display: none; }
+@media (min-width: 1000px) {
+  .learn.with-side { position: relative; margin-left: max(264px, calc(50% - 360px)); margin-right: auto; }
+  .side-menu { display: block; position: absolute; top: 24px; bottom: 32px; right: calc(100% + 16px); width: 232px; font-size: 15px; line-height: 1.3; }
+  .side-menu > ol { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; margin: 0; padding: 0 4px 0 0; list-style: none; }
+  .side-menu li { margin: 0; }
+  .side-menu > ol > li > * { display: block; padding: 3px 8px; border-radius: var(--r-box); }
+  .side-menu a { text-decoration: none; }
+  .side-menu a:hover, .side-menu a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+  .side-menu .here > span { font-weight: 700; background: var(--shade); }
+  .side-menu .here ol { list-style: none; margin: 4px 0 8px 8px; padding: 0; border-left: 2px solid var(--rule); }
+  .side-menu .here ol a { display: block; padding: 3px 8px 3px 10px; margin-left: -2px; border-left: 2px solid transparent; font-size: 14px; }
+  .side-menu .here ol a[aria-current] { border-left-color: var(--rel); color: var(--rel); font-weight: 700; }
+}
+/* reading aids (owner, 2026-10-25): inline code as a chip, a gold edge on each Grammar section, a red one on the common
+   mistakes, Try it in the accent colour, a refused query joined to the terminal's answer; all off the tokens, so the
+   night palette follows */
+.learn :not(pre) > code { background: var(--shade); padding: 0 4px; border-radius: 3px; }
+.learn .refusal code { background: none; padding: 0; }
+.learn h2.rule { border-left: 4px solid var(--gold); border-bottom-color: var(--gold); padding-left: 10px; }
+.learn h2.mistakes + p, .learn .try-it { padding: 8px 12px; border-radius: var(--r-box); }
+.learn h2.mistakes + p { border-left: 4px solid var(--rel); background: color-mix(in srgb, var(--rel) 7%, transparent); }
+.learn .try-it { border-left: 4px solid var(--gold); background: var(--card); }
+.learn pre { margin-top: 16px; }
+.learn pre + table.result { margin-top: 0; }
+.learn pre.wrong { margin-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.learn pre.wrong + .refusal { border-top: 0; border-radius: 0 0 var(--r-box) var(--r-box); background: color-mix(in srgb, var(--rel) 7%, transparent); }
+/* index.html and grammar.html (UI pass, 2026-10-25): the start path, the chapters as numbered cards, the order of
+   execution as numbered steps, the rules grouped by the page that explains them; all off the tokens */
+.learn .start-path, .toc-groups ol.toc, .learn ol.steps, .learn ul.rules { list-style: none; margin: 0; padding: 0; }
+.learn .start-path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; counter-reset: step; margin: 6px 0 4px; }
+.learn .start-path li { counter-increment: step; }
+.learn .start-path a, .toc-groups ol.toc a { display: block; height: 100%; box-sizing: border-box; text-decoration: none; color: var(--ink);
+  background: var(--card); border: 1px solid var(--rule); border-radius: var(--r-card); padding: 10px 12px; }
+.learn .start-path a { border-top: 3px solid var(--gold); }
+.learn .start-path a::before { content: "Step " counter(step); display: block; font: 12px "Special Elite", monospace; color: var(--rel); }
+.learn .start-path b, .toc-groups ol.toc b { display: block; font: 700 17px/1.25 "Playfair Display", serif; }
+.learn .start-path span, .toc-groups ol.toc span { display: block; font-size: 15px; line-height: 1.35; margin-top: 3px; }
+.toc-groups ol.toc span::first-letter { text-transform: uppercase; }
+.learn .start-path a:hover, .learn .start-path a:focus-visible, .toc-groups ol.toc a:hover, .toc-groups ol.toc a:focus-visible,
+  .toc-pair .toc-card:hover, .toc-pair .toc-card:focus-visible { border-color: var(--ink); background: var(--shade); }
+.toc-groups ol.toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; counter-reset: chap; }
+.toc-groups ol.toc li { counter-increment: chap; margin: 0; }
+.toc-groups ol.toc a { display: grid; grid-template-columns: 2.1em minmax(0, 1fr); column-gap: 8px; align-content: start; }
+.toc-groups ol.toc a::before { content: counter(chap); grid-row: 1 / 3; font: 900 26px/1 "Playfair Display", serif; color: var(--rel); text-align: right; }
+.toc-groups ol.toc a b, .toc-groups ol.toc a span { grid-column: 2; }
+.toc-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.toc-pair .toc-card { border: 1px solid var(--rule); border-top: 3px solid var(--rel); }
+.toc-pair .toc-card b { text-decoration: none; }
+.toc-pair .toc-card span { display: block; font-size: 16px; line-height: 1.4; }
+.learn ol.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; counter-reset: step; margin: 12px 0 16px; }
+.learn ol.steps li { counter-increment: step; background: var(--card); border: 1px solid var(--rule); border-radius: var(--r-panel); padding: 8px 10px 10px; font-size: 15px; line-height: 1.35; }
+.learn ol.steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: var(--paper); font: 700 13px "Playfair Display", serif; margin-right: 6px; vertical-align: 1px; }
+.learn ol.steps b { font-weight: 400; }
+.learn ol.steps span { display: block; margin-top: 6px; }
+.learn .rule-groups { columns: 2; column-gap: 10px; margin: 12px 0; }   /* columns, not a grid: no gaps under the short groups */
+.learn .rule-groups section { break-inside: avoid; margin-bottom: 10px; background: var(--card); border: 1px solid var(--rule); border-left: 4px solid var(--gold); border-radius: var(--r-panel); padding: 8px 12px 10px; }
+.learn .rule-groups h3 { font: 700 12px "Special Elite", monospace; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 4px; }
+.learn ul.rules li { padding: 5px 0; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.35; }
+.learn ul.rules li:first-child { border-top: 0; }
+.learn ul.rules a { font: 700 16px/1.3 "Playfair Display", serif; }
+.learn ul.rules span { display: block; }
+.learn table.shorthands td { padding-right: 24px; }
+@media (max-width: 700px) {
+  .learn .start-path, .learn ol.steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .toc-groups ol.toc, .toc-pair { grid-template-columns: minmax(0, 1fr); }
+  .learn .rule-groups { columns: 1; }
+}
