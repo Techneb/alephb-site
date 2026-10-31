@@ -12,18 +12,18 @@
 <meta property="og:title" content="SQL JOIN, LEFT JOIN and self-joins -- The Ritz Affair">
 <meta property="og:description" content="Combining tables in SQL: inner JOIN on a foreign key, chaining several joins, LEFT JOIN to keep unmatched rows and find what is missing, and joining a table to itself. Beginner examples on SQLite.">
 <meta property="og:url" content="https://alephb.uk/learn/joins.html">
-<meta property="og:image" content="https://mystery.alephb.uk/landing-pillow.jpg">
+<meta property="og:image" content="https://alephb.uk/ritz-affair/landing-pillow.jpg">
 <meta property="og:image:width" content="960">
 <meta property="og:image:height" content="640">
 <meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"JOIN, LEFT JOIN and self-joins","description":"Combining tables in SQL: inner JOIN on a foreign key, chaining several joins, LEFT JOIN to keep unmatched rows and find what is missing, and joining a table to itself. Beginner examples on SQLite.","url":"https://alephb.uk/learn/joins.html","image":"https://mystery.alephb.uk/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Tutorial","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"AlephB","url":"https://alephb.uk/"}}</script>
-<link rel="icon" href="lib/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"JOIN, LEFT JOIN and self-joins","description":"Combining tables in SQL: inner JOIN on a foreign key, chaining several joins, LEFT JOIN to keep unmatched rows and find what is missing, and joining a table to itself. Beginner examples on SQLite.","url":"https://alephb.uk/learn/joins.html","image":"https://alephb.uk/ritz-affair/landing-pillow.jpg","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Tutorial","educationalLevel":"Beginner","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"isPartOf":{"@type":"WebSite","name":"AlephB","url":"https://alephb.uk/"}}</script>
+<link rel="icon" href="../ritz-affair/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="lib/style.css?v=6e2cf9f">
-<link rel="stylesheet" href="learn.css?v=6e2cf9f">
-<script src="theme.js?v=6e2cf9f"></script>
+<link rel="stylesheet" href="../ritz-affair/style.css?v=3e59b60">
+<link rel="stylesheet" href="learn.css?v=3e59b60">
+<script src="theme.js?v=3e59b60"></script>
 </head>
 <body>
 <div class="corners">
@@ -33,7 +33,7 @@
 <header class="masthead">
   <div class="mast-title">LE PETIT JOURNAL</div>
   <div class="mast-sub">THE CLERK'S HANDBOOK</div>
-  <nav class="learn-nav muted"><a href="https://mystery.alephb.uk/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
+  <nav class="learn-nav muted"><a href="../ritz-affair/" title="The game">The Ritz Affair</a> &middot; <span class="current" aria-current="page" title="Training content: SQL lessons and exercises">The Clerk's Handbook</span></nav>
 </header>
 <!-- menu: colour_learn.mjs -->
 <nav class="learn-menu"><a href="index.html">Index</a> &middot;
@@ -85,7 +85,7 @@
 </ol></nav>
 <!-- /side menu -->
 <h1>JOIN, LEFT JOIN and self-joins</h1>
-<p class="game-label">Game: chapters <a href="https://mystery.alephb.uk/">V</a>, <a href="https://mystery.alephb.uk/">VI</a>, <a href="https://mystery.alephb.uk/">IX</a> and <a href="https://mystery.alephb.uk/">X</a></p>
+<p class="game-label">Game: chapters <a href="../ritz-affair/">V</a>, <a href="../ritz-affair/">VI</a>, <a href="../ritz-affair/">IX</a> and <a href="../ritz-affair/">X</a></p>
 <p class="lede">A good database keeps each fact in one place, so most real questions need two or more tables at once. Joins put them back together.</p>
 
 <h2 id="keys-how-tables-point-at-each-other">Keys: how tables point at each other</h2>
@@ -183,11 +183,11 @@
 <nav class="learn-pager"><a class="prev" href="group-by-having.html">Previous: GROUP BY, aggregates and HAVING</a><a class="next" href="nulls.html">Next: NULL and missing values</a></nav>
 <!-- /pager -->
 </main>
-<footer class="learn-foot muted"><a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="https://mystery.alephb.uk/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
+<footer class="learn-foot muted"><a href="../ritz-affair/privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="../ritz-affair/admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></footer>
 <div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
   <span>Help improve the course: allow anonymous usage statistics?</span>
-  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="https://mystery.alephb.uk/privacy.html">Privacy notice</a></span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="../ritz-affair/privacy.html">Privacy notice</a></span>
 </div>
-<script type="module" src="handbook.js?v=6e2cf9f"></script>
+<script type="module" src="handbook.js?v=3e59b60"></script>
 </body>
 </html>

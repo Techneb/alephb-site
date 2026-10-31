@@ -1,0 +1,354 @@
+{
+ "mode": "compete",
+ "normalise_fixture": [
+  [
+   "  Phileas Fogg, Esq. ",
+   "phileas fogg"
+  ],
+  [
+   "phileas   fogg",
+   "phileas fogg"
+  ],
+  [
+   "Lord Eddard Stark",
+   "eddard stark"
+  ],
+  [
+   "STARK",
+   "stark"
+  ],
+  [
+   "75-9999",
+   "759999"
+  ],
+  [
+   "75 9999",
+   "759999"
+  ],
+  [
+   "12 rue de la Paix",
+   "12 la paix"
+  ],
+  [
+   "Suite 305",
+   "305"
+  ],
+  [
+   "room 305",
+   "305"
+  ],
+  [
+   "0305",
+   "305"
+  ],
+  [
+   "Mr. Waldo",
+   "waldo"
+  ],
+  [
+   "M. Dupont",
+   "dupont"
+  ],
+  [
+   "Countess Smith",
+   "smith"
+  ],
+  [
+   "Comtesse de Segur",
+   "segur"
+  ],
+  [
+   "Trunk no B-3",
+   "b3"
+  ],
+  [
+   "B 3",
+   "b3"
+  ],
+  [
+   "B3",
+   "b3"
+  ],
+  [
+   "WIRE 12 STOP",
+   "12"
+  ],
+  [
+   "stop at the door stop",
+   "stop at door"
+  ],
+  [
+   "STOP",
+   "stop"
+  ]
+ ],
+ "cast": [
+  {
+   "name": "Lord Ashcombe",
+   "cleared": 8,
+   "nationality": "English",
+   "meet": 3,
+   "bio": "Peer of the realm. Collects clocks and grievances.",
+   "notes": [
+    [
+     3,
+     "Was at the Opera until one, asleep at the Ritz before two. His valet saw a man in an English coat leave by the service door."
+    ],
+    [
+     9,
+     "Left for London on the boat train of the 19th, with his trunks."
+    ],
+    [
+     10,
+     "Carried the Blue Star through customs with a clear conscience, in a trunk he never packed."
+    ]
+   ]
+  },
+  {
+   "name": "Paul Sernine",
+   "cleared": 10,
+   "nationality": "French",
+   "meet": 10,
+   "bio": "Rentier. Nobody has ever seen him pay for anything.",
+   "notes": [
+    [
+     10,
+     "A regular at the Ritz since January."
+    ],
+    [
+     11,
+     "Slept at the Ritz on the night of 11 January, when Mr. Blakeney did."
+    ]
+   ]
+  },
+  {
+   "name": "Horace Velmont",
+   "cleared": 11,
+   "nationality": "French",
+   "meet": 11,
+   "bio": "Painter of society portraits. Paints mostly at night.",
+   "notes": [
+    [
+     11,
+     "Seldom in his suite after dark."
+    ],
+    [
+     12,
+     "Out from 02:30 to 05:55 on the night of the theft, painting the Prefect's wife. The Prefect confirms it, twice."
+    ]
+   ]
+  },
+  {
+   "name": "Raul Ortega",
+   "cleared": 8,
+   "nationality": "Argentine",
+   "meet": 7,
+   "bio": "Cattle baron. Signs everything with a flourish and an R.",
+   "notes": [
+    [
+     7,
+     "Complains that the Ritz desk keeps mixing up his wires with another guest's, who also signs R."
+    ],
+    [
+     8,
+     "Wired Buenos Aires from the Ritz desk at 06:20 on the 18th: morning, by Ganimard's clock."
+    ],
+    [
+     9,
+     "Drinks champagne before dawn, but only after his coffee."
+    ]
+   ]
+  },
+  {
+   "name": "Ines de Almagro",
+   "cleared": 10,
+   "nationality": "Spanish",
+   "meet": 10,
+   "bio": "Widow. Never travels without her maid.",
+   "notes": [
+    [
+     10,
+     "A regular at the Ritz since January, never without her maid."
+    ],
+    [
+     11,
+     "Slept at the Ritz on the night of 11 January, when Mr. Blakeney did."
+    ]
+   ]
+  },
+  {
+   "name": "Rupert Blakeney",
+   "nationality": "English",
+   "meet": 9,
+   "bio": "Gentleman of leisure from Bath.",
+   "notes": [
+    [
+     9,
+     "His first order before dawn on the 18th: champagne, as always."
+    ],
+    [
+     10,
+     "Wears an excellent coat, the kind a booking clerk remembers."
+    ],
+    [
+     11,
+     "At the Ritz every other week since January, never on the same nights as Mr. Grey."
+    ],
+    [
+     12,
+     "His suite was silent from 02:05 to 03:10 on the night of the theft."
+    ]
+   ]
+  }
+ ],
+ "wrong_suspects": {
+  "paul sernine": "An anagram, Ganimard? Lupin is vain, not stupid. Sernine is released with apologies.",
+  "horace velmont": "Velmont went out after the lift the porter heard, to paint the Prefect's wife until dawn. The Prefect confirms it, twice.",
+  "raul ortega": "Senor Ortega produces a receipt for the champagne and a lawyer for everything else.",
+  "ines almagro": "The Senora faints. The maid does not. Neither is Lupin.",
+  "ashcombe": "You arrest the peer in the neighbouring suite. He is the Prefect's cousin. Awkward.",
+  "arsene lupin": "Yes. Under which name? That is rather the question.",
+  "grey": "Mr. Grey checked out this morning. The concierge is certain, because Mr. Grey tipped him.",
+  "ganimard": "The inspector reads your note, takes off his hat, and puts it back on. 'Out.'"
+ },
+ "wrong_default": [
+  "Ganimard reads your note twice and lights his pipe. 'No.'",
+  "The clerk before you was dismissed for less. Try again.",
+  "Not that, mon petit. Look at the data again."
+ ],
+ "chapters": [
+  {
+   "title": "The Night Manager",
+   "story": "*June, four in the morning, the Prefecture.* The Ritz file is still open on **Ganimard**'s desk, and now the *Hotel Meurice* has been burgled. He drops a stack of police reports on your desk: *every theft, fraud and lost umbrella in Paris this spring.*\n\n*'**One of these is the Meurice**, clerk. **Hippolyte Morand**, the night manager, found the damage himself. His clocks and ours have never agreed, so he will swear to the night only to within a day. And mind what he says it was not.'*",
+   "objective": "The Meurice night manager knows when, give or take a day.",
+   "answer_form": "the report id",
+   "telegram": "MY DEAR GANIMARD STOP NOT ME THIS TIME STOP I HAVE A FRIEND WITH THE SAME TASTE IN ROOMS STOP A L",
+   "board": "Police report",
+   "n": 1,
+   "tables": [
+    "police_report",
+    "interview"
+   ],
+   "construct": "SELECT / WHERE",
+   "answer_sha256": [
+    "f1294f35f19846cd012506eadcc13ecda95eb7ddc6c661bc1b9402c4b00eb703"
+   ]
+  },
+  {
+   "title": "Below the Royal Pair",
+   "story": "**Ganimard** reads the Meurice report you found and swears, once. *'A friend, he says. Lupin has no friends, clerk, only names. He has habits, though. What he did at the Meurice in June, he had done at the Ritz in May: the same floor, the same taste in rooms.'*\n\nThe Ritz has sent over its *register*: every guest, every suite and every price since January. *'On that floor, the two dearest suites share one price: the royal pair. He never touches those. Find me **the one just below the royal pair**, the night of the 17th of May.'*",
+   "objective": "The report from chapter 1 describes his room. Which suite was it at the Ritz, the night of the 17th of May?",
+   "answer_form": "the suite number",
+   "telegram": "MY DEAR GANIMARD STOP MY FRIEND NEVER WALKS STOP THE RIVAL COMPANY KEEPS BETTER BOOKS THAN YOURS STOP A L",
+   "board": "His suite",
+   "n": 2,
+   "tables": [
+    "hotel_register",
+    "suite"
+   ],
+   "construct": "ORDER BY / LIMIT",
+   "answer_sha256": [
+    "8d1ede4f889e0ed6f0823d8c1821905b9de37a0f851dc270df0dbf72b3c93641"
+   ]
+  },
+  {
+   "title": "A Plate in the Dark",
+   "story": "Whoever slept in that room did not leave on foot. **Ganimard** has found a second cab book: a rival company, which writes down its fares as carefully as the first and trusts its drivers less.\n\nIts despatcher, **Firmin Lagarde**, has already talked to the inspector. *'He is sure of how the plate began, and of one figure near the end. Read what he said, then find me **the cab that took him**.'*",
+   "objective": "The rival despatcher is sure of two figures of the plate. Find the cab.",
+   "answer_form": "the plate",
+   "telegram": "MY DEAR GANIMARD STOP THE CAB SMELLED OF CIGARS STOP THE DRIVER KNOWS THE WAY STOP HE HAS TAKEN ME THERE BEFORE STOP READ HIS WEEK STOP A L",
+   "board": "Licence plate",
+   "n": 3,
+   "tables": [
+    "cab_ride"
+   ],
+   "construct": "LIKE",
+   "answer_sha256": [
+    "6607231cf1351ca6f628e4fb6d2d5bdad67a718c71a9c94943940d38f5be3a99"
+   ]
+  },
+  {
+   "title": "The Cab's Week",
+   "story": "**Ganimard** taps the plate you found in chapter 3. *'A second cab book, clerk, and a driver paid to forget. But his company pays him to write it all down.'*\n\nThe book holds that cab's fares for the week of the theft, from the 13th to the 19th of May. *'A wedding brings a cab back to one door again and again in a single afternoon. A fence brings it back day after day. Find me **the address it went back to on three different days**.'*",
+   "objective": "Where did the cab from chapter 3 keep going back to, the week of the theft?",
+   "answer_form": "the address",
+   "telegram": "MY DEAR GANIMARD STOP THREE DAYS AT THE SAME DOOR STOP FIVE TENANTS AND A CONCIERGE WHO SEES NOTHING STOP A L",
+   "board": "Fence's address",
+   "n": 4,
+   "tables": [],
+   "construct": "GROUP BY / HAVING",
+   "answer_sha256": [
+    "8df30c6cf86d285c09b52c87e220075aa224558986e0bbb68dd40de4918acc7a"
+   ]
+  },
+  {
+   "title": "The Boarding House",
+   "story": "The address is a boarding house: five tenants, and a concierge who has *minded her own business since the Commune*.\n\nOne of the tenants is a jeweller, and **Ganimard** could not care less. *'Every fence in Paris calls himself a jeweller, clerk, so ours calls himself nothing at all. He came to the police before we came to him: find me **the tenant who gave us a statement**.'*",
+   "objective": "Who is the fence at the address from chapter 4?",
+   "answer_form": "the person's name",
+   "telegram": "MY DEAR GANIMARD STOP HE BANKS AT THE SOCIETE GENERALE STOP A TIDY MAN PAYS IN TIDY SUMS STOP A L",
+   "board": "The fence",
+   "n": 5,
+   "tables": [
+    "person",
+    "address",
+    "guest_card"
+   ],
+   "construct": "JOIN",
+   "answer_sha256": [
+    "a0a6ac5460ba2ef60debfb1a849a78f4a5a476f9a3736cf561202ecf98265f3a",
+    "d2e191d405e2c58c3b5420c7ee6165ec230281993155ce12d3497420aa974cc3"
+   ]
+  },
+  {
+   "title": "Follow the Francs",
+   "story": "The fence banks at the *Societe Generale*, and **Ganimard**'s warrant opens that ledger: one line per transfer, the account that paid, the account that was paid, the sum and the day.\n\n*'A tidy man, clerk. No three pieces for him: he paid his man in **two equal halves** in May, the same to the franc. Not two different sums, and not three.'*",
+   "objective": "Which account did the fence from chapter 5 pay in two equal halves in May?",
+   "answer_form": "the account number",
+   "telegram": "MY DEAR GANIMARD STOP TWO HALVES TO THE FRANC STOP YOU ARE LEARNING STOP HIS BROKER CONFIRMED IT FROM THE BOURSE STOP A L",
+   "board": "Shell account",
+   "n": 6,
+   "tables": [
+    "bank_account",
+    "bank_transaction"
+   ],
+   "construct": "JOIN x3 + GROUP BY + HAVING",
+   "answer_sha256": [
+    "87e9749e8d854ca23563513c20cd0a38e8838109869e44c888f271bf751a3785"
+   ]
+  },
+  {
+   "title": "The Busiest Hour",
+   "story": "The money was confirmed by wire, through a broker at the *Bourse*. **Anatole Brissac** signs every wire he sends, and the Bourse telegraph office sent dozens on the 18th.\n\nThe Bourse keeps its own hours, and **Ganimard** boxes its day its own way:\n\n| Box | From | Before |\n| Before the bell | 00:00 | 10:00 |\n| The session | 10:00 | 15:00 |\n| The call | 15:00 | 17:00 |\n| After hours | 17:00 | midnight |\n\n*'A broker hides in a crowd, clerk. He wired in three of those boxes that day, and his real wire went out in **the busiest box**, the one with the most wires.'*",
+   "objective": "Find the broker's wire in the Bourse's busiest box.",
+   "answer_form": "the telegram id",
+   "telegram": "MY DEAR GANIMARD STOP YOU READ HIS WIRE STOP A MAN OF HABIT IS A MAN WITH A ROOM NUMBER STOP A L",
+   "board": "Broker's wire",
+   "n": 7,
+   "tables": [
+    "telegram"
+   ],
+   "construct": "CASE WHEN + GROUP BY",
+   "answer_sha256": [
+    "142522997f0a1ec79df3f8788969baaa9ed0306afdeb66b036a3e486cc458a83"
+   ]
+  },
+  {
+   "title": "The Last Order Before Dawn",
+   "story": "**Ganimard** reads aloud the broker's wire you found in chapter 7. It names his habit before dawn, *as always*.\n\n*'A broker who sells a stolen stone sleeps near it, clerk. That night he slept at the Ritz, and room service writes down every order, in order. I want the suite where it was **the last order before dawn**. And before dawn, at my age, means before six.'*",
+   "objective": "The wire from chapter 7 names his habit. Which suite had it as its last order before dawn on the 18th?",
+   "answer_form": "the suite number",
+   "telegram": "MY DEAR GANIMARD STOP GARE DU NORD NINE FIFTEEN STOP DO NOT BE LATE STOP THE BLUE STAR SENDS REGARDS FROM LONDON STOP A L",
+   "board": "Broker's suite",
+   "n": 8,
+   "tables": [
+    "room_service"
+   ],
+   "construct": "RANK() OVER + CTE",
+   "answer_sha256": [
+    "36790ecd55c2030dc553685bef719df653f413a20cdad1bfd1dc934c76686ddd"
+   ]
+  }
+ ],
+ "decoys": {}
+}

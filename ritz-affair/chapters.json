@@ -1,0 +1,741 @@
+{
+ "mode": "learn",
+ "normalise_fixture": [
+  [
+   "  Phileas Fogg, Esq. ",
+   "phileas fogg"
+  ],
+  [
+   "phileas   fogg",
+   "phileas fogg"
+  ],
+  [
+   "Lord Eddard Stark",
+   "eddard stark"
+  ],
+  [
+   "STARK",
+   "stark"
+  ],
+  [
+   "75-9999",
+   "759999"
+  ],
+  [
+   "75 9999",
+   "759999"
+  ],
+  [
+   "12 rue de la Paix",
+   "12 la paix"
+  ],
+  [
+   "Suite 305",
+   "305"
+  ],
+  [
+   "room 305",
+   "305"
+  ],
+  [
+   "0305",
+   "305"
+  ],
+  [
+   "Mr. Waldo",
+   "waldo"
+  ],
+  [
+   "M. Dupont",
+   "dupont"
+  ],
+  [
+   "Countess Smith",
+   "smith"
+  ],
+  [
+   "Comtesse de Segur",
+   "segur"
+  ],
+  [
+   "Trunk no B-3",
+   "b3"
+  ],
+  [
+   "B 3",
+   "b3"
+  ],
+  [
+   "B3",
+   "b3"
+  ],
+  [
+   "WIRE 12 STOP",
+   "12"
+  ],
+  [
+   "stop at the door stop",
+   "stop at door"
+  ],
+  [
+   "STOP",
+   "stop"
+  ]
+ ],
+ "cast": [
+  {
+   "name": "Lord Ashcombe",
+   "cleared": 8,
+   "nationality": "English",
+   "meet": 3,
+   "bio": "Peer of the realm. Collects clocks and grievances.",
+   "notes": [
+    [
+     3,
+     "Was at the Opera until one, asleep at the Ritz before two. His valet saw a man in an English coat leave by the service door."
+    ],
+    [
+     9,
+     "Left for London on the boat train of the 19th, with his trunks."
+    ],
+    [
+     10,
+     "Carried the Blue Star through customs with a clear conscience, in a trunk he never packed."
+    ]
+   ]
+  },
+  {
+   "name": "Paul Sernine",
+   "cleared": 10,
+   "nationality": "French",
+   "meet": 10,
+   "bio": "Rentier. Nobody has ever seen him pay for anything.",
+   "notes": [
+    [
+     10,
+     "A regular at the Ritz since January."
+    ],
+    [
+     11,
+     "Slept at the Ritz on the night of 11 January, when Mr. Blakeney did."
+    ]
+   ]
+  },
+  {
+   "name": "Horace Velmont",
+   "cleared": 11,
+   "nationality": "French",
+   "meet": 11,
+   "bio": "Painter of society portraits. Paints mostly at night.",
+   "notes": [
+    [
+     11,
+     "Seldom in his suite after dark."
+    ],
+    [
+     12,
+     "Out from 02:30 to 05:55 on the night of the theft, painting the Prefect's wife. The Prefect confirms it, twice."
+    ]
+   ]
+  },
+  {
+   "name": "Raul Ortega",
+   "cleared": 8,
+   "nationality": "Argentine",
+   "meet": 7,
+   "bio": "Cattle baron. Signs everything with a flourish and an R.",
+   "notes": [
+    [
+     7,
+     "Complains that the Ritz desk keeps mixing up his wires with another guest's, who also signs R."
+    ],
+    [
+     8,
+     "Wired Buenos Aires from the Ritz desk at 06:20 on the 18th: morning, by Ganimard's clock."
+    ],
+    [
+     9,
+     "Drinks champagne before dawn, but only after his coffee."
+    ]
+   ]
+  },
+  {
+   "name": "Ines de Almagro",
+   "cleared": 10,
+   "nationality": "Spanish",
+   "meet": 10,
+   "bio": "Widow. Never travels without her maid.",
+   "notes": [
+    [
+     10,
+     "A regular at the Ritz since January, never without her maid."
+    ],
+    [
+     11,
+     "Slept at the Ritz on the night of 11 January, when Mr. Blakeney did."
+    ]
+   ]
+  },
+  {
+   "name": "Rupert Blakeney",
+   "nationality": "English",
+   "meet": 9,
+   "bio": "Gentleman of leisure from Bath.",
+   "notes": [
+    [
+     9,
+     "His first order before dawn on the 18th: champagne, as always."
+    ],
+    [
+     10,
+     "Wears an excellent coat, the kind a booking clerk remembers."
+    ],
+    [
+     11,
+     "At the Ritz every other week since January, never on the same nights as Mr. Grey."
+    ],
+    [
+     12,
+     "His suite was silent from 02:05 to 03:10 on the night of the theft."
+    ]
+   ]
+  }
+ ],
+ "wrong_suspects": {
+  "paul sernine": "An anagram, Ganimard? Lupin is vain, not stupid. Sernine is released with apologies.",
+  "horace velmont": "Velmont went out after the lift the porter heard, to paint the Prefect's wife until dawn. The Prefect confirms it, twice.",
+  "raul ortega": "Senor Ortega produces a receipt for the champagne and a lawyer for everything else.",
+  "ines almagro": "The Senora faints. The maid does not. Neither is Lupin.",
+  "ashcombe": "You arrest the peer in the neighbouring suite. He is the Prefect's cousin. Awkward.",
+  "arsene lupin": "Yes. Under which name? That is rather the question.",
+  "grey": "Mr. Grey checked out this morning. The concierge is certain, because Mr. Grey tipped him.",
+  "ganimard": "The inspector reads your note, takes off his hat, and puts it back on. 'Out.'"
+ },
+ "wrong_default": [
+  "Ganimard reads your note twice and lights his pipe. 'No.'",
+  "The clerk before you was dismissed for less. Try again.",
+  "Not that, mon petit. Look at the data again."
+ ],
+ "chapters": [
+  {
+   "title": "The Night of the 17th",
+   "story": "*Four in the morning, the Prefecture.* **Ganimard** comes back from the Ritz with his collar undone and his temper worse. He drops a stack of police reports on your desk: *every theft, fraud and lost umbrella in Paris this spring.*\n\n*'**One of these is ours**, clerk. **Marcel Duroc**, the night porter, was in the lobby all night. He never sleeps and never forgets.'*",
+   "objective": "Which report is ours, filed under that date?",
+   "answer_form": "the report id",
+   "telegram": "MY DEAR GANIMARD STOP YOU FOUND THE REPORT STOP THE BALCONY WAS DELIGHTFUL STOP I LEFT MY CARD ON THE PILLOW STOP A L",
+   "board": "Police report",
+   "n": 1,
+   "tables": [
+    "police_report",
+    "interview"
+   ],
+   "construct": "SELECT / WHERE",
+   "answer_sha256": [
+    "06ceef9715535b739e13f0eff2d08f2a4d57b537aaa549facff529eaa2af02d0"
+   ],
+   "where": "You have the date. Now search `police_report`: the place, the type of crime and that date leave one report.",
+   "step1": {
+    "objective": "Mr. Duroc knows which night. Under which date is the theft filed?",
+    "answer_form": "the date",
+    "board": "Date of the theft",
+    "where": "Read what the night porter told the police in `interview`. He says when he heard the lift. Which date does that hour fall on?",
+    "answer_sha256": [
+     "b25f5025ebdcec55c74e7c065d36ec15f6df53ea1f25c702d7b7de74d2438833",
+     "4789f490018112bae73ff6caddc92470da772959e482cb2c0df7a68250b802a8",
+     "65bc7b0727c073d36e5a2ad10d65ada593a36f84d7758e2960ee6dbd19f21f38",
+     "1d17a070f955e3cc54ac1fe0ccb0d27669fd9acfbc9a8f7c1739c4f6855d2ba8",
+     "4b0ec23bf15df4a030db977d22a473e1022288e8d11bac6855e34c9d0334248d",
+     "e7e19b442fa9852bea1ec1d62c285a86e8b7799459bae3a999be835b074c2d2a",
+     "d070c6edb3fa23d96ad22a4ddf691d720fe3d5c76b539c3862419295bf2bb3b7",
+     "3cae7243deb5f1c69332b16e56957a28ab43c363da218f604c0ec4c85664b479",
+     "672eb365c903a3b4558bebaef687a5fe9599d87f8b816558d88cc53f5ae9e577",
+     "31e26cc6faa47472cc438db732a0a68c861c5a15f211319db55b7ce9d0761c06",
+     "96995c6a19ffe858bf59370fc421faf67077f1b2cc7341c99e22df4856832f77",
+     "f95722627d5dfd0528b4e7c5a3650ed543029e77e96aa010b6824c2601c7569f",
+     "bd490603dea42639b818236e02b5fd599d44ec68dde1e8dd13818472ac2d75be",
+     "0b8c84fd32492e1b192a4d9fee7d0ba83523241806338a1425a2b5f3e5b1e25d",
+     "baf30d80f0930342b81f93fd973112cee8dac678cab59769e6e631e8a77d162c",
+     "c9a814a7c6fd931155e9fcac14c6a6ea38e4a916a2e49e28a85f0953de34e896",
+     "016e7e0e2aa2db6a06223439754dbf2459dae4a6410f1545ba9fb8c47c7db66c",
+     "0ce74f4b8e73c0ddf491102adeadbbedb06c5f79346afdbc366bafdbbfb31da8",
+     "528455b9884b9d3ec05e2fce5182747598121b3e39e34a98824c7b30458064a9",
+     "391a2a35f261fb6c0bfcb501224dfb1abec5abaf96d370002e5451012ebfd25a",
+     "5b036131a12951413c68ef0cc2050103dea3fc327f47d558b23998bf83247ede",
+     "3815abd5abd787b10d603d6d0e96182a9aa17f61978b4aa35af2ccc10816c8ef",
+     "8aef9e08210a801c6b447337e24394e3e8584f2545b7a0c3a491c832982851d0",
+     "6f62e5ea9ffc9697c588f1caea5b992d635dc54574e615bc205bb8c0de510068",
+     "5274b40303ae0cd7c130fd02c81b22de61af1a3a8097a3652a6cc6517ab9dfab",
+     "a5f2dcecb069f2d1775facfd9ea53caf873da41a1eb47d1edc2d4e5133a99454",
+     "4f14a254c5cf99fe71b311644fb761f02cd568b9e63bb6c10eeefeff8b4ad785",
+     "dfe2e462edab0a82fb055676bede1273c3cbb3cfaa35de0da8a3be3ef6899540",
+     "67c63ebbce8ffb59e239d31f8bf311b23db466c2df57a27d4f5eed19da7399ea",
+     "2df1d1330ca22713d64541b594196dda02459624fb0a05512c2621a84d932b16",
+     "3a857cd2612f618e2d326474aef9a1153b2678e2cc3d597683fab7a2e53138c0",
+     "d9939981d9d0d5f82bb1b6fdac39d3fdbba683f14718dad925551f7b014fcd33",
+     "e2a3fc5679634fe7842fc8ef87be836e425ab768d7197fef0057296f673073eb",
+     "33822e36759496aaba2e341398ef1c03c8eea353fa9d81b1559fb346956f0453",
+     "b4e8a9ad2ceffa9655a6dcf4faca4d53f0b4208d6289bc7668e2a1d6b9d24abc",
+     "dbb129f3d6839e21210beb52267653828391438de5fd2e0cd617ab403f38a424",
+     "00f2e53b5369b9c8cf9f10e45ca5de8508bc396f7d8d9e61d33a97052bb73b59",
+     "3ce7df4ab2a367ffb51d76ab4f3ec6188997ca58a7cba8796ddc6e8530bfb92d",
+     "e90f5fb4798693340d1f2b4548bcabc9adde7eec99a83b49d8e71004117ec295",
+     "3437ac2181633055079b9f8612a8a13801dafa229d5279f30602fb695e39329e",
+     "94293e9af08919fd625fea10a0a37bc2153a59b01247194a914ed4af000d6f63",
+     "6a83ed68e258b2e7c264f139692d862b198671c17806f89756881b63b9ebf20d",
+     "02bee2db85d1ade168f186f332916855005edb5b2e19fbb5003595084603a963",
+     "f4f469e3e36dfae7c173f9b0e669963ecc4b4c71d33b7129c513ebde086c70b9",
+     "c1a11a26c62508ec7c9cb038378ff889e1414ed6ccaed7bf47d0fbafbd507d00",
+     "687f49df3641ecb3aa8507c3d71586dfa2381d848bcc5e66a3d41c5328d3a05a",
+     "9c08a94d15eaa205653a97e36f44ca25e0514333184bc361525bd4316987c413",
+     "6caffccb84ae99b3e8dcf4221c51c4ff8b0ceced76bf95611f83d441f0ce8f30",
+     "a0e7efb31f4be622288df49b577dfd289c956d75eb9fe77d7970a5631b17b702",
+     "7eeba883fb3f84b9c9507e2ef5544813c2fcbd26ae27d52327dff34dee337e2c",
+     "ca587ff5c4d80c529a614c5895e51d5aec570cb5172bb8589be6bdc0af1ea3fd",
+     "617fc9e74bfe59e9d7ce5b2dff256d777736be9a90f9489c01c81c892e6c511c",
+     "77295734309175800e598d086b96ccdc04c01c95e8ea1d78c744aad4ee405fd5",
+     "bb762fbbcaa9d20c30e21e6cdd8e361c73fc0145fae6ccf23890979a933b50cf",
+     "f884acb64cc059714b867a8baf59852f5c341315c5594f2585131cf938f5f5d7",
+     "02f6a0b7862d05eda7876ffcfa1045af9975685e9e11447b1af9a9e8912c13cc",
+     "426873b3a2a1f79613cb686909660e15e74c50e3b33680b1ba95beec1438baed",
+     "89052b7d7d6054bbd6752f2fb7310824fe702e10df9581c542f7d5c2c8df784e",
+     "e451519f47be8f8a7c088656a0ea1e0ee299ed436d2eda09615273e0e34a370a",
+     "800e77b8381de4aa037835716d30afceb0afbc1761e0203b86e473d97cb357bf",
+     "74126a3899884417078b0c07de1d140f56f33e9f22364c71373defa1007be10f",
+     "e3f8b95b255ffac791f77eb56b081d97d20790c0d619e1b0964786e50d55dbe9",
+     "64db245c593da6603669abf5a9d6933b911d2632c10c34024b3af6d719fef257",
+     "645a335a1763a30841a7df73c77ca923f0ac2442a15ea2c88f0910579938e83d",
+     "27ddc520bcdb75060ac2502b35cb3c5eacff0eb3321119d0aa597b5a41c0ed8c",
+     "47a2bc07d8ed95ccaafabf441c549eefdd1a4ecd4a045a1766565234de283bce",
+     "fe31066939aec8ec0aed7d5cc0eaf636dfa9ac69cfbd5005dcfb1694a81d47c5",
+     "af4e1c55aecb4c8cecf0415887b9a701b5a96cf2eb813c19ac04967bfd38cb0d",
+     "cedceb97905f0c5805e9593b34c8cfee20c89a57b6cb2a2713648a006082e812",
+     "875e29f82c9b80336113be9e68bb02c96ca947bd51d0175a61dd17088ef7b305",
+     "b66558ca9a3bdb860a8c11953caf5884d7abac329cefaa9ee8920fe1a804f7d8",
+     "e1878a2313d58114951501ecd874af6663fb4e827d35450bfaa455fde8dd8c48",
+     "86683ada2dcf2cb86e423a07a8991ce1737d629b07654d2f2abd5ac05ce5dd93",
+     "07fc68682ac530fb1845347bccf36f9a9343c02afa113713b450ac7cb02fab4d",
+     "a491d22032f07ca146c5e7399ca79528b2ed67de2af0a8b92b96ab6a4d3633b7",
+     "cfd499da59e6dc2047a53dc6172ab9fd631a584fe3cb3583851174d05f7a3d31",
+     "60f92293399927aff3bec868a91c57a0a8161de6e5bee5c60605156e8540b009",
+     "90e811249bbaf1dbdea4daad6a237ee66371f5d1d89f13a27ada47c8ed736819"
+    ],
+    "eve_sha256": [
+     "055d706b31199eed5f753b15d8a42a39c2929fe9f8548a91461b4fc3a994b865",
+     "09504a4aa2ec904e026ef63f4b4feb59c1c1a6815ad9e9bcd1335a2731abbdfe",
+     "0cea0e8b41a6f0660683e1a91153ef5c83451d771af4439ca2e9cc575bf77b20",
+     "12527d2bb2d095359f57cf72a337fcbdff852c31cc2f095d4eee4ccf2e8de5b6",
+     "12f9ac5a84e8a33f5d07376aa0d0db2e752d2f5a72c047120da665f249818df7",
+     "15d40ecd21369d6239b3bc9bc4526d5ebf379214febc8fca2c8dae370bd44da4",
+     "1a097a668dffa6d0b4ef5552276b592dc33e69ea9a32fbf854b483184716e2a0",
+     "1cee6212e8176b004dc4204509d171576486f77c3dbaad81bd213223d597474d",
+     "211659ec288ba2cf312d8a7807e242388fa4f7ba2059791731859f25b2d60ba7",
+     "215cb842e8fbe4b3527eab94f7f8d2ae0b299e9ccbacd363e2a698b908a523da",
+     "27b2ce531f7fab49ebc12542c16e61d8cbb56847a0c52d879ce7a2137bd928b9",
+     "29a52db0fb59c371021c2b3d52679b065aa1708a7a3c8890e5411aa8e0524073",
+     "2f5d77520e63762963319eec7edc9404d28493e0b1ec62f3ac9e2e5d20fe4c2a",
+     "3048a622f0d5bf9282ebcec308bd2398d0299754e5d17875075c35cf3e5f1e5b",
+     "329b41e64d9732595b533a48fc09d947348fa0f5e1920fcd07e208dbb0333919",
+     "34fcaee2bdabf597491a09ac40c3afaf14c7d1f8c715b3fee162100b72e90a16",
+     "38bb8ee0879c1ed2e7ef7f1df744fa7cdfe418b121f43299bc70752e0f218de3",
+     "38bc3d1c4787dd15fb6b16dccd548786cb773da29ffeb075602c76d2ca87f9fd",
+     "3f061234f55d2e019e5894e69bc60a9d281d4f70ddca378e095ae39596a2186c",
+     "3fd029c41f19580a71c64064983d0e0bacd9fcd822a6c786c7f0fe4e7e42e139",
+     "4020172525058faad7fb60a5a3a0f1d0cd0806904a763b9424b818e40c04122f",
+     "45d6582d537399e763f5d24e1b9544a491657a4a848d381b8b4da9e1e1ecd807",
+     "48e4192e3926ac5244b0bc2c36ab780c3ee7bc8f6ef1e67b93fc4cc6407ef065",
+     "4aabfba2e825e1e6367fc83d189785ad76e015718e6a8eb809f8e8bcaf076a1d",
+     "4ad907cdef545fef538b7ca25f9d930db161115394771850558722149a99ae2b",
+     "4c6467274b4ffb2dcb4fc96cdf33ab3e0f26daf08b37b7dc44ac5a59fb47d497",
+     "4e42793f8be336f4dd3822142edee1b42a802dd27713da4b1ef7503a9102591e",
+     "4f032f38831304c3990b9e05ff17c5f23d6c9f78c78a0c0e81bf3d1a16ac3cd7",
+     "53192ccd712f9a5a19973c01300e519e268d5ca32894c7636f52502a9ff06f75",
+     "5509b2908306fbaf83253a44143b6f49a964265d43479679420e57a4d5ceb3b0",
+     "5c17deda411078f9a444da05b26344e39f352c7320b6dd841aacf16672b68a24",
+     "5c6dd98f8748b17a0890cb2baddbc289ecd582abe3341284b98097442db81e6e",
+     "5f156ed0cfa0fb6c25fa129716f9c961f311dc1496a973ea3a09b009f0f34ed5",
+     "62746435f6cca31b8b3dfe168de5bcfc455763917d976bb615c6fb4046ffc2b8",
+     "62adb20ef8850e6f433eb031c3b56e1680ea6033b5aafc7373eddeeecd25c88d",
+     "6326d696cd04b3db83086c93c6202f19886c66d0db5e01df0ad41c6573a29e16",
+     "649c76e96ccf5d03f98a0397ce971e310b6f300f334d3f707eb4ea4bce243567",
+     "667b512032ab0b093cd96573fa9ca6fabe04ede40ab2173bfaaa272ba317b9c1",
+     "6af826a3d2efc1075bc32782e00a2be7bf9dc457710cd5ba5429249201611ac6",
+     "719513579ff17e71814da76dea15e1ae7f4e7265728d41acb5409d3b5dcb696a",
+     "75c481c33d1f56c101927c8113fbbd0ab049702515b54cdb5911d72b492527c3",
+     "7d069c81dd456261fea18cd4291f941a6888945629025eb33180ad014292caa9",
+     "7e8d9101e9351d979b2cb280317c3c4ee76b337c97234ef5b03b4f1bdfa4eaee",
+     "7f1c014d6d8ee87a930ff2666e3c190a8b93659a7e7bd0657d52a947f58eedf1",
+     "837c5f3f39f29c2d9556b33fad1b2f5b8730691c3f3533970270cf37de0eee1c",
+     "83ab10035e3835ac1503dc6a3b51db0bf54eb7c34a070bfb4589147efa0b5f50",
+     "8829304cbd142cd08534c4f3277156870ec93197131ba7ce9926acfa5872d48c",
+     "8aa36c42de323cf5391ac18deee00c6e165c26099d186bdc9eb1ec7506307f59",
+     "927e567232f745befbf2bbe6c5f90cd86f3f48e2aa619eef0175eca80cef7d26",
+     "99deae8845c05489fb2418f4f75ac9efa89af650f7d80c9600e6bcbf668948ab",
+     "9f5be369c2bd93c1d6cbba7dc6b001b71686656969d67055d0109743c21d7400",
+     "a002a6aa80f86e3c70ee5accdf98d50baa1a4dba90465c05909c023861e8add0",
+     "a52f97864e3db788724e0f7f1293587db6611dfed7c53346de53dda1f4c5fa87",
+     "a5607538debc5b472c3447a5ee6892fe9b40189e69d65d16727393df5f7395d7",
+     "a913183000d19e8f6e46bd0abfe420543de298d7551d3500e91f858ae1785855",
+     "aaab5468289cf5a7730e721f4b77a119688100f9ffc013b32c9f47b12cf6ca67",
+     "b05bb37469c71ff5f9a9f21bc45901e4d1cfd2710e6627f4dbcffafa918abb5a",
+     "b65ef3386a810e82ede51ef17754e2cdc209e97f52b11dcca763102e2758356d",
+     "b8660b204da5ac60f47d9153d6c9de48fa51436e8efd218557db7fe7ddd6f222",
+     "b9c7c219acba0294a5f202f03ff705db629c66276c9735c17d4eca946f02ce36",
+     "bc9aee264a5b37918e06a5053efcf0c60bc09de43118bf540cae51c0c2fd9896",
+     "c21eb5ac84733e21b554cbd63f5afbefc2de6b8be15f6b7bf623ef791b9a9ef6",
+     "c3430fa19b6f263cb33cf6d796512819fa19379ce63db2d46d21847093088748",
+     "c6b75a16734d3396e9d4a475f83acaf9abbedd5bc45960736afe00579af29a7f",
+     "ca5ed098d0884f01272b800778366bfb596dfe6bf74447ad6c6295fc308b5065",
+     "cada3cafbcb641564de357793444c7214af7d527803e4a77f39e0a1d5a701d9c",
+     "cf2ef2a0612e2ad06c582219a9b4ab0d48288ef013b95c0a8c86b81ee5505635",
+     "d381c1ecd308bfe20699edc48f7e7f859f9c2192a0bfd6d8a02541e8cd12e524",
+     "de4b9e060f6f9250117dbb51851379a997801cd55c8dda8514fdf911d9e1dd4d",
+     "e05cb30b377d90fbe9d5e9971b9f0acfd68fcd861542f2b9251e0bc2e153d8dd",
+     "e53c0d58b128c0ed53713c4d3b1c062faae7c95036943583f8ff191e2030a1d5",
+     "e6eba235b21f974eae7119242a20b92bfd8c2d2ce9d51dd069937d1f4bf3f7c2",
+     "e7b9ea290ebbc8eca5ae08f772992bab2d86d56fd8ed1b4888b2bee207044785",
+     "e8f5ea2a1e6b19d491a8715d7d5a9d43ae39af71852ccbeb35b9fc374d3dcf0a",
+     "eaeaf7f35e1aee9b2247e8c45161574d9437ec9e17336f74c9ddd44857ebd80b",
+     "ee2c84ec44764c07bc4a305d8ec54a4d258601727064faeea62f42382935012e",
+     "f35da508b4b2d9566c90ea619ecdae23ab9ee81b74aa6763f231192462ab2c8e",
+     "f3a8f8fcac7cacb937adc053f9a67e8537afd8d48c1f9b0d350b72f9413e2531",
+     "fbaf3b26aa6317ffa2211e5841af800ce0ef549fa7df1d6bab57877d869e1f33"
+    ]
+   },
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "xB5MyPooeP9CZALPKMGa2A=="
+    ],
+    "wraps": [
+     "ceaVNiAYlxHwk2j0mlag0In1ZEDoT13lhVYuiXkBBEn0rySch9vm8iB+mDFBmTru"
+    ],
+    "ct": "JxLjzenX7b5haD48HUzW7xeZmhI8PVc3m8irT5+Dj8Q8mB75XlpiEXrK/hFQ7v472zm+PcgT7fKGx4rsX+l5BW0W4+qT5Zsvhypvj1sXkVVpvl5kJ4OC45XWubS6s/Rlb/KubwWXhTAjmYJjyKrPKrePLlnzu1/1lk3zhRFzVqj12H323iX1A0dpBc0ToAbyO4rVAwIz8Ak1tbLI2o//QpPKB9wg1jqVQyBtl13Kp2d+UF1c/fzLrOSMhoBREFJUDl1RKs/cKgfkGwLrIQL5PfdZbL0+aknvmqG3nO21rv83LWqLkG394xPdSyo6wdn08xfwzqw9PbxhL690TQlsgRoZjtK9rKIcyQ4l8Y0WVrx+q4uPDLRMj36pctqRSXGhSaQk+42YY94A7IqSyKsImfxZqyd8IIZGLRYbZ4tCCuaKcRqQNU1oD4o0obFm6/n8mtXMpUrcUOO618xepprK1kEsn0lLdaMnGrwjGddsD9efDahFpq4VybAmuKHrjEedNhth/iW+Z6JsnNnNyEj28jI4V0UA4Ae7sgNjf+JA+KTj9aKlSgkoi9hHw9MkN0MeaMDfifZJ40TnI2sXb65l0Q8RNU/zxda0+Uc9GYZJNiAB7eGZkAlHWqp7o6mNKMt47YNrzICkLVA7YpcwUaDb4CfpqBYcXOyWiXmkslMgTPhYkzTfaUc30HbKlnahkY1sL4DooTQkiCk8pJFF0ZgG3cGjQs7hqHbDVEGCxEinO1nlZ3INEODyk88EN0twJYj+AX6zkOoSqrO9xnOG0EjxY9ev/ca4aq6l01qFKxdVWrGWv0wXW+2RjN+4FjzzHDbM+NKx3BwWywZBEIe+1RaGrsWQxlRKXve2CHCYHzXq+jIJbbotOYw/IDlrGz/ypRAmGyjWtE749BIAR9dGmUY9jXZquvso9tIth+hznppA+yH3hmqpWsk8COxGpJZ3XAtv5Fk/JddNX75Pc75jm6Ln9zegXVlQoOdMNX3vPqjncfqqB0Up402W+Nt+4rJfTZCBBqeRPxuKEwLauitaZ7lG5atrvZuXgohotfkVmkGhQ46Z1L7CWfUTyJ8BKzGxGPNx/g1zoNtv18GvswG5kqze4h3U70E5JOpsa5c+Cy1UXKt2n81JF5kU7djNcbHpNi7E5tuhyqjs6PaaWbn587SdR406khaS19oLC96J7N3q0AEoORR+TtfdIU0qeR49XQkckERXdZTa6joYFqxipGR2wOhJLdzZaBWf8Crl+liu08UxmtgnkD4sU4OPah4Sj9hAZEPccp7acuzkOmGFSvv4mx82ntodVuDS70+7Q0ElQK7A6TePDOzW8IvCbwnE9/UKyvFlaq06+sFQGow7byxm2BsIq4NH",
+    "tag": "KhoR5md0Z8FJSJTfwGC5GJVtZeWAhZYvz7CXeLQ0yiQ="
+   }
+  },
+  {
+   "title": "The Neighbouring Suite",
+   "story": "**Ganimard** drops the report you found back on your desk. *'It is all in here, clerk, if you read it properly. I am not paid to read twice.'*\n\nThe Ritz has sent over its *register*: every guest, every suite and every price since January.",
+   "objective": "The report says where the thief came from. Who slept there?",
+   "answer_form": "the guest's name",
+   "telegram": "MY DEAR GANIMARD STOP HIS LORDSHIP SNORES STOP I CROSSED HIS BALCONY TWICE AND HE NEVER STIRRED STOP HIS VALET SLEEPS LESS STOP ASK HIM ABOUT MY COAT STOP A L",
+   "board": "The neighbour",
+   "n": 2,
+   "tables": [
+    "hotel_register",
+    "suite"
+   ],
+   "construct": "ORDER BY / LIMIT",
+   "answer_sha256": [
+    "2bfed5243b13cf6ecaaef3b52f924a77ace86b858b6877633ffe1afd9f2b7432"
+   ],
+   "where": "Read the theft report from chapter I again: it describes the suite the thief came from. `hotel_register` says who slept in each suite, on which nights, and at what price.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "ZrMAZ3Twcg9upjC248HdeA=="
+    ],
+    "wraps": [
+     "+xt0lMCM03k1vxDF+ilMF/dLQk0ANdAb0wtg8JFpjWGKXbKdpPpq3LOii+VtQM4l"
+    ],
+    "ct": "uuvYpfLC+/CemMyRcc/FOgp7GTMHPOAlrssh4xI1BouDfjoYR5MadV6NV4RgCVruQNhd2mYdGpGhn2hseB36srHXodmH1snOv0po2izt4VrEVBCv4jbc0KaCQZvmGWU6CZCH40Y4Fduzs0jOnqHthivG2wfU7KevDgqSmJeBUkthiHi5SyWqmDYQIVa27emqBWfDUj4VqbCAeo/oQk6iOHyINOYHt9lFUtdoxyXRikUSip5rPKNSUx3Ure8eOwrjgRoRqAA4V1aqWPYYZMtV6VYcKpovx7QSfUXD9e1xJJsR75FohrZUjzgLO8APZSbysSf5tgqHs4w0xG8GP2rpTBVG9cHM63Avb1PG6cHu7x4jmxphDIuSmZ1ZfABNeGj7P4s77V2UNh93dlyAQOzLpkdgUScHY7U9SkCwg4q8yXNn8GBIOcNcYsbvPlQ0/C32f9VkE2h6uNHQHS0LTxKBi37flvvrKSu/c2xjJ/GfFUtaJ9uAjoAh8G1vjH0/tTpgCMhW4jNEdSulO95dJ0BMt6frGrRSd07zuZJ9waKICjHyPPR8tYw6SLP0COcCp1LHzlpgLEfZhgVXcY1aeI8+r4Qgs9JdwySJSa17YUSEeu5OYuZkwm3S6LfqeFbr+vvtdz9KqYpX2HGAf8w6A2800znNhTkyxd7a5JGlD9d9Ka80Gy6zNkJ7deMNi+Y5KaBNKREMKOkbH5pEYtBSSaHauD+hodeu6WQrsNNtw7w/mhQ+sFuNaB9X0l0ATYiNR2V+tdIAATQEUUdKfy6mrs/jcND3vYQIGqJhSpn6zcVMLiOCzOjfa4uRbPuqHDUEza+n07nyhkfneVoL/86v7uqORjt7CICrQvMN7izMtjLxcIwtQfC3MWrM59rRObh/NFxQPogXMLdTLTZLGHM4y/QrSbfB08iVhqWXYfK/U38vvCCGIvmRhFQ2wJ4e8Nf4EfwvyTKcpHzS/wDV8ZBZjGP+W+yfb1XOiqVGK8uqmHDZtV7fyftV+3V+muITOY0Ser30zrXS8R4pEQ/YNCuBcUPJJV++HFFPTLdHn5spJPApchXYeFR53QK5f0Y2kc+spglcie9P3ucwPEDYDEcPeZA+IT5nsMX8QxJb0hKk76C9/XmrNB5vP5CJOO9pvP7fn/ASFm11044ZYkmEVw38oLAD6g4I/vpMUpV281N30ByxolODgriUxyQyxUYqsRMwekQiZ7gPwjwmR9e47XeH9yVMiCDzTSzgyozEKqC0BNj/FY4fahRuu55yJ+kjOOfu6JMm/N7W9LdA7JjWxv+73VcONYuM5ClokDbLLzMC3oCR8npW9YOUeOi/9BHZtx814ByUDmrAOfmLcQchIvTnRe+Xq+/HNNWoQ2rR/EdREyoFZ473kw==",
+    "tag": "w02T/EeFOcdodiYnNpQj2PJWSSZmBtF9RRqdwkZmwCo="
+   }
+  },
+  {
+   "title": "A Plate in the Dark",
+   "story": "**His Lordship**, woken at dawn, is displeased but useful. *'My valet saw the man,'* he says, *'and I have told your inspector what he saw. Read it, if you doubt a peer's memory.'*\n\nThe cab company keeps a book of every fare. **Ganimard** wants **the cab that took our man**.",
+   "objective": "Read what the neighbour told Ganimard, then find the cab.",
+   "answer_form": "the plate",
+   "telegram": "MY DEAR GANIMARD STOP THE CAB SMELLED OF CIGARS STOP THE DRIVER KNOWS THE WAY STOP HE HAS TAKEN ME THERE BEFORE STOP READ HIS WEEK STOP A L",
+   "board": "Licence plate",
+   "n": 3,
+   "tables": [
+    "cab_ride"
+   ],
+   "construct": "LIKE",
+   "answer_sha256": [
+    "27d6a6ca8995fb021b2bc928319ec3b3b3ab82d0744fc45077c5ca8175638ea5"
+   ],
+   "where": "Read what the neighbour told Ganimard in `interview`: his valet saw part of the plate and how the man paid. `cab_ride` has a column for each, and one for the date.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "G+Og1QV/hB5tlSMqK85Vhg=="
+    ],
+    "wraps": [
+     "rtCwHLIqfbzuRzpb+1aILUQf22PxUCb5qiBaPrrP57Mjl1gLtWIBwuQiM1+doWDj"
+    ],
+    "ct": "eAU5rfL8ywJpQIMaVZ3+LGz5h011WAmi9lUF7ANOWcKryEtEWSa8XuO1zCev4JMBiPokAuA0tUQjvkziIDXp4eQh8Jvoz3m9yCLi1gy99yXOcPSzDnPzNjNvlJAERhqSWHylH+lynFvLLZjfjcGQWFiTOPeSGXjtJwuTnII7TLFsVRU+tpWbI1xlXN8x8Y4lom9YqtEhoDnFFknC/1m3FFt5iN/5rCTxWW29Z6cQi+y9cW8s3Xq+kMk0zs0riOWSZoSFqoiAlHPtvEJPutP1Aq8wbqBKkuav2x00QaZegdnZ1fMcS6dQCQzfNZo8RP7ejASX5RzpKaDBuIfGHoJzd91GQDkd7numepjPRU1YdTtNHyNN9JqQNskK8dPAzxubgNgM98wn71et5Ud8r7G8q6LYu2GDrHuXT+RzLfVoF++6iDqpsnZ6Sg5McZHjUojcYEJhfxuCHTRkLNIHVoN0mHQGFsnscdW7fiqkfjTOtVMm5hSgB59T0eQWXxdMeQzU24XTNixcoz3WtdTwSp7gpP7VW9Hka9gJaKMGwsnW9OoHZhTH69oDw+hpQyzexP05u9MBMw8dp62d9+JsUobUTCm/QrW2rT9hpYq14mdoaoRGk1r1wK3T2g3Nu3gPQz1QLy/574VWbCGfVWpe8NMPJz9J1YCBqgFfLwrk+re3O11FMmsrIO1epDCKpqEXEkLoeQRB0LcnDEsqirBwRvRaTzVsxMcAbOr7hMWlO+zy4MujEO85RJMWs4YtcfEz6/i7J3APcc+JD/ORA/LYDNiQo31LMe1iEpb0K10RTJMJqBk4hhVwbt/v7SwaH1zdvcHarzzD4sXCllkeh5WqbyAgR0n4mhuwAy6ud9XSK77Ks9Z12ptZZydA6Qzpx8Mce1435wvPwftvJCHF5QprV3d0YTE5ong0cx3DDMDW2ulNth3xI5XkEAFEwqdTKCxLkhtE3a/6svO+x1pnEjsXvsEcWbGIieGwRTjlXtQXvOOF+wPImIdR1ZfOeQcjMkODMiUHNiGL0+59Teuj7sywezfO10HIW0LY4lDdz9gnSXL7bfaQhqDz8iPzn4KihGLIptd2gyWNKYfZ22kB18pD38Myn5kmoegrarRuZ/kynkb3pWyLcD7S0+SC5ovkrlC6f//XcpsW4mq5hRadGJNjYVDCkK5DD0w5satK38sIj0SzMXncUO1ChqRJh4XMIltim+J2XNUKvzYRNoJerO6Dz9KftT8dmBu0e15MW5GIMiTqspBEDoqF4YZo8sSrqlGmV3ordorXMwikmdjv0SsV1f/JONXSZFJZsmoCo/nYlT6Jl0M4D4jcdH8PMm5PfH+dQO6nnNO5Dh7rvgfIAmnbYBNCp4ZLZBtI8z0BZ1kA4Bw4b3NtBkisSy3hluRkCkWG4rdIhYjUxjs9po9RI0fzCaNc5SWsbNlaW5VE1LKxV24O1otOWBrYzinA2KeUHXEw/P/japP2k0AB+Huu9O/4wffwb0dnPlV8m6hWEoJdBo1pDtjXVl9ow0oJePgjW98cYP8=",
+    "tag": "+VwDWEjtwNwDi4fh0dPrHnyZEOQVGDqfrIwxtsvAcB0="
+   }
+  },
+  {
+   "title": "The Cab's Week",
+   "story": "**Ganimard** snorts at the plate. *'A gentleman thief does not hail cabs, clerk. He keeps one, with a driver paid to forget where he goes. But the company pays the same driver to write it all down.'*\n\nThe book holds some sixty fares for that cab in the week of the theft, from the 13th to the 19th of May. *'A thief with a plan visits his fence before the job. Find me **the address this cab kept going back to**. I do not want the list. I want the address.'*",
+   "objective": "Where did the cab from chapter 3 keep going, the week of the theft?",
+   "answer_form": "the address",
+   "telegram": "MY DEAR GANIMARD STOP THREE TIMES TO THE SAME DOOR STOP HABIT IS THE ENEMY OF ART STOP THE HOUSE HAS FIVE TENANTS AND ONE OF THEM OWNS A LOUPE STOP A L",
+   "board": "Fence's address",
+   "n": 4,
+   "tables": [],
+   "construct": "GROUP BY / HAVING",
+   "answer_sha256": [
+    "6d71eb5495c5a18d933c60ee4d5e9999e9bef84fbf614721e3d3ac425287c4cb"
+   ],
+   "where": "Take the plate from chapter III and list every ride it made that week. One drop-off address keeps coming back, so count the rides per address.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "ZMz61Bl6uCBpD+z++/wIAQ=="
+    ],
+    "wraps": [
+     "5ZsYueWb5qZ6ZV5z6T6fu0QhIF3BgOsM7aqJOjeExiv0jXpbI4GOFWVxA4YSLeRU"
+    ],
+    "ct": "8P6thIXyJZkYLL7y/MBrfNvNW7D9dVeXJDxtuHiHX0As4Wm918CxdHSknXX5yd4+Vb9HobsOkm+zY1uom/lSBlTPtXQAi3h4nXQ7xxy938esp7Yin5NeG/nBfsTVPpj+oE0ibsycC0KPBXwpmrT/1JqU6PFFxKW/wws7PMMksRmB8A4HaIGyu1rQgOEVz6b6hVbwn/dJ1QjxlZV24khI19oHIGUxa+zcU2LFkuRJxJM6MyF6wlLgr8PINFbrXu8C4fvc4lanP0mwrzm666Vuue1EOijhaEfsvBARBFs8tt/QomPYMjeH8BXA1ieOdzzw/Rxu1MFU9j6BR4DDJbKNQD+nTc67scvpAHqrupVdEpwZtrktso3rtd2spJ0pVgoQVYFi52Q0W9Qhe3SuCiw5sbqNQorABsbMxHiyWa38A+nKrJ7Ni5xBFBkR88yIcOZtheCNr4lWZmiFKl+ZAfZIcmNXjkGfDXFcJXHoSNcFWDe+laBKty/Hi0lRVV0YEqkIdD6M6yThnxvjazeoko7N2JGsUw/BoxzSTxAGRJUHVLeke8FayG6khG2QT3f737ts6dQ6AOR9aLKO30dyVsV3ZZlWbUFhci7+n3SJVAJoCZpTwSL29pmQfEp0vr/OuCb4M8Gx4NVHTb5PwnbaR2713Jv2IsXswDRGnfmGBR9+D05EjamUeNgeoVnxb93Iw9FYdKGHOhQ3KzYYhDoRB81f0XVjHOiRg80xVsOQcvUbco3IezS+ZqKET1YftqfkzE4E9Vv9NDAlv3X1q9PFUm9gPNGMBsM98s6eG6UrH0gDRD4C5IOJLJHOaRfonf2lZGcUNZm/pzR2oyLACwN6zWaTu/gj0Of+dxFhoe9xbuozG9ZG+oGbMW8+3MgYi2m8wPup4x6dB9KUkC2ZCZO0RIN042RDCGfxSsXzAzOrvXLCbNagjL8j2/tOfyNdo4C0IMYOLJwIX89EONfkLU+gnAtYJ/sEWOOAgoWW9c5NDaghmS/NlBhFwjVvinfQNEQ3U3nGMa61LuCFZiMNTBlkENAdCmqD98ZYCoG6cNrDA4tIIcfNk92Kq40rV3OCNCTbQYFJ0iSnJleQXPBeDI2J6y7ZcXKPPlTAgCKR6ICeLdaCN0cIInNWTGv8a60b0QL41DMvlLZ0RfAPKsba6pA0JsUNdVLRiPO9q94gLdjIpK06HDqtjAQs0peIVx+GTV40eL/R6JRVxP9srPi73lHRRfHyWH6wGbIkGNxh4EaKTiJhR3Pq6fvsZdVLJLeNFeRWGxs/PRGSnPYEJUrWbMqbc/ZbskR7bSSi09g0RNNlQlVQoDepPJkMSzbvtvRLQRR4/AaXqtg84p/jVUnyAW8oP0TmQbHFfVohTwZy6WLeTeOgNfYDEJ9gNtVRDj+CByNo85siHmG7MvCGS9DpQEgwTA==",
+    "tag": "Q/oReH3NM5+uUnDk9iHHZpgPZsdd6D8k1DongKrrYRk="
+   }
+  },
+  {
+   "title": "The Boarding House",
+   "story": "The address is a boarding house: five tenants, and a landlady who has *seen nothing since 1889*.\n\n**Ganimard** wants the jeweller among them. Every fence in Paris calls himself a jeweller.",
+   "objective": "Who is the jeweller at the address from chapter 4?",
+   "answer_form": "the person's name",
+   "telegram": "MY DEAR GANIMARD STOP GRIMAUD PAID ME WELL AND PROMPTLY STOP HE BANKS AT THE CREDIT LYONNAIS STOP HE PAYS A GREAT MANY PEOPLE STOP A L",
+   "board": "The fence",
+   "n": 5,
+   "tables": [
+    "person",
+    "address",
+    "guest_card"
+   ],
+   "construct": "JOIN",
+   "answer_sha256": [
+    "19ff3eb5cfacb9fdaa755c9ce0fb8774ba68f4821b0d6d44998db1b0553ecf2c",
+    "5dde5e4b49fe2adc11c9311f47537f78a166acb40c1e6873d9915a7c2b0f7190"
+   ],
+   "where": "The address from chapter IV has its own id in `address`. `person` points to it: one of the people living there has a trade that fits.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "xq0jp5NGoL0Tq8eKSG1qIA==",
+     "e7PFfjpyq2Mn5xUeUXZa4A=="
+    ],
+    "wraps": [
+     "vMiF6hLJ8pgOfL45xTXGNZH7CJIq5OM8FrHvoyjh+82dipk4Lu+3wrkmVkBiDpYd",
+     "azOXCQa3VQlnQLDER1sxBLkXAC03pw/NOv6IV1Q+ChypIYwXm7eNjPgZ6CRXrNT9"
+    ],
+    "ct": "nRX92okTqDprM92OpUAmakvNjflTGpV8YuhwvgWl8cV1TKNZUV4BKwV8ZeXKdFFPh7oZM3KesJMNOxDr/0nRW5dpfgBQ1EVdOYHSV8xUTpMQ4WTcDg/nZdvZVSIhARf/EmdGR2Fsr0d2/snhWuUA37KuKm7cKcSKPZk6O4YeAVjIbQRJy5amkOrq4kosKbW5KY78BQ+VNx88I2BzTarzUR9oLuhRDd8jV85I+MfI5fqW0iQK5iogAmn2eJYjvTKuGUFIaWb4ZZGqAxNE67T1S2D06ZxJy0WLMZjfUUAbUbfEKfzkAjGdwF4SEVzwwv/+WLIZiwTWX2Qnm2lcuss76m3WZQF8V7DUDX2tV5MMWpmbYPdQRTtLnkrXOS/Uwp1NH2HP7FR6mJ/R8NkmaAta1TB/fvWd8doPCGV8oUYRW8tsI6XSwHF1RBDK0GFhu9M3xitnk0hNpDtk8Wyd1JkSNPqgNY48cmgAlUL7XfR5lI6VgyrK7wh7eOibOUYnMwC1lyQLkc6JLgYP295J1Pm3Ic0bb9CL47+UaACmiiID/SNJicAy3chFyYrm8Z5lSbxdCPmNk9u21I4VQifFUKvgrW/slIprmQ6MhC9JgETwll0/K7idCzhODqdjRQ7Y+Rm8AT6FvO11aI9uTvQV1jxodsBTwcOGf4TneuXy7q2llCQIizxtY/bQI7yUPyasJxuB51MaP+DieGrWTcdZDHmOa79v9IF+UaKV6xQ4MGEk7/Jly36Rz6Zr9uwS1DoJhyH/XjTbZKkHmgLHJdRBN9FLUkfz30Sdeu9yMLlDncyJthsRg/1ndWcGliXchgMb6TLwTFRTLUi1W4TcHTZHjufH57H8y/zpuekEa+u4KlUyLE3rck8zeKip29UDCWlsrfXiRlulbWUc0cDM9DknDMQpDqtOES44NTk4hFhER591eqqsXwgGDfbxwYLKdvWwrXKfM8peagbsEpp3c61gurwL1+NnxfapUzSshhl4gsHaPOMlfmLex0Fh7BNxARv1XPNrkmwsVV50xASldcn2TksMzp8HFazvcsLLbYIk3aPaDD2OLg8DUyZd9QA9xC2fxXpn4ZiKbwE35GQ+mZChR4Z382ua9Agn+bxbXoqS8ovN3pFzf/M+VFGVOuiBQ82rD8shS++3g4fWOuvxfIIkmKiDQti/sIH68+GorY3x92AmHnjthX5m8hzhl44qUV0ax7nmXd9AbJD1KmJKqhjLTb9VOpo+kHZmL0/OqPOv3PwlqKjVyN+6B4sCgCSDFOaCih4xHhioO17RSS3gI48fPBt5IZYPVK/PMKz4nc734x053k5LULpVVhi4BmuYaJSusI93ZRaWi9srOpRWn9DtpPPW8qpZu0D7o4IPnpSn1C7wIzr4",
+    "tag": "qPU4WLFxAKpgS0t26qggn29rN+tcaKxiithUwH0Op0M="
+   }
+  },
+  {
+   "title": "Follow the Francs",
+   "story": "The jeweller banks at the *Credit Lyonnais*, and **Ganimard** has a warrant, so the bank hides nothing. Its ledger has one line per transfer: the account that paid, the account that was paid, the sum and the day.\n\n*'A fence pays a thief in three pieces, clerk: one before the job, one for the silence, one for the road. The bank does not blink at small sums. And of all the men he paid that way in May, **ours was paid best**.'*",
+   "objective": "Of the accounts the jeweller from chapter 5 paid in three pieces in May, which received the most?",
+   "answer_form": "the account number",
+   "telegram": "MY DEAR GANIMARD STOP THREE PIECES AND THE BEST SHARE STOP YOU ARE LEARNING STOP I CONFIRMED RECEIPT BY WIRE FROM THE RITZ DESK AT ITS QUIETEST STOP THE CLERK THERE READS NOTHING STOP A L",
+   "board": "Shell account",
+   "n": 6,
+   "tables": [
+    "bank_account",
+    "bank_transaction"
+   ],
+   "construct": "JOIN x3 + SUM + HAVING",
+   "answer_sha256": [
+    "fe6340be87fd5e43b7f0cac5741e76205dd69a68b2024fda16c696848a720f7a"
+   ],
+   "where": "Start from the jeweller's own account in `bank_account`, then his May payments in `bank_transaction`. \"Three pieces\" means three payments to the same account, so group by the account that received them.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "615+i6j0a03HEnlEXW85Gg=="
+    ],
+    "wraps": [
+     "+FN0gpji14O2VVDwQlchhLaY8n3ajzvc7zc9c7zvAhR/DtIxmUYIXYl6Fupc0K9G"
+    ],
+    "ct": "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",
+    "tag": "hl1B3dn3aUEYPqp935O8PYJNFcxmqaJCGyHOf6leFOI="
+   }
+  },
+  {
+   "title": "The Quietest Hour",
+   "story": "Lupin wrote that he confirmed the payment by wire from the Ritz desk, at its quietest. The desk sent a hundred and seventy-odd wires on the 18th, and its clerk is *too proud to have read any of them*.\n\n**Ganimard** does not count hours the way you do. His day has four boxes:\n\n| Box | From | Before |\n| Night | 00:00 | 06:00 |\n| Morning | 06:00 | 12:00 |\n| Afternoon | 12:00 | 18:00 |\n| Evening | 18:00 | midnight |\n\n*'The quietest box is the one with the fewest wires, clerk. His wire is in it. He signs with one letter, which is one more than he needs. Which letter? Ask **Senor Ortega**: his card is in the Suspects file, and the desk has heard his complaint all week.'*",
+   "objective": "Find the wire he signed at the Ritz desk on the 18th, in the quietest of Ganimard's four boxes.",
+   "answer_form": "the telegram id",
+   "telegram": "MY DEAR GANIMARD STOP YOU READ MY WIRE STOP AS ALWAYS MY FIRST ORDER BEFORE DAWN STOP A MAN OF HABIT IS A MAN WITH A ROOM NUMBER STOP A L",
+   "board": "Lupin's wire",
+   "n": 7,
+   "tables": [
+    "telegram"
+   ],
+   "construct": "CASE WHEN + GROUP BY",
+   "answer_sha256": [
+    "c47e82e01e20ad22f816159eb3c3c048308ffca5b116cfc0c9aaaf012ee5b729"
+   ],
+   "where": "Before choosing a box, count the Ritz wires of the 18th in each of Ganimard's four boxes, with CASE WHEN inside a GROUP BY. The quietest box is not the one most people guess. A suspect's card gives the signature letter.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "iQOi3E6RfPpCRLlvqxRz0w=="
+    ],
+    "wraps": [
+     "8y2uRXCePjljtAD98Fd+b6X7thqeboscwQIRdp7dZAqqDOd2NoZzyDmE/3VqJ57M"
+    ],
+    "ct": "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",
+    "tag": "zVTYpFJ6sRD0YFcbAlt4rwib0hK6B2EvoNyibbTeSjE="
+   }
+  },
+  {
+   "title": "The First Order Before Dawn",
+   "story": "**Ganimard** reads aloud the wire you found in chapter 7: *'as always my first order before dawn'*. It names the drink, too.\n\n*'A man of habit is a man with a room number, clerk. And before dawn, at my age, means before six.'*",
+   "objective": "The wire from chapter 7 describes a habit. Whose was it, on the 18th?",
+   "answer_form": "the guest's name",
+   "telegram": "MY DEAR GANIMARD STOP GARE DU NORD NINE FIFTEEN STOP DO NOT BE LATE STOP THE BLUE STAR SENDS REGARDS FROM LONDON STOP CHAPTER IX IF YOU DARE STOP A L",
+   "board": "Lupin's alias",
+   "n": 8,
+   "tables": [
+    "room_service"
+   ],
+   "construct": "RANK() OVER + CTE",
+   "answer_sha256": [
+    "024c19a5b3272788562f6b42e508f38d594761b102bed30d5edfe37ef18a8c40",
+    "de6f9b0fe8953bd5654b84b3e3cb7cda3b2c0cf2b7b08b514ef5b70855766662"
+   ],
+   "where": "Read the wire from chapter VII again: it names a drink and a habit. Number each suite's orders of the 18th by time, and look for a suite whose first order matches. The register names its guest.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "Gfdo3Rj1Nm+voXtAHoXlSw==",
+     "VTEO2GfDqeWCN4ikwFME9w=="
+    ],
+    "wraps": [
+     "XL0wWj8xbVcsxTLAxsU2GDOT1KCBN0+POiRNY4q2GqJXyGZmfJ/sgHm/aPa1kg+f",
+     "Vs+//sUZB6gup5VwL2Fr+V+3orOP9M2QKyI/pvLGIZOTTHw76fgq84MGpD5xoxNf"
+    ],
+    "ct": "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",
+    "tag": "+oBN1EMd3iQrAtmXGRBdqgd3Z1rd10J6YEW6/IrUxwI="
+   }
+  },
+  {
+   "title": "The Trunk",
+   "story": "**Ganimard** has gone home to his cat: his prisoner walked out of the *Depot* on the 21st, and the gendarme who led him away has not been found. *You have not gone home.*\n\nThe Blue Star *'sends regards from London'*. The boat train left the Gare du Nord on the 19th, and the peer from chapter 2 was on it with his valet, **Bertram Hobbs**, his maid, **Ada Pringle**, and his trunks. Each of the three held a ticket. The *Compagnie du Nord* enters every trunk under an owner's name and a ticket number, and nobody checks that the two agree.",
+   "objective": "Find the trunk labelled for the neighbour that travelled on the ticket of someone outside his household.",
+   "answer_form": "the trunk number",
+   "telegram": "MY DEAR CLERK STOP HIS LORDSHIP CARRIED THE STONE THROUGH CUSTOMS WITH A CLEAR CONSCIENCE STOP THE TICKET WAS BOUGHT BY A REGULAR STOP YOU HAVE NEVER SEEN US TOGETHER STOP A L",
+   "board": "The trunk",
+   "n": 9,
+   "tables": [
+    "train_ticket",
+    "luggage"
+   ],
+   "construct": "CTE + JOIN",
+   "answer_sha256": [
+    "20377cec9f51f6bf5ba1fa64649f3b1614e4eee833fd0fc5893f24f6e0accbaf"
+   ],
+   "where": "Put each of the neighbour's trunks next to the ticket it travelled on and the name of that ticket's holder. Then ask who belongs to his household and who does not.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "4UYq+CQJ7zw44FWBocNzSA=="
+    ],
+    "wraps": [
+     "CctKui1rbqdjIQdBQ/WI48ChFt8O3vb2Sv8haKkyauxXZ9jLUTujmk84XaK2iCFk"
+    ],
+    "ct": "wP3mIvAcjfgLeoFTwohb/aZMcoHlQ1lEkIBRJnoKcdkuTXlyp3WKVXeme21FbrUIP1buF3Uzmjz1DEIr2STQ4TYlcgnszMIyDK9+6fj02pdlnnw4S0zFvYkWV8wg9UPJcHYF1Ke0CuY5GGmdQ/q6axBUo1d+Kf1xVvwzjUTcP9zrBnEv6krBsFfRiPH6D8GlhlQzIPfkpAzaiFp2D9y01hO0O7tdvwxoCzeiTHxQ5qufhTRrJGYLm7fOxYMM9FTUxntDFZLaImKlRGlzFdYeTldxk3vS/skrcmjnWNoKpW52i3zZFNakaxAX6L9utO9jyY/R5cjUMAuO629hH+k0cxFRl2Dq0vaVZX6JmiIkjhtRlczG7G5jaRsoSmVipKbfSHE7hriQT0PnAlVMgQEhStrdqQThTOdSnVBNLqTj3xrNRO5H/bjkQtmoxmHu6qOsDUe86lBfnmWGNpg3nvDafFqBibd9lfMZQEm1nvPsclZi/loONqnogTZH1hL9Zxfp7pV+klc2tP0SIq1YHrYh2OBQcmEKFof45zIjDva5xGOzHFzaHMUy2SUCrEpz3sjxhR8ZYdff34lxEVghe4LJO6DQKz99TDmsBukFI3KMq3yc+LpxCKzlvap8BidVD1GKsPpocR/t5g6lh24cadPgb6qEeb4S6b13Jlxnlv8Md6i8X+fKoisLVu0xlhgGMs21o1dHlj4sjgSmmcegS2m8Y+u+5TKwKIw0zdf5eKP5CYWduRpgspDlWoT4rfiZGc6lFaJpHcwJ1Nwod6g9uowNyxD3/b2KGCoTy51yfM8dW8DOvg+78XJeZFA3SGmhTFG6RSM3+JZjV1T/7CgzNuec6YrOpIQE/r80C2etYhHMJrq7ZDPkvmrCjzkCkFBlxSssjW7W1WE+MsJcEkYkxyzxa9ImYoBgTCqHawN5DGonPiabOMop3YKDD7pAP4dvJZISkOIvuNMFUM9t3ADFEUOimsplQyzHu6RE189E0HuUTK7kRQqYTfnSWr/HniT4gAre9k3neqIQ+nvvJUtWroFkXt5m9Xr0FPece9t1p8/7I27mkYmLRxV2b59oJH/8Mr/FaCFz/yFBOCeQ1bI2zBjgCBzT6D/Bzv7h/tzztt0l0D5pN/8QV4nicZhYqhb77YDoZRfQDsJtD4hWsW4DxWAOA1iYKf90ysAF4sOmmTmKEw0EKJylqgTDNPjW4XqxrkwmDo9eM3JpbZV5aY+9tHOLfsO1s8cYp2DsNga9+8cKa0eTm3PpJW+RozrhsenSLDejWt6AB7KirgsnZVAgdhMnzLsMI79plsdk4c4OXZuofrDQWM6F3u7JIj/wZo6YeW73x8NScTUIg2c8MQUqi5Dp4DsbU8qIRP09DiU+8YZjdgJkEaywhHDAsD7rkrFq9pUntLm5Xh5/aLDV0EdNFW+bULICaKcRmZDnJMHrU8duYFNohlwYlTMorBs5svnDcskOfiLjNm3VJPkLOEnBrM7Nlh/0CG91h001UGojnp8aTb3PX/en1K/Bwr7nxg4eGqqgATs9n9ZgZl+k1YH6nzpk0C/E/Sf/fXxNc47DlQyx0KKff90wkrZzGs7AOEjxZf6aI1N7BFCm+D6smO282R3K/gqSvTr7j+cVep87la+mSFSnszlPSpg7MMEKV9ExJ3tRdhVhI3DCjNzDxRX4Zgjeur2IA5GgFZ448xtq3//C/hvo7tu0R2Mdf1b0XDx3zTo=",
+    "tag": "xejwekGidgI0hsKBaKD6AUgbr4NYkG3cJHagGfYyYcI="
+   }
+  },
+  {
+   "title": "Never Seen Together",
+   "story": "The ticket held by no one in His Lordship's household was bought for cash. The booking clerk remembers only *'a regular, monsieur, English, excellent coat'*, which describes half the Ritz's second floor.\n\nThe regulars include the **Senora de Almagro**, **M. Sernine** and the gentleman from chapter 8. You have *a suspicion of the theatrical kind*: **two names, one man**. And one man cannot sleep in two suites on the same night.",
+   "objective": "Find the regular (six stays or more) who has never slept at the Ritz on the same night as the gentleman from chapter 8.",
+   "answer_form": "the guest's name",
+   "telegram": "MY DEAR CLERK STOP BLAKENEY IN THE ODD WEEKS GREY IN THE EVEN STOP THE CONCIERGE NEVER NOTICED STOP ON THE NIGHT OF THE 17TH MY SUITE WAS VERY QUIET FOR ONE HOUR STOP A L",
+   "board": "Second alias",
+   "n": 10,
+   "tables": [],
+   "construct": "Self-join",
+   "answer_sha256": [
+    "67fc36385bb47db091a4d850d450021a8b7ba3b58615fc918808d4e636d8ad46"
+   ],
+   "where": "First find the regulars, guests with six stays or more. Two stays share a night when each one starts before the other ends, so join `hotel_register` to itself on that.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "EtrXMm23fdy+tQEZU+YASw=="
+    ],
+    "wraps": [
+     "YACBGjklKSe8dZXlwfFCn3rQVKMKURngAOuIA6w7asi7f57Jy/hlJTDGwxaVrkWt"
+    ],
+    "ct": "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",
+    "tag": "hdOkc4QYvl0f5QIVGxl7QqROPcmw1mTHFOgCMCyY3xA="
+   }
+  },
+  {
+   "title": "The Silence",
+   "story": "**Ganimard** is back at his desk, and wants to know **who was out of his suite when the sapphire went**. A Ritz suite is never quite silent at night: the lift boy notes every ring, room service every order, and the telegraph desk every wire charged to a suite.\n\nLaid side by side, the three ledgers show one suite on the second floor going quiet for an hour, around the time the porter heard the lift at 02:10. It is not the only quiet suite. **M. Velmont** paints at night, in his studio, and often comes back to the Ritz only at dawn.",
+   "objective": "Which suite fell silent on the night of the theft?",
+   "answer_form": "the suite number",
+   "telegram": "MY DEAR CLERK STOP ONE HOUR AND FIVE MINUTES STOP THE BALCONY THE STONE THE CAB THE JEWELLER AND BACK FOR CHAMPAGNE STOP AND THE FORTY THOUSAND FRANCS STOP WHERE DO YOU THINK THEY WENT STOP A L",
+   "board": "Silent suite",
+   "n": 11,
+   "tables": [
+    "lift_log"
+   ],
+   "construct": "LAG() OVER",
+   "answer_sha256": [
+    "802b906a18591ead8a6dd809b262ace4c65c16e89764c40ae326cfcff811e10c"
+   ],
+   "where": "A suite can make noise in three ledgers: the lift, room service and telegrams. Put that night's events from all three into one list, then use LAG to measure each suite's gap since its previous event.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "2eD3GoSavmxRBIs/cew+VA=="
+    ],
+    "wraps": [
+     "4vGI1iHJGBSkSEbHYJswC8mo9dEA49i8zLQap16IEqZkpWapKoWRO02CP7NTrJca"
+    ],
+    "ct": "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",
+    "tag": "1OhLWlaXtI0nV/qfHU73UiR1DGS6DF+4siw7bg+Z2N4="
+   }
+  },
+  {
+   "title": "Follow the Money",
+   "story": "The forty thousand francs did not stay in the shell account of chapter 6. They moved on, through shell accounts at three other banks, into June. What **Ganimard** knows:\n\n| The road | |\n| Starts | at the shell account of chapter 6, forty thousand francs |\n| First move | the 20th of May, then every three days or so |\n| At every door | two per cent stays behind: the next account gets ninety-eight |\n| One door | was paid in two halves, the same day |\n| Doors | seven |\n\nFollow the ninety-eight per cent, and only the ninety-eight per cent, and **read the name on the last account**. Ganimard will not like it.",
+   "objective": "Follow the ninety-eight per cent from the account of chapter 6, seven doors down. Whose is the last account?",
+   "answer_form": "the person's name",
+   "telegram": "MY DEAR GANIMARD STOP INSURANCE PAYS THREE HUNDRED THOUSAND FOR A STONE WORTH FORTY THOUSAND STOP ARITHMETIC IS THE GREATEST OF CRIMES STOP A L",
+   "board": "Where the money went",
+   "n": 12,
+   "tables": [],
+   "construct": "WITH RECURSIVE",
+   "answer_sha256": [
+    "5f4b9a3cb0977d77cc43bb37fbe173d26ede96c880d6074ae72555b7c0adcd8c"
+   ],
+   "where": "Start from the account of chapter VI. At each step, follow the one transfer worth 98 per cent of the previous one. Some transfers are paid in parts, so add them up per pair of accounts first. WITH RECURSIVE repeats the step.",
+   "howto": {
+    "iter": 200000,
+    "salts": [
+     "3d/blOvzp+1nYFs7O0+d2g=="
+    ],
+    "wraps": [
+     "wIic7qQBnjqZdpXsNmBWsjDTWjnMBODEITJgxT0QE4BP+MxMGieYYmHP6hzixy9/"
+    ],
+    "ct": "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",
+    "tag": "g4X1aXp4kfp5pRmQ08x/08si33MtjFIoDxsekPTEdao="
+   }
+  }
+ ],
+ "decoys": {
+  "1": 1839
+ },
+ "endings": {
+  "part1": "Gare du Nord, 20 May, 09:10. **Ganimard** is early: *Lupin had asked him not to be late.* His hand falls on the shoulder of **Rupert Blakeney, Esq.**\n\n*'Monsieur Rupert Blakeney. You are under arrest.'*\n\nThe gentleman smiles. *'Delighted, Inspector.'* He lets the inspector take the small velvet case from his hand. Ganimard opens it. *It is empty.*\n\nA gendarme leads the prisoner away in handcuffs, still smiling. Behind them, the boat train pulls out, a day behind the Blue Star: *it crossed yesterday, in a trunk.*",
+  "part2": "The **Comtesse** receives **Ganimard** in her suite; the stone, she reminds him, was insured for three hundred thousand francs. She offers tea. Ganimard declines, *which is a first*, and lays the bank's ledger on her desk: sold for forty thousand, insured for three hundred.\n\n*'Arithmetic, Inspector.'*\n\n*'Madame la Comtesse, you are under arrest.'* The jeweller bought nothing: the forty thousand were hers, sent round seven doors to come home as a sale. She asks for her furs. You are promoted to a desk with a window. **Lupin**, in London, sends a telegram."
+ },
+ "part2_code_sha256": [
+  "05107323d5a58037c5524a24f859825733ad286c18c93889dab838e1c0722feb",
+  "ef6af3bee8a7190ea046684d55c824686262045d2b631caf1e5ae036c47c8af5"
+ ]
+}

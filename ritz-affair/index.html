@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<meta name="google-site-verification" content="-fqcYQMOruZhkzUQeJUjfuQjdxXKDeeu0F8gQ8ASH3Y">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ritz Affair: a free SQL detective game</title>
+<meta name="description" content="The Ritz Affair is a free detective game that teaches SQL in your browser. Paris, 1912: a sapphire disappears from the Ritz, and you work through twelve chapters by querying the police archive. No install and no account.">
+<link rel="canonical" href="https://alephb.uk/ritz-affair/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Ritz Affair">
+<meta property="og:title" content="The Ritz Affair: a free SQL detective game">
+<meta property="og:description" content="The Ritz Affair is a free detective game that teaches SQL in your browser. Paris, 1912: a sapphire disappears from the Ritz, and you work through twelve chapters by querying the police archive. No install and no account.">
+<meta property="og:url" content="https://alephb.uk/ritz-affair/">
+<meta property="og:image" content="https://alephb.uk/ritz-affair/landing-pillow.jpg">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"The Ritz Affair","url":"https://alephb.uk/ritz-affair/","inLanguage":"en"},{"@type":["VideoGame","LearningResource"],"name":"The Ritz Affair","description":"The Ritz Affair is a free detective game that teaches SQL in your browser. Paris, 1912: a sapphire disappears from the Ritz, and you work through twelve chapters by querying the police archive. No install and no account.","url":"https://alephb.uk/ritz-affair/","image":"https://alephb.uk/ritz-affair/landing-pillow.jpg","genre":["Detective","Educational"],"gamePlatform":"Web browser","applicationCategory":"Game","operatingSystem":"Any","inLanguage":"en","isAccessibleForFree":true,"learningResourceType":"Game","teaches":"SQL","author":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"publisher":{"@type":"Organization","name":"AlephB","url":"https://alephb.uk/"},"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}]}</script>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=3e59b60">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js" integrity="sha384-DJiKBv+LC78e5InEB+MvFIAH079ynMK/ERTtFUCpDzXhH1Bht7aVfpg3yOVsuYl9" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="corners">
+<button id="btn-feedback" class="quiet feedback-corner" title="Send feedback" aria-label="Send feedback"><svg class="icon mail" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M2 4.5L8 9L14 4.5"/></svg><span class="btn-text">Feedback</span></button>
+<button id="btn-theme" class="quiet theme-corner" title="Night edition" aria-label="Night edition"><svg class="icon moon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 8.53A6 6 0 1 1 7.47 2A4.67 4.67 0 0 0 14 8.53Z"/></svg><span class="btn-text">Night edition</span></button>
+</div>
+<div id="landing">
+  <div class="landing-card">
+    <p class="landing-band">A FREE GAME TO LEARN SQL</p>
+    <div class="mast-title">LE PETIT JOURNAL</div>
+    <div class="mast-sub">PARIS &mdash; MAY 1912 &mdash; FIVE CENTIMES</div>
+    <nav class="landing-nav muted"><span class="current" aria-current="page" title="The game">The Ritz Affair</span> &middot; <a href="../learn/" title="Training content: SQL lessons and exercises">The Clerk's Handbook</a></nav>
+    <h1>THE BLUE STAR VANISHES FROM THE RITZ</h1>
+    <figure class="landing-photo">
+      <img src="landing-pillow.jpg" width="960" height="640" alt="A calling card signed A. L., lying on a white damask pillow with gold tassels">
+      <figcaption>The pillow, as the maid found it. <i>Photograph: Prefecture of Police.</i></figcaption>
+    </figure>
+    <p class="landing-story">A calling card signed <i>A. L.</i> was found on the pillow of the <b>Comtesse de Cagliostro</b>.<br><b>Inspector Ganimard</b>, summoned in the night, has promised an arrest <i>before the week is out</i>. He has also, we are told, hired a clerk.</p>
+    <p class="landing-kicker">You are <b>the clerk</b>. Your only weapon is <b>SQL</b>.</p>
+    <div class="landing-buttons">
+      <button id="btn-investigate" disabled>Investigate</button>
+      <button id="btn-compete" disabled title="Ask your teacher for the season link.">Compete</button>
+    </div>
+    <p class="landing-warmup"><strong>New to SQL?</strong> <a href="../learn/exercises.html#the-cheap-shelf">Try a two-minute warm-up first &rarr;</a></p>
+    <div id="compete-form" class="compete-form" hidden>
+      <div class="row"><span class="label">PSEUDO</span><input id="team" autocomplete="off" maxlength="40" placeholder="Your pseudo"><button id="btn-start">Join</button></div>
+      <p id="compete-note" class="muted"></p>
+    </div>
+    <div id="compete-wait" class="compete-form" hidden>
+      <div class="label">SEASON</div>
+      <p><b id="wait-name"></b>, as <b id="wait-team"></b></p>
+      <p class="muted">Waiting for the teacher to open the session. Keep this page open: the clock starts for everyone at once.</p>
+    </div>
+    <p id="status" class="muted">Loading the archives...</p>
+    <details class="landing-about">
+      <summary class="label">ABOUT THIS GAME</summary>
+      <p><b>The Ritz Affair is a detective story you play by writing SQL.</b> Paris, May 1912: the Blue Star, a famous sapphire, has vanished from the Hotel Ritz, and Inspector Ganimard needs a clerk who can read his archives. The archives are a <b>SQLite database that runs in your browser</b>. There is nothing to install and no account to create, and in learning mode nothing you type is sent to a server.</p>
+      <p>It is written for <b>students of a first SQL course</b>, and for <b>teachers</b> who want a graded or timed class session built on real queries instead of multiple-choice questions.</p>
+      <p class="landing-sub"><b>How a chapter works</b></p>
+      <p>You read the story and the objective, then query the archives: police reports, the hotel register, cab rides, telegrams, bank transfers. Your first query is already waiting in the terminal:</p>
+      <pre class="landing-sql"><span class="sql-kw">SELECT</span> * <span class="sql-kw">FROM</span> <span class="sql-id">police_report</span> <span class="sql-kw">LIMIT</span> <span class="sql-num">5</span>;</pre>
+      <p>When you think you have it, type the answer. A correct answer opens the next chapter and <b>reveals its tables</b> in the schema beside the terminal. In learning mode a wrong one costs nothing but pride. Once a chapter is solved, its review shows <b>how it's done</b>, with the reference SQL.</p>
+      <p class="landing-sub"><b>The twelve chapters</b> (each construct links to its lesson in the handbook)</p>
+      <table class="landing-chapters">
+        <tr><th>Chapter</th><th>SQL practised</th></tr>
+        <tr><td>I. The Night of the 17th</td><td><a href="../learn/select-where.html"><code>SELECT</code></a> / <a href="../learn/select-where.html"><code>WHERE</code></a></td></tr>
+        <tr><td>II. The Neighbouring Suite</td><td><a href="../learn/order-by-limit.html"><code>ORDER BY</code></a> / <a href="../learn/order-by-limit.html"><code>LIMIT</code></a></td></tr>
+        <tr><td>III. A Plate in the Dark</td><td><a href="../learn/like.html"><code>LIKE</code></a></td></tr>
+        <tr><td>IV. The Cab's Week</td><td><a href="../learn/group-by-having.html"><code>GROUP BY</code></a> / <a href="../learn/group-by-having.html"><code>HAVING</code></a></td></tr>
+        <tr><td>V. The Boarding House</td><td><a href="../learn/joins.html"><code>JOIN</code></a></td></tr>
+        <tr><td>VI. Follow the Francs</td><td>three <a href="../learn/joins.html#several-joins-in-a-row"><code>JOIN</code></a>s, <a href="../learn/group-by-having.html"><code>SUM</code></a> and <a href="../learn/group-by-having.html"><code>HAVING</code></a></td></tr>
+        <tr><td>VII. The Quietest Hour</td><td><a href="../learn/case-when.html"><code>CASE WHEN</code></a> with <a href="../learn/group-by-having.html"><code>GROUP BY</code></a></td></tr>
+        <tr><td>VIII. The First Order Before Dawn</td><td><a href="../learn/window-functions.html#numbering-and-ranking"><code>RANK() OVER</code></a> and a <a href="../learn/ctes.html"><code>CTE</code></a></td></tr>
+        <tr><td>IX. The Trunk</td><td><a href="../learn/ctes.html#several-steps-and-joining-a-cte"><code>CTE</code></a> and <a href="../learn/joins.html"><code>JOIN</code></a></td></tr>
+        <tr><td>X. Never Seen Together</td><td><a href="../learn/joins.html#a-table-joined-to-itself"><code>self-join</code></a></td></tr>
+        <tr><td>XI. The Silence</td><td><a href="../learn/window-functions.html#looking-at-the-previous-row-lag"><code>LAG() OVER</code></a></td></tr>
+        <tr><td>XII. Follow the Money</td><td><a href="../learn/ctes.html#with-recursive-following-a-chain"><code>WITH RECURSIVE</code></a></td></tr>
+      </table>
+      <p>After chapter VIII the paper switches to its <b>night edition</b>: Part II follows the case after dark through four more chapters and new tables.</p>
+      <p>In <b>compete mode</b> a teacher hands out a season link; each player picks a pseudo, the teacher starts every clock at once, and a class leaderboard ranks everyone by time.</p>
+      <p class="landing-sub"><b>Learn the SQL first</b></p>
+      <p><a href="../learn/">The Clerk's Handbook</a> explains every construct the chapters use, on a separate <a href="../learn/database.html">bakery database</a>, with <a href="../learn/exercises.html">twenty graded exercises</a> you can run in the page and <a href="../learn/grammar.html">the grammar of SQL</a> in one place.</p>
+      <p>The story borrows Arsene Lupin, Ganimard, the Comtesse de Cagliostro and the names Sernine and Velmont from Maurice Leblanc. Everyone else in the archives is invented, and every name, sum and timetable in the database is fictional. The jokes hidden among its rows are deliberate.</p>
+    </details>
+    <p class="muted landing-foot"><a href="privacy.html">Privacy notice</a><span id="stats-link" hidden> &middot; <a href="#" id="btn-stats">Statistics</a></span> &middot; <a href="admin.html">The Clerk's Desk</a> &middot; <a href="https://alephb.uk">AlephB</a> &middot; <a href="mailto:contact@alephb.uk">Contact</a></p>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="mast-title">LE PETIT JOURNAL</div>
+  <div id="compete-info" class="mast-sub compete-info" hidden></div>
+  <nav class="landing-nav muted mast-nav"><span class="current" aria-current="page" title="The game">The Ritz Affair</span><span class="mast-chapter"> &mdash; <span id="masthead-chapter" class="chapter-menu-toggle">Chapter <b>I</b> of VIII</span></span> &middot; <a href="../learn/" title="Training content: SQL lessons and exercises">The Clerk's Handbook</a><button id="btn-back" class="quiet back-small" hidden>Back to investigation</button></nav>
+  <button id="btn-reset" class="quiet reset-corner" title="New investigation" aria-label="New investigation"><svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.5"/><path d="M9.7 9.7L14.5 14.5M4.5 4V7M3 5.5H6"/></svg><span class="btn-text">New investigation</span></button>
+  <div id="chapter-menu" class="chapter-menu" hidden></div>
+</header>
+
+<main class="columns">
+  <aside class="col-erd">
+    <div class="label-row"><span class="label">SCHEMA</span><button id="btn-erd" class="quiet" title="Enlarge the schema" aria-label="Enlarge the schema"><svg class="icon enlarge" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 2.5H13.5V6.5M13.5 2.5L9 7M6.5 13.5H2.5V9.5M2.5 13.5L7 9"/></svg></button><span class="erd-legend muted">
+      <span data-legend="pk"><svg width="16" height="10" viewBox="0 0 16 10" class="key pk"><circle cx="4" cy="5" r="2.8"/><path d="M7 5H15M12 5V8M14.5 5V7.5"/></svg>primary key</span>
+      <span data-legend="fk" hidden><svg width="16" height="10" viewBox="0 0 16 10" class="key fk"><circle cx="4" cy="5" r="2.8"/><path d="M7 5H15M12 5V8M14.5 5V7.5"/></svg>foreign key</span>
+      <span data-legend="many" hidden><svg width="46" height="16" viewBox="0 0 46 16"><path class="rel" d="M4 12H42"/><circle class="rel-dot" cx="4" cy="12" r="2.4"/><circle class="rel-dot" cx="42" cy="12" r="2.4"/><text class="rel-t" x="8" y="8">1</text><text class="rel-t" x="33" y="8">N</text></svg>one-to-many</span>
+      <span data-legend="one" hidden><svg width="46" height="16" viewBox="0 0 46 16"><path class="rel" d="M4 12H42"/><circle class="rel-dot" cx="4" cy="12" r="2.4"/><circle class="rel-dot" cx="42" cy="12" r="2.4"/><text class="rel-t" x="8" y="8">1</text><text class="rel-t" x="33" y="8">1</text></svg>one-to-one</span>
+    </span></div>
+    <div id="erd" class="erd" role="img" aria-label="Database schema: the tables revealed so far and their relationships"></div>
+    <!-- The ad box (a native <details>, open on every visit, nothing remembered). Until AdSense approves the
+         site it carries a house ad for the handbook, a 1912-style engraved advertisement made on OpenGen (owner, 2026-10-19); Google's ad replaces it then. -->
+    <details id="press-box" class="press-box" open>
+      <summary class="label">ADVERTISEMENTS</summary>
+      <div class="press-slot">
+        <a class="press-notice" href="../learn/" target="_blank" rel="noopener"><img class="day" src="handbook-ad.jpg" width="880" height="659" loading="lazy" alt="The Clerk's Handbook: every query the Inspector expects of you. From SELECT to WITH RECURSIVE. Twenty graded exercises, answers enclosed. Free of charge. Open it now."><img class="night" src="handbook-ad-night.jpg" width="880" height="659" loading="lazy" alt=""></a>
+      </div>
+    </details>
+  </aside>
+
+  <section class="col-terminal">
+    <div class="label-row"><span class="label">TERMINAL</span><span class="term-meta"><span class="muted keys"><span class="kgrp"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>Enter</kbd> run</span><span class="kgrp"><kbd>Tab</kbd> complete</span><span class="kgrp"><kbd>Ctrl</kbd><span class="plus">+</span><kbd>F</kbd> format</span><span class="kgrp"><kbd>Shift</kbd><span class="plus">+</span><kbd>Tab</kbd> leave the box</span></span><a class="dialect" href="../learn/grammar.html" target="_blank" rel="noopener" title="This terminal follows PostgreSQL's rules: The Grammar of SQL">PostgreSQL</a></span></div>
+    <div class="editor"><pre id="sql-hl" class="sql-hl" aria-hidden="true"></pre><textarea id="sql" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="SQL query" placeholder="SELECT * FROM police_report WHERE ..."></textarea></div>
+    <div class="row"><button id="btn-run"><svg class="icon play" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 2.5L13 8L4.5 13.5Z"/></svg><span class="btn-text">Run</span></button><span id="run-info" class="muted" aria-live="polite"></span></div>
+    <div id="results" class="results" aria-live="polite"></div>
+    <div class="answer-row">
+      <span class="label">ANSWER</span>
+      <input id="answer" autocomplete="off" aria-label="Answer">
+      <button id="btn-answer">Submit</button>
+    </div>
+    <p id="reply" class="reply" aria-live="polite"></p>
+    <div id="howto-now"></div>
+    <button id="btn-next" class="next-chapter" hidden></button>
+    <details><summary class="label">HISTORY</summary><ol id="history"></ol></details>
+  </section>
+
+  <aside class="col-story">
+    <div class="label-row">
+      <div class="chapter-head">
+        <img id="chapter-icon" class="chapter-icon" alt="">
+        <h2 id="chapter-title"></h2>
+      </div>
+    </div>
+    <div id="story" class="story"></div>
+    <div class="box"><div class="label">OBJECTIVE</div><div id="objective"></div></div>
+    <div class="label-row"><span class="label">CASE BOARD</span><span><button id="btn-badges" class="quiet"><svg class="icon rosette" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="6" r="4"/><path d="M6 9.5L5 14.5L7 13.5M10 9.5L11 14.5L9 13.5"/></svg><span class="btn-text">Badges</span></button> <button id="btn-suspects" class="quiet"><svg class="icon person" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="5" r="2.75"/><path d="M2.5 14.5C2.5 11 5 9.5 8 9.5S13.5 11 13.5 14.5"/></svg><span class="btn-text">Suspects</span></button></span></div>
+    <div id="board" class="board"></div>
+    <pre id="telegram" class="telegram" aria-label="Telegram"></pre>
+    <pre id="taunt" class="telegram" aria-label="Telegram" aria-live="polite"></pre>
+    <div class="label">NOTEPAD</div>
+    <textarea id="notes" placeholder="Ganimard does not read your notes. Write anyway."></textarea>
+    <div class="row"><button id="btn-print" hidden>Print certificate</button></div>
+  </aside>
+</main>
+
+<div id="suspects" class="suspects" hidden></div>
+<div id="extra" class="extra" hidden></div>
+<dialog id="part2" class="part2"><form method="dialog">
+  <div class="label">A NEW OBJECTIVE</div><h2>PART II<br>The case is not closed</h2>
+  <p>Lupin mentioned a Chapter IX. Somewhere in the archives a telegram is addressed to a curious clerk; its code, typed in the answer box...</p>
+  <button autofocus>To the archives</button>
+</form></dialog>
+<dialog id="closed" class="part2"><form method="dialog">
+  <div class="label">COMPETE</div><h2>THE SESSION IS OVER</h2>
+  <p>The teacher has closed the session. Your time is recorded up to this point.</p>
+  <p class="closed-time"></p>
+  <a class="btn" target="_blank" rel="noopener">See the results</a> <button class="quiet" autofocus>Keep reading</button>
+</form></dialog>
+<dialog id="reset" class="part2" aria-labelledby="reset-title" aria-describedby="reset-msg"><form method="dialog">
+  <div class="label">A FRESH START</div><h2 id="reset-title">New investigation</h2>
+  <p id="reset-msg" class="ask-msg"></p>
+  <button value="" class="quiet" autofocus>Cancel</button> <button value="ok">Erase and start afresh</button>
+</form></dialog>
+<dialog id="names" class="part2" aria-labelledby="names-title"><form method="dialog">
+  <div class="label">CERTIFICATE</div><h2 id="names-title">For the record</h2>
+  <p><label for="names-input">Names for the certificate (both of you):</label><br><input id="names-input" type="text" maxlength="80" autocomplete="off" autofocus></p>
+  <button value="ok">Print</button> <button value="" class="quiet">Cancel</button>
+</form></dialog>
+<div id="badges" class="suspects" hidden></div>
+<!-- The clerk's first morning (learn mode, first visit): app.js showPrologue builds lost_property in the browser -->
+<dialog id="prologue" class="part2 prologue" aria-labelledby="prologue-title">
+  <div class="label">BEFORE THE INSPECTOR ARRIVES</div><h2 id="prologue-title">The clerk's first morning</h2>
+  <p>The head porter hands you the hotel's lost-property book while Ganimard finishes his coffee. Practise on it: nothing in it is evidence.</p>
+  <p id="prologue-step" class="prologue-step" aria-live="polite"></p>
+  <div class="editor"><pre class="sql-hl" aria-hidden="true"></pre><textarea id="prologue-sql" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="SQL query"></textarea></div>
+  <div class="row"><button type="button" id="prologue-run"><svg class="icon play" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 2.5L13 8L4.5 13.5Z"/></svg><span class="btn-text">Run</span></button><span id="prologue-info" class="muted" aria-live="polite"></span></div>
+  <div id="prologue-results" class="results" aria-live="polite"></div>
+  <div id="prologue-answer" class="row prologue-answer" hidden><span class="label">ANSWER</span><input id="prologue-input" autocomplete="off" aria-label="Answer"><button type="button" id="prologue-submit">Submit</button></div>
+  <p id="prologue-reply" class="reply" aria-live="polite"></p>
+  <button type="button" id="prologue-done" hidden>To chapter I</button> <button type="button" id="prologue-skip" class="quiet">Skip, I know SQL</button>
+</dialog>
+<dialog id="passgate" class="part2"><form method="dialog">
+  <div class="label">ADMIN</div>
+  <p><label for="pass">Passphrase</label> <input id="pass" type="password" autocomplete="current-password"></p>
+  <button value="ok">Unlock</button> <button value="" class="quiet" formnovalidate>Cancel</button>
+</form></dialog>
+<dialog id="newsuspects" class="part2 newsuspects"><form method="dialog">
+  <div class="label"></div><div class="cards"></div>
+  <button autofocus>Noted</button>
+</form></dialog>
+<div id="toasts" role="status" aria-live="polite"></div>
+<div id="consent" class="consent" role="region" aria-label="Usage statistics" hidden>
+  <span>Help improve the course: allow anonymous usage statistics?</span>
+  <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="privacy.html">Privacy notice</a></span>
+</div>
+<section id="certificate"></section>
+<script type="module" src="app.js?v=3e59b60"></script>
+</body>
+</html>
