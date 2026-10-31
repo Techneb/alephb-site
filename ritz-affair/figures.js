@@ -5,7 +5,7 @@
 // categorical --c1..--c6, validated light and night with the dataviz skill's script) and resolved at draw time, so day
 // and night follow. Every hover box is one hovertext string (tipText), on the mark or on an invisible carrier trace that
 // owns a whole column (or row) so it can list every series.
-import { csvText, escapeHtml as esc, gaText } from "./shared.js?v=c37030d";
+import { csvText, escapeHtml as esc, gaText } from "./shared.js?v=588307f";
 
 export const pct = (a, b) => (b ? Math.round((100 * a) / b) + "%" : "-");
 export const compact = n => (n >= 1e6 ? +(n / 1e6).toFixed(1) + "M" : n >= 1e3 ? +(n / 1e3).toFixed(1) + "K" : String(n));
