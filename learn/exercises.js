@@ -2,11 +2,11 @@
 // browser with sql.js, the game's terminal (terminal.js: the same run pipeline and editor as the game), and a check
 // of the last result against the chosen question's solution, run on the same database. It never loads the game.
 // The page itself stays complete without this script: every question, row count and solution is in the HTML.
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, EMPTY_RUN } from "./lib/terminal.js?v=873f5e0";
-import { toSqlite } from "./lib/strict.js?v=873f5e0";
-import { btnLike, erdButtonHtml, setIconButton, showCallouts } from "./lib/ui.js?v=873f5e0";
-import { initAds, track, trackOnce, useFeature, queryFail } from "./lib/stats.js?v=873f5e0";
-import { escapeHtml } from "./lib/shared.js?v=873f5e0";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, EMPTY_RUN } from "./lib/terminal.js?v=89576c7";
+import { toSqlite } from "./lib/strict.js?v=89576c7";
+import { btnLike, erdButtonHtml, setIconButton, showCallouts } from "./lib/ui.js?v=89576c7";
+import { initAds, track, trackOnce, useFeature, queryFail } from "./lib/stats.js?v=89576c7";
+import { escapeHtml } from "./lib/shared.js?v=89576c7";
 
 const VERSION = new URL(import.meta.url).search;
 const STORE = "ritz.exercises";                  // the questions solved
