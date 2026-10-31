@@ -1,11 +1,12 @@
 // site/endings.js -- the ends of the two parts (learn mode): the extra editions with their films, the Part II ending,
 // the certificate, the share line. Each takes the state and data it shows plus hooks into the game
 // ({ save, chapter, reset }) instead of reading the game's globals. Side-effect free at import.
-import { BADGES, rank } from "./badges.js?v=3e59b60";
-import { part1Done, partStats } from "./state.js?v=3e59b60";
-import { portraitSrc } from "./suspects.js?v=3e59b60";
-import { esc, richText, ICON_ATTRS } from "./ui.js?v=3e59b60";
-import { useFeature } from "./stats.js?v=3e59b60";
+import { BADGES, rank } from "./badges.js?v=c37030d";
+import { part1Done, partStats } from "./state.js?v=c37030d";
+import { portraitSrc } from "./suspects.js?v=c37030d";
+import { esc, richText, ICON_ATTRS } from "./ui.js?v=c37030d";
+import { useFeature } from "./stats.js?v=c37030d";
+import { GAME_URL } from "./shared.js?v=c37030d";
 
 const $ = id => document.getElementById(id);
 
@@ -92,7 +93,7 @@ export function certificateHtml(state) {
 
 // --- Share, at the end of the game only (owner, 2026-10-25): never a clue or an answer, only the rank and the count.
 // The rank is Part I's (RANKS are tuned on it, as on the certificate); the count is the whole game's.
-export const SHARE_URL = "https://alephb.uk/ritz-affair/";
+export const SHARE_URL = GAME_URL;
 export const shareText = (rankName, queries) => "I solved The Ritz Affair, a free SQL detective game, as " + rankName + " in " + queries + " queries.";
 export function shareLinks(text, url = SHARE_URL) {
   return { x: "https://x.com/intent/post?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url),

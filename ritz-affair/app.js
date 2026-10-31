@@ -2,17 +2,17 @@
 // client, boot). Its parts live in their own modules: state.js (the saved state), terminal.js and strict.js (the SQL
 // terminal), badges.js, suspects.js, endings.js, onboarding.js, ui.js, stats.js and shared.js. boot() only runs on
 // the game page.
-import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=3e59b60";
-import { wireFeedback } from "./feedback.js?v=3e59b60";
-import { track, trackOnce, useFeature, queryFail, initConsent, initAds, quietStats } from "./stats.js?v=3e59b60";
-import { freshState, migrateSave, readImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, stepOn } from "./state.js?v=3e59b60";
-import { highlightSql, wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=3e59b60";
-import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=3e59b60";
-import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=3e59b60";
-import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=3e59b60";
-import { prologueOn, tourOn, showPrologue, CALLOUTS } from "./onboarding.js?v=3e59b60";
-import { openHowto, howtoHtml } from "./howto.js?v=3e59b60";
-import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText } from "./ui.js?v=3e59b60";
+import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=c37030d";
+import { wireFeedback } from "./feedback.js?v=c37030d";
+import { track, trackOnce, useFeature, queryFail, initConsent, initAds, quietStats } from "./stats.js?v=c37030d";
+import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, stepOn } from "./state.js?v=c37030d";
+import { highlightSql, wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=c37030d";
+import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=c37030d";
+import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=c37030d";
+import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=c37030d";
+import { prologueOn, tourOn, showPrologue, CALLOUTS } from "./onboarding.js?v=c37030d";
+import { openHowto, howtoHtml } from "./howto.js?v=c37030d";
+import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText } from "./ui.js?v=c37030d";
 
 const NAMES_ASK = "Names for the certificate (both of you):";   // #names' label, and prompt()'s where <dialog> cannot open
 export function resetMessage(mode) {   // the New investigation question (#reset, or confirm() as the fallback)
@@ -119,6 +119,13 @@ export function currentObjectiveHtml(ch, state) {
   const step = stepOn(state, ch);
   return step ? objectiveHtml(step.objective, "Answer:", step.answer_form, { ...ch, where: step.where })
     : objectiveHtml(ch.objective, "Answer:", ch.answer_form, ch, stepDoneHtml(ch, state));
+}
+// The Where to look opened on chapter n, as [its key in state.hintsWhere, hint_where's params]: chapter I's two steps
+// count apart (keys 1 and "1b", param step 1 or 2), every other chapter by its number alone.
+export function whereOpened(state, ch, n) {
+  if (!ch || !ch.step1) return [n, { chapter: n, mode: state.mode }];
+  const step = stepOn(state, ch) ? 1 : 2;
+  return [step === 1 ? n : n + "b", { chapter: n, mode: state.mode, step }];
 }
 
 // Scroll the page to the schema box, then the box to table t, and flash its outline for a moment.
@@ -273,7 +280,7 @@ export const TAUNTS = [
 ];
 
 // Chapter I's step 1 answered with the 17th (any spelling, `step1.eve_sha256`): still a wrong answer, with its own line.
-export const EVE_REPLY = "The night began on the 17th, clerk. Under which date did the police file it?";
+export const EVE_REPLY = "The 17th is when the night began, clerk, not where the police filed it. Mr. Duroc knows the hour: read him.";
 
 export function judgeWrong(norm, data, state, met) {
   if (Object.hasOwn(data.wrong_suspects, norm) && (!met || met.includes(norm))) return data.wrong_suspects[norm];
@@ -868,12 +875,12 @@ function enterGame() {
   showClosed();   // the season closed while the page was shut
 }
 
-// The saves the old subdomain's bridge (publish.mjs) carried over (state.js readImport), written before anything reads storage;
-// then the fragment goes, so a reload or a copied link never imports again.
+// The saves the old subdomain's bridge (publish.mjs) carried over (state.js bridgeImport: only from the bridge, never the
+// desk's board URL), written before anything reads storage; then the fragment goes, so a reload or a copied link never imports again.
 function importSaves() {
-  const imp = readImport(location.hash);
-  if (!imp) return;
-  try { for (const [k, v] of Object.entries(importWrites(imp, k => localStorage.getItem(k)))) localStorage.setItem(k, v); } catch {}
+  if (!/^#import=/.test(location.hash)) return;
+  const imp = bridgeImport(location.hash, document.referrer);
+  if (imp) try { for (const [k, v] of Object.entries(importWrites(imp, k => localStorage.getItem(k)))) localStorage.setItem(k, v); } catch {}
   history.replaceState(null, "", location.pathname + location.search);
 }
 
@@ -978,11 +985,12 @@ async function boot() {
       state.hints.push(n); save(state);
       track("hint_open", { chapter: n, mode: state.mode });
     }
-    if (d.matches("details.hint-where")) {   // once per chapter per save, like hint_open
+    if (d.matches("details.hint-where")) {   // once per chapter (per step on chapter I) per save, like hint_open
       const n = reviewing ?? curChapter();
-      if (state.hintsWhere.includes(n)) return;
-      state.hintsWhere.push(n); save(state);
-      track("hint_where", { chapter: n, mode: state.mode });
+      const [key, params] = whereOpened(state, data.chapters.find(c => c.n === n), n);
+      if (state.hintsWhere.includes(key)) return;
+      state.hintsWhere.push(key); save(state);
+      track("hint_where", params);
     }
   }, true);
   // Leaving with the chapter unsolved: once per chapter per page load, sent as a beacon so the close does not drop it.
