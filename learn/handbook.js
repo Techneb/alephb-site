@@ -1,8 +1,8 @@
 // Usage statistics on every handbook page: the game's consent banner and GA4 (../stats.js, the same ritz.consent
 // answer site-wide) and the reading events, each once per page load. The exercises page adds its own (exercises.js).
 // The ad path (Google's message) applies only where the ad box is, exercises.html; elsewhere the banner asks.
-import { initConsent, useFeature } from "./lib/stats.js?v=d97e6c9";
-import { wireFeedback } from "./lib/feedback.js?v=d97e6c9";
+import { initConsent, useFeature } from "./lib/stats.js?v=fc785b2";
+import { wireFeedback } from "./lib/feedback.js?v=fc785b2";
 
 if (typeof document !== "undefined") {
   initConsent(!!document.getElementById("press-box"));
