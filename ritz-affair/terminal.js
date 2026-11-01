@@ -2,9 +2,9 @@
 // (runSql: comma-join guard, strict check, sql.js, SQLite's errors explained, the date note), one editor (wireEditor:
 // colouring, Tab completion, Ctrl+Enter, Ctrl+F, Tab, Enter auto-indent), the results table and the database settings.
 // Side-effect free at import; the DOM is touched only inside wireEditor.
-import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=588307f";
-import { esc } from "./ui.js?v=588307f";
-import { HANDBOOK } from "./shared.js?v=588307f";
+import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=bda19e8";
+import { esc } from "./ui.js?v=bda19e8";
+import { HANDBOOK, HISTORY_MAX } from "./shared.js?v=bda19e8";
 
 // SQL colouring for the terminal: a <pre> under a transparent textarea (index.html .editor).
 export const SQL_KEYWORDS = new Set(("select from where and or not in is null like ilike glob between join inner left right full outer " +
@@ -308,8 +308,8 @@ export const runHtml = (r, base) => r.strict ? strictHtml(r.strict, base) : r.er
 // The run line beside Run: "error", or the row count.
 export const runInfo = r => r.error ? "error" : (r.res ? r.res.values.length : 0) + " rows";
 
-// History: most recent first, 20 at most, no repeat of the last one.
+// History: most recent first, HISTORY_MAX at most, no repeat of the last one.
 export function pushHistory(state, sql) {
   if (state.history[0] !== sql) state.history.unshift(sql);
-  state.history = state.history.slice(0, 20);
+  state.history = state.history.slice(0, HISTORY_MAX);
 }
