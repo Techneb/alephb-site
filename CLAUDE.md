@@ -17,7 +17,7 @@ The AlephB home page at <https://alephb.uk>: one static page listing the project
 
 ## AdSense
 
-- Publisher `pub-9765732642926043`; application for the root domain alephb.uk sent 2026-10-03, refused 2026-10-11 for low-value content; the Ritz Affair page and three articles followed, then a new review request on 2026-10-19 (still under review on 10-23). Readiness audit: `~/Projets/2023-2026-AlbertSchool/SQL-Mystery-Game/docs/audits/2026-10-09-adsense-readiness.md`.
+- Publisher `pub-9765732642926043`; application for the root domain alephb.uk sent 2026-10-03, refused 2026-10-11 for low-value content; the Ritz Affair page and three articles followed, then a new review request on 2026-10-19 (refused 2026-10-30, low-value content); the game moved to alephb.uk/ritz-affair/ on 2026-10-31 and a new review was requested on 2026-11-02, verdict pending. Readiness audit: `~/Projets/2023-2026-AlbertSchool/SQL-Mystery-Game/docs/audits/2026-10-09-adsense-readiness.md`.
 - Keep `ads.txt` and the meta tag as they are. Never remove or re-add the site in AdSense while it is under review (Google says that delays it); editing pages is fine.
 - The consent message should point at `https://alephb.uk/privacy.html`.
 
