@@ -1,1 +1,1 @@
-exclude: [CLAUDE.md, LOGO.md, tools]
+exclude: [CLAUDE.md, LOGO.md, README.md, tools]
