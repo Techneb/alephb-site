@@ -7,10 +7,10 @@
 // opens GA. This module is the GA model (the Count metrics, the request builders, PANELS) and the views; the charts
 // themselves are figures.js (Plotly figures, drawn by drawPlots below). Pure parts are exported for test_desk.mjs; the page wiring runs only in a browser.
 // The board URL comes from ?board= or localStorage ritz.admin.board, as on admin.html; the passphrase stays in sessionStorage for the tab (shared.js deskPassphrase).
-import { wireFeedback } from "./feedback.js?v=bda19e8";
-import { DIMENSIONS, deskBoard, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=bda19e8";
+import { wireFeedback } from "./feedback.js?v=6ce1056";
+import { DIMENSIONS, deskBoard, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=6ce1056";
 import { ROMAN, STAGES, barTable, chapterBarsFig, chapterLineFig, compact, donutHtml, fold, funnelFig, groupFig, hbarFig, legend, legendKeys, legendOf,
-  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=bda19e8";
+  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=6ce1056";
 const hbar = (...a) => plotHtml(hbarFig(...a));
 
 export const DAYS = [7, 30, 90];
