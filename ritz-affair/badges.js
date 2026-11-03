@@ -1,6 +1,6 @@
 // site/badges.js -- the badges (BADGES: name, text, predicate on an event context that app.js ctx() builds), the
 // easter eggs read from narrow results, and the ranks. Pure, side-effect free; docs/badges.md lists every badge.
-import { ROW_CAP, tablesIn } from "./terminal.js?v=e503377";
+import { ROW_CAP, tablesIn } from "./terminal.js?v=d8c2a74";
 
 export const BADGES = [
   ["Tourist", "SELECT * over seven columns or more. Ganimard sighs.", c => c.event === "query" && /select\s+\*/i.test(c.sql) && c.cols >= 7],
