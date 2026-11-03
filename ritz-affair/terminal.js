@@ -2,9 +2,9 @@
 // (runSql: comma-join guard, strict check, sql.js, SQLite's errors explained, the date note), one editor (wireEditor:
 // colouring, Tab completion, Ctrl+Enter, Ctrl+F, Tab, Enter auto-indent), the results table and the database settings.
 // Side-effect free at import; the DOM is touched only inside wireEditor.
-import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=6ce1056";
-import { esc } from "./ui.js?v=6ce1056";
-import { HANDBOOK, HISTORY_MAX } from "./shared.js?v=6ce1056";
+import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=c84e0ae";
+import { esc } from "./ui.js?v=c84e0ae";
+import { HANDBOOK, HISTORY_MAX } from "./shared.js?v=c84e0ae";
 
 // SQL colouring for the terminal: a <pre> under a transparent textarea (index.html .editor).
 export const SQL_KEYWORDS = new Set(("select from where and or not in is null like ilike glob between join inner left right full outer " +
@@ -195,10 +195,12 @@ export function wireEditor(ta, hl, { run, cols, minHeight = 0 }) {
 }
 
 export const ROW_CAP = 200;
+// a cell longer than this (a name, a statement) wraps on phones (style.css .results td.long); ids, dates (10), times stay on one line
+export const LONG_CELL = 12;
 export function renderResults(res) {
   if (!res) return '<p class="muted">No rows.</p>';
   const head = "<tr>" + res.columns.map(c => "<th>" + esc(c) + "</th>").join("") + "</tr>";
-  const body = res.values.slice(0, ROW_CAP).map(r => "<tr>" + r.map(v => "<td>" + esc(v) + "</td>").join("") + "</tr>").join("");
+  const body = res.values.slice(0, ROW_CAP).map(r => "<tr>" + r.map(v => (String(v).length > LONG_CELL ? '<td class="long">' : "<td>") + esc(v) + "</td>").join("") + "</tr>").join("");
   const more = res.values.length > ROW_CAP ? '<p class="muted">' + (res.values.length - ROW_CAP) + " more rows not shown.</p>" : "";
   return "<table>" + head + body + "</table>" + more;
 }

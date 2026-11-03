@@ -1,9 +1,9 @@
 // site/onboarding.js -- a new player's first minutes in learn mode (owner, 2026-10-25): the clerk's first morning (a
 // prologue on a tiny book built in the browser) and chapter I's callouts. state.onboarding walks "prologue" -> "tour"
 // -> "done"; only New investigation (freshState) offers them again. Side-effect free at import.
-import { normalise } from "./shared.js?v=6ce1056";
-import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=6ce1056";
-import { esc } from "./ui.js?v=6ce1056";
+import { normalise } from "./shared.js?v=c84e0ae";
+import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=c84e0ae";
+import { esc } from "./ui.js?v=c84e0ae";
 
 const $ = id => document.getElementById(id);
 
@@ -74,7 +74,7 @@ export function showPrologue(SQL, done) {
   d.oncancel = e => { e.preventDefault(); close(step >= 3 ? "done" : "skip"); };   // Escape skips
   d.showModal();
   sync();   // measured once the dialog is open
-  ta.focus();
+  if (!matchMedia("(pointer: coarse)").matches) ta.focus();   // on a touch screen the keyboard (and iOS's zoom) waits for a tap; Run has autofocus
 }
 
 // Chapter I's callouts, shown once after the prologue or its skip (ui.js showCallouts). They point at the parts of
@@ -84,3 +84,5 @@ export const CALLOUTS = [
   ["#btn-run", "Write SQL in the box above and press Run (or Ctrl+Enter). The results appear underneath."],
   ["#objective", "The objective says what to find. Your answer goes in the box under the terminal."],
   ["#board", "Every answer you find is pinned to the case board."]];
+// On a phone the page reads objective, schema, terminal, case board (style.css): the tour starts at the top and ends on Run.
+export const tourSteps = narrow => narrow ? [2, 0, 3, 1].map(i => CALLOUTS[i]) : CALLOUTS;
