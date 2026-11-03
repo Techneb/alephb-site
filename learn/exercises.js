@@ -2,11 +2,11 @@
 // browser with sql.js, the game's terminal (terminal.js: the same run pipeline and editor as the game), and a check
 // of the last result against the chosen question's solution, run on the same database. It never loads the game.
 // The page itself stays complete without this script: every question, row count and solution is in the HTML.
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=c84e0ae";
-import { toSqlite } from "../ritz-affair/strict.js?v=c84e0ae";
-import { btnLike, erdButtonHtml, setIconButton, showCallouts } from "../ritz-affair/ui.js?v=c84e0ae";
-import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=c84e0ae";
-import { escapeHtml } from "../ritz-affair/shared.js?v=c84e0ae";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=9f965bc";
+import { toSqlite } from "../ritz-affair/strict.js?v=9f965bc";
+import { btnLike, erdButtonHtml, setIconButton, showCallouts, NARROW } from "../ritz-affair/ui.js?v=9f965bc";
+import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=9f965bc";
+import { escapeHtml } from "../ritz-affair/shared.js?v=9f965bc";
 
 const VERSION = new URL(import.meta.url).search;
 const STORE = "ritz.exercises";                  // the questions solved
@@ -160,7 +160,7 @@ async function boot() {
   initAds();
 
   const ta = $("sql");
-  const sync = wireEditor(ta, $("sql-hl"), { run, cols: () => cols, minHeight: 140 });   // the whole bakery
+  const sync = wireEditor(ta, $("sql-hl"), { run, cols: () => cols, minHeight: matchMedia(NARROW).matches ? 64 : 140 });   // the whole bakery
   // History, as in the game: most recent first, 20 at most, a query that errors or is refused never kept; per browser.
   function renderHistory() {
     $("history").innerHTML = hist.history.map(q => "<li>" + escapeHtml(q) + "</li>").join("");

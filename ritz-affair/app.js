@@ -2,18 +2,18 @@
 // client, boot). Its parts live in their own modules: state.js (the saved state), terminal.js and strict.js (the SQL
 // terminal), badges.js, suspects.js, endings.js, onboarding.js, ui.js, stats.js and shared.js. boot() only runs on
 // the game page.
-import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=c84e0ae";
-import { wireFeedback } from "./feedback.js?v=c84e0ae";
-import { track, trackOnce, useFeature, queryFail, initConsent, initAds, quietStats } from "./stats.js?v=c84e0ae";
-import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=c84e0ae";
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=c84e0ae";
-import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=c84e0ae";
-import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=c84e0ae";
-import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=c84e0ae";
-import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=c84e0ae";
-import { openHowto, howtoHtml } from "./howto.js?v=c84e0ae";
-import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=c84e0ae";
-import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, revealOnPhone } from "./ui.js?v=c84e0ae";
+import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=9f965bc";
+import { wireFeedback } from "./feedback.js?v=9f965bc";
+import { track, trackOnce, useFeature, queryFail, initConsent, initAds, quietStats } from "./stats.js?v=9f965bc";
+import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=9f965bc";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=9f965bc";
+import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=9f965bc";
+import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=9f965bc";
+import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=9f965bc";
+import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=9f965bc";
+import { openHowto, howtoHtml } from "./howto.js?v=9f965bc";
+import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=9f965bc";
+import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, revealOnPhone } from "./ui.js?v=9f965bc";
 
 const NAMES_ASK = "Names for the certificate (both of you):";   // #names' label, and prompt()'s where <dialog> cannot open
 export function resetMessage(mode) {   // the New investigation question (#reset, or confirm() as the fallback)
@@ -840,7 +840,7 @@ function importSaves() {
 async function boot() {
   importSaves();
   // The query box; it completes only the tables the schema shows (learn or compete): never one the evidence has not reached.
-  syncSql = wireEditor($("sql"), $("sql-hl"), { run: () => db && state && runQuery(), cols: visibleColumns, minHeight: 160 });
+  syncSql = wireEditor($("sql"), $("sql-hl"), { run: () => db && state && runQuery(), cols: visibleColumns, minHeight: matchMedia(NARROW).matches ? 64 : 160 });
   $("btn-theme").onclick = toggleTheme;
   wireFeedback(() => useFeature("feedback", { chapter: curChapter() }),
     () => state ? { chapter: String(curChapter()), mode: state.mode, part: state.part2 ? "2" : "1" } : {});
