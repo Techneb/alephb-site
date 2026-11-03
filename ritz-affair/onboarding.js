@@ -1,9 +1,9 @@
 // site/onboarding.js -- a new player's first minutes in learn mode (owner, 2026-10-25): the clerk's first morning (a
 // prologue on a tiny book built in the browser) and chapter I's callouts. state.onboarding walks "prologue" -> "tour"
 // -> "done"; only New investigation (freshState) offers them again. Side-effect free at import.
-import { normalise } from "./shared.js?v=ece3c97";
-import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=ece3c97";
-import { esc } from "./ui.js?v=ece3c97";
+import { normalise } from "./shared.js?v=295755a";
+import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=295755a";
+import { esc } from "./ui.js?v=295755a";
 
 const $ = id => document.getElementById(id);
 
