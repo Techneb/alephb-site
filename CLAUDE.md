@@ -5,7 +5,7 @@ The AlephB home page at <https://alephb.uk>: one static page listing the project
 ## Pages
 
 - `index.html` (`main.home`, 1240 px wide; other pages keep the 640 px reading width): the logo, Hillel's motto and a day/night switch (`#theme`, saved in localStorage `alephb.theme`), then one `section.project` per project. Each has a lead with **bold** highlights, bullets (`li[data-slide]`), a carousel of marketing images in `img/` (`[data-carousel]` in `home.js`: hovering or clicking a bullet shows its slide, auto-advance every 4 s, paused on hover), big `.cta` buttons, and a grey `.status` line, links separated by ` · `. Day/night image pairs (`.day`/`.night`) follow the theme.
-  - Compromise (two columns): a reel clip plus five Instagram-post slides on pure white, blended into the page (`multiply` by day, inverted `screen` by night); the official App Store badge, unlinked until 1.0 is approved, and "How it works".
+  - Compromise (two columns): a reel clip plus five Instagram-post slides on pure white, blended into the page (`multiply` by day, inverted `screen` by night); the official App Store badge, linked to the listing, and "How it works".
   - The Ritz Affair (`.stack`: intro, full-width media, three bullets in three columns): chapter, handbook (`learn/group-by-having.html`) and leaderboard shots from the game's session.
   - What's my size? (`.stack`, linked to whatsmysize.alephb.uk at the owner's request): product panel (the owner's real Wooden Store jeans on drapeur.com), wardrobe, brands; model faces softly blurred. An "Outfit ideas" bullet and slide come once What's my size · Main shoots them.
   - Then the four articles as cards. Fonts: Nunito (headings, buttons) and Nunito Sans (body), self-hosted in `fonts/` (OFL), on every page.
