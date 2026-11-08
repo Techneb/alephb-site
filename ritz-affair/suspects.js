@@ -1,9 +1,9 @@
 // site/suspects.js -- the suspects (learn only): who is met when, their cards and portraits, the case board's
 // pictures. Pure, side-effect free; app.js draws the gallery, the pop-up and the board's strip with these.
-import { normalise } from "./shared.js?v=df03c61";
-import { currentChapter } from "./state.js?v=df03c61";
-import { ROW_CAP } from "./terminal.js?v=df03c61";
-import { esc } from "./ui.js?v=df03c61";
+import { normalise } from "./shared.js?v=3264a7c";
+import { currentChapter } from "./state.js?v=3264a7c";
+import { ROW_CAP } from "./terminal.js?v=3264a7c";
+import { esc } from "./ui.js?v=3264a7c";
 
 // Portrait file per face (site/portraits/*.jpg -- Style A/Lavery colour, generated; see docs/superpowers/specs
 // section 8's visual-identity entry): the six suspects of data.cast, the same every mode (Lupin himself never gets

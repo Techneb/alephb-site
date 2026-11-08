@@ -1,8 +1,8 @@
 // site/leaderboard.js -- the public board (leaderboard.html?data=<Apps Script /exec URL>&season=<id>): read-only,
 // projector-sized, polls the season record and its rows every 10 s. Pure renderers are exported for test_site.mjs;
 // the page wiring runs only in a browser. The deployment URL travels in the link, never in this public repo.
-import { wireFeedback } from "./feedback.js?v=df03c61";
-import { officialTime, fmtTime, escapeHtml as esc } from "./shared.js?v=df03c61";
+import { wireFeedback } from "./feedback.js?v=3264a7c";
+import { officialTime, fmtTime, escapeHtml as esc } from "./shared.js?v=3264a7c";
 
 export const POLL_MS = 10000;
 const FLAG_TITLE = "The browser's own clock disagrees with the server by more than a minute: a late or lost post.";
