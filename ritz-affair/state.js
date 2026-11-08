@@ -1,6 +1,6 @@
 // site/state.js -- the game's saved state and what is read from it (pure: app.js keeps the storage and the page).
 // Split out so badges.js, suspects.js and endings.js read the state without importing the game module.
-import { OLD_ORIGIN, BOARD_KEY, HISTORY_MAX } from "./shared.js?v=d8c2a74";
+import { OLD_ORIGIN, BOARD_KEY, HISTORY_MAX } from "./shared.js?v=df03c61";
 
 export function freshState() {
   return { mode: "learn", season: "", team: "", startedAt: 0, finishedAt: 0, outbox: [], db: 0, seasonName: "", penalty: 10, over: false, board: "",
