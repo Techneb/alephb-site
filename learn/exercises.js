@@ -2,12 +2,12 @@
 // browser with sql.js, the game's terminal (terminal.js: the same run pipeline and editor as the game), and a check
 // of the last result against the chosen question's solution, run on the same database. It never loads the game.
 // The page itself stays complete without this script: every question, row count and solution is in the HTML.
-import { wireEditor, runSql, runHtml, runInfo, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=67eda0d";
-import { toSqlite } from "../ritz-affair/strict.js?v=67eda0d";
-import { openBakery, sameResult, checkOptions } from "./bakery.js?v=67eda0d";
-import { btnLike, erdButtonHtml, setIconButton, showCallouts, NARROW } from "../ritz-affair/ui.js?v=67eda0d";
-import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=67eda0d";
-import { escapeHtml } from "../ritz-affair/shared.js?v=67eda0d";
+import { wireEditor, runSql, runHtml, runInfo, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=c354cff";
+import { toSqlite } from "../ritz-affair/strict.js?v=c354cff";
+import { openBakery, sameResult, checkOptions } from "./bakery.js?v=c354cff";
+import { btnLike, erdButtonHtml, setIconButton, showCallouts, NARROW } from "../ritz-affair/ui.js?v=c354cff";
+import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=c354cff";
+import { escapeHtml } from "../ritz-affair/shared.js?v=c354cff";
 
 const STORE = "ritz.exercises";                  // the questions solved
 const HISTORY_STORE = "ritz.exercises.history";   // the queries run (the game keeps its own in ritz.learn)
