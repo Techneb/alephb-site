@@ -2,8 +2,8 @@
 // draft for each one that left an email (feedback_script.gs: doGet ?list=1&key=, doPost actions draft, redraft, save,
 // send, discard). It talks to the feedback script (FEEDBACK_URL), not the compete board; the passphrase as on every desk
 // page. Pure parts are exported for test_desk.mjs; the page wiring runs only in a browser.
-import { FEEDBACK_URL, wireFeedback } from "./feedback.js?v=a2a9815";
-import { askDialog, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, escapeHtml as esc } from "./shared.js?v=a2a9815";
+import { FEEDBACK_URL, wireFeedback } from "./feedback.js?v=b23d751";
+import { askDialog, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, escapeHtml as esc } from "./shared.js?v=b23d751";
 
 export const FILTERS = [["todo", "To do"], ["replied", "Replied"], ["discarded", "Discarded"], ["all", "All"]];
 // A status's filter: "" to do, "replied <date>", "discarded <date>" (or the older "done"); anything else the owner
