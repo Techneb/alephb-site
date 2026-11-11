@@ -7,10 +7,10 @@
 // opens GA. This module is the GA model (the Count metrics, the request builders, PANELS) and the views; the charts
 // themselves are figures.js (Plotly figures, drawn by drawPlots below). Pure parts are exported for test_desk.mjs; the page wiring runs only in a browser.
 // The board URL comes from ?board=, localStorage ritz.admin.board or, after the gate, BOARD_SEALED, as on admin.html; the passphrase stays in sessionStorage for the tab (shared.js deskPassphrase).
-import { wireFeedback } from "./feedback.js?v=f7def91";
-import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=f7def91";
+import { wireFeedback } from "./feedback.js?v=a2a9815";
+import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=a2a9815";
 import { ROMAN, STAGES, barTable, chapterBarsFig, chapterLineFig, compact, donutHtml, fold, funnelFig, groupFig, hbarFig, legend, legendKeys, legendOf,
-  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=f7def91";
+  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=a2a9815";
 const hbar = (...a) => plotHtml(hbarFig(...a));
 
 export const DAYS = [7, 30, 90];
@@ -575,13 +575,15 @@ export function gameHtml(s, w, P = {}, c = {}) {
 }
 
 // --- Handbook -----------------------------------------------------------------------------------
-// The twenty exercises of learn/exercises.html in its order, slug -> its numbered title (a test checks the page).
-export const EXERCISES = [["the-cheap-shelf", "1. The cheap shelf"], ["early-customers", "2. Early customers"], ["every-croissant", "3. Every croissant"],
-  ["untidy-emails", "4. Untidy emails"], ["the-counter-by-category", "5. The counter by category"], ["orders-by-town", "6. Orders by town"],
-  ["takings-per-day", "7. Takings per day"], ["the-price-rise", "8. The price rise"], ["busy-hours", "9. Busy hours"], ["referred-from-afar", "10. Referred from afar"],
-  ["the-staff-room", "11. The staff room"], ["morning-people", "12. Morning people"], ["above-their-category", "13. Above their category"],
-  ["not-on-the-weekend-menu", "14. Not on the weekend menu"], ["no-bread-thank-you", "15. No bread, thank you"], ["money-back", "16. Money back"],
-  ["best-seller-of-each-category", "17. Best seller of each category"], ["back-again", "18. Back again"], ["shutters-down", "19. Shutters down"], ["word-of-mouth", "20. Word of mouth"]];
+// The twenty-three exercises of learn/exercises.html in its order, slug -> its numbered title (a test checks the page).
+export const EXERCISES = [["meet-the-staff", "1. Meet the staff"], ["the-refunds", "2. The refunds"], ["the-cakes", "3. The cakes"], ["the-cheap-shelf", "4. The cheap shelf"],
+  ["early-customers", "5. Early customers"], ["every-croissant", "6. Every croissant"], ["untidy-emails", "7. Untidy emails"],
+  ["the-counter-by-category", "8. The counter by category"], ["orders-by-town", "9. Orders by town"], ["takings-per-day", "10. Takings per day"],
+  ["the-price-rise", "11. The price rise"], ["busy-hours", "12. Busy hours"], ["referred-from-afar", "13. Referred from afar"],
+  ["the-staff-room", "14. The staff room"], ["morning-people", "15. Morning people"], ["above-their-category", "16. Above their category"],
+  ["not-on-the-weekend-menu", "17. Not on the weekend menu"], ["no-bread-thank-you", "18. No bread, thank you"], ["money-back", "19. Money back"],
+  ["best-seller-of-each-category", "20. Best seller of each category"], ["back-again", "21. Back again"], ["shutters-down", "22. Shutters down"],
+  ["word-of-mouth", "23. Word of mouth"]];
 const exTitle = new Map(EXERCISES);
 // Every exercise in order (zeros included), then any slug GA reports that the list lacks.
 const exRows = (...maps) => [...EXERCISES.map(e => e[0]), ...new Set(maps.flatMap(m => [...m.keys()]).filter(k => !exTitle.has(k)))];
