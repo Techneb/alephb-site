@@ -7,10 +7,10 @@
 // opens GA. This module is the GA model (the Count metrics, the request builders, PANELS) and the views; the charts
 // themselves are figures.js (Plotly figures, drawn by drawPlots below). Pure parts are exported for test_desk.mjs; the page wiring runs only in a browser.
 // The board URL comes from ?board=, localStorage ritz.admin.board or, after the gate, BOARD_SEALED, as on admin.html; the passphrase stays in sessionStorage for the tab (shared.js deskPassphrase).
-import { wireFeedback } from "./feedback.js?v=b23d751";
-import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=b23d751";
+import { wireFeedback } from "./feedback.js?v=67eda0d";
+import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=67eda0d";
 import { ROMAN, STAGES, barTable, chapterBarsFig, chapterLineFig, compact, donutHtml, fold, funnelFig, groupFig, hbarFig, legend, legendKeys, legendOf,
-  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=b23d751";
+  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=67eda0d";
 const hbar = (...a) => plotHtml(hbarFig(...a));
 
 export const DAYS = [7, 30, 90];
@@ -328,7 +328,7 @@ export const GAME_FEATURES = { schema_enlarge: "Schema enlarged", suspects_open:
   ad_house_click: "House ad clicked", warmup_link: "Warm-up link followed", card_review: "Case card reopened", feedback: "Feedback link pressed" };
 export const HANDBOOK_FEATURES = { schema_enlarge: "Schema enlarged", history_reuse: "History query reused", grammar_link: "Grammar link followed",
   howto_open: "How to use opened", solution_open: "Solution opened", try_it: "Try it link followed", theme_toggle: "Day/Night toggled", ad_house_click: "House ad clicked",
-  tour_done: "Tour finished", tour_skip: "Tour skipped", feedback: "Feedback link pressed" };
+  tour_done: "Tour finished", tour_skip: "Tour skipped", feedback: "Feedback link pressed", try_here: "Try it here opened" };
 export const MODES = { learn: "Learn", compete: "Compete" };
 export const KINDS = { error: "SQLite error", refused: "Refused by the grammar check" };
 export const LEVELS = { "warm-up": "Warm-up", practice: "Practice", challenge: "Challenge" };

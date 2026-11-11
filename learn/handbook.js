@@ -1,8 +1,8 @@
 // Usage statistics on every handbook page: the game's consent banner and GA4 (../stats.js, the same ritz.consent
 // answer site-wide) and the reading events, each once per page load. The exercises page adds its own (exercises.js).
 // The ad path (Google's message) applies only where the ad box is, exercises.html; elsewhere the banner asks.
-import { initConsent, useFeature } from "../ritz-affair/stats.js?v=b23d751";
-import { wireFeedback } from "../ritz-affair/feedback.js?v=b23d751";
+import { initConsent, useFeature } from "../ritz-affair/stats.js?v=67eda0d";
+import { wireFeedback } from "../ritz-affair/feedback.js?v=67eda0d";
 
 if (typeof document !== "undefined") {
   initConsent(!!document.getElementById("press-box"));
@@ -24,6 +24,21 @@ if (typeof document !== "undefined") {
     if (d.matches("details.howto")) useFeature("howto_open");
     else if (d.matches("details.solution")) useFeature("solution_open");
   }, true);
+}
+
+// The lesson pages' small tasks (<div class="task">): a Try it here button under each question opens a terminal
+// there (tasks.js, imported on the first click only, so sql.js loads only for a reader who practises).
+if (typeof document !== "undefined") {
+  document.querySelectorAll("div.task").forEach((task, n) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "task-try"; b.textContent = "Try it here";
+    task.querySelector(".task-q").after(b);
+    b.onclick = () => {
+      useFeature("try_here");
+      b.disabled = true;
+      import("./tasks.js?v=67eda0d").then(m => m.openTask(task, n), () => { b.disabled = false; b.textContent = "Could not load: try again"; });
+    };
+  });
 }
 
 // A learning chapter's side menu (colour_learn.mjs writes it): the section being read gets aria-current. The section

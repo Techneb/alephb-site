@@ -3,10 +3,10 @@
 // browser. The Apps Script /exec URL comes from ?board= or localStorage ritz.admin.board, else from BOARD_SEALED (shared.js, sealed under the passphrase), never in plain text in this repo; the
 // passphrase stays in sessionStorage for the tab (shared.js deskPassphrase) and goes to the backend as `key` (apps_script.gs
 // compares it with ADMIN_KEY).
-import { wireFeedback } from "./feedback.js?v=b23d751";
-import { BOARD_KEY, csvText as csv, downloadText, BOARD_SEALED, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, openBoard, sealBoard, askDialog, officialTime, chapterSummary, fmtTime, escapeHtml as esc, resultsLink } from "./shared.js?v=b23d751";
-import { qrSvg } from "./qr.js?v=b23d751";
-import { ICON_ATTRS } from "./ui.js?v=b23d751";
+import { wireFeedback } from "./feedback.js?v=67eda0d";
+import { BOARD_KEY, csvText as csv, downloadText, BOARD_SEALED, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, openBoard, sealBoard, askDialog, officialTime, chapterSummary, fmtTime, escapeHtml as esc, resultsLink } from "./shared.js?v=67eda0d";
+import { qrSvg } from "./qr.js?v=67eda0d";
+import { ICON_ATTRS } from "./ui.js?v=67eda0d";
 
 export const POLL_MS = 10000;
 export const CSV_COLUMNS = ["timestamp", "event", "team", "season", "chapter", "wrong", "queries", "clientAt", "elapsedMs"];

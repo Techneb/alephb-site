@@ -2,9 +2,9 @@
 // (runSql: comma-join guard, strict check, sql.js, SQLite's errors explained, the date note), one editor (wireEditor:
 // colouring, Tab completion, Ctrl+Enter, Ctrl+F, Tab, Enter auto-indent), the results table and the database settings.
 // Side-effect free at import; the DOM is touched only inside wireEditor.
-import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=b23d751";
-import { esc, PHONE } from "./ui.js?v=b23d751";
-import { HANDBOOK, HISTORY_MAX } from "./shared.js?v=b23d751";
+import { strictCheck, toSqlite, ilike, ymd, STRICT_SECTIONS } from "./strict.js?v=67eda0d";
+import { esc, PHONE } from "./ui.js?v=67eda0d";
+import { HANDBOOK, HISTORY_MAX } from "./shared.js?v=67eda0d";
 
 // SQL colouring for the terminal: a <pre> under a transparent textarea (index.html .editor).
 export const SQL_KEYWORDS = new Set(("select from where and or not in is null like ilike glob between join inner left right full outer " +
