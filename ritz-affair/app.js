@@ -2,18 +2,18 @@
 // client, boot). Its parts live in their own modules: state.js (the saved state), terminal.js and strict.js (the SQL
 // terminal), badges.js, suspects.js, endings.js, onboarding.js, ui.js, stats.js and shared.js. boot() only runs on
 // the game page.
-import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=09aa9f9";
-import { wireFeedback } from "./feedback.js?v=09aa9f9";
-import { track, trackOnce, useFeature, queryFail, initConsent, initAds, quietStats } from "./stats.js?v=09aa9f9";
-import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=09aa9f9";
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=09aa9f9";
-import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=09aa9f9";
-import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=09aa9f9";
-import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=09aa9f9";
-import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=09aa9f9";
-import { openHowto, howtoHtml } from "./howto.js?v=09aa9f9";
-import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=09aa9f9";
-import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=09aa9f9";
+import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=0d44b6a";
+import { wireFeedback } from "./feedback.js?v=0d44b6a";
+import { track, trackOnce, useFeature, queryFail, initConsent, initAds, showAd, quietStats } from "./stats.js?v=0d44b6a";
+import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=0d44b6a";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=0d44b6a";
+import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=0d44b6a";
+import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=0d44b6a";
+import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=0d44b6a";
+import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=0d44b6a";
+import { openHowto, howtoHtml } from "./howto.js?v=0d44b6a";
+import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=0d44b6a";
+import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=0d44b6a";
 
 const NAMES_ASK = "Names for the certificate (both of you):";   // #names' label, and prompt()'s where <dialog> cannot open
 export function resetMessage(mode) {   // the New investigation question (#reset, or confirm() as the fallback)
@@ -820,7 +820,7 @@ async function renderAdminPanel() {
 }
 
 function enterGame() {
-  $("landing").hidden = true; applyMood(); renderChapter(); renderErd(); renderAdminPanel();
+  $("landing").hidden = true; showAd(); applyMood(); renderChapter(); renderErd(); renderAdminPanel();
   if (!$("sql").value) { $("sql").value = starterSql(state); syncSql(); }   // a first query that runs
   if (awaitingCode(state) && !state.extraSeen) showExtra(state, data, hooks());   // solved chapter VIII, closed the page before the extra edition
   if (state.mode !== "compete" && state.solved.includes(12) && !state.extraSeen2) showExtra2(state, data, hooks());   // the same for chapter XII
@@ -846,7 +846,7 @@ async function boot() {
   wireFeedback(() => useFeature("feedback", { chapter: curChapter() }),
     () => state ? { chapter: String(curChapter()), mode: state.mode, part: state.part2 ? "2" : "1" } : {});
   initConsent();
-  initAds();
+  initAds({ slot: false });   // the script and the consent path now; Google's ad once the landing card is gone (enterGame)
   applyMood();   // the reader's palette on the landing page too, before any state is loaded
   const params = new URLSearchParams(location.search);
   seasonId = params.get("season") || "";

@@ -21,9 +21,9 @@
 <link rel="icon" href="../ritz-affair/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../ritz-affair/style.css?v=09aa9f9">
-<link rel="stylesheet" href="learn.css?v=09aa9f9">
-<script src="theme.js?v=09aa9f9"></script>
+<link rel="stylesheet" href="../ritz-affair/style.css?v=0d44b6a">
+<link rel="stylesheet" href="learn.css?v=0d44b6a">
+<script src="theme.js?v=0d44b6a"></script>
 </head>
 <body>
 <div class="corners">
@@ -270,7 +270,7 @@
 <p>Say which price you mean: the dearest of each category here, or <code>MIN(price)</code>, or <code>AVG(price)</code>.</p>
 
 <h2 id="group-concat" class="rule">Grammar: string_agg and SUM</h2>
-<p>To join the texts of a group into one, standard SQL writes <code>string_agg(column, ', ')</code>, with an <code>ORDER BY</code> inside the parentheses to fix the order of the pieces. <code>GROUP_CONCAT</code> is not standard SQL, and neither is <code>TOTAL(x)</code>: write <code>SUM(x)</code>, or <code>COALESCE(SUM(x), 0)</code> when an empty group should read 0.</p>
+<p>To join the texts of a group into one, PostgreSQL writes <code>string_agg(column, ', ')</code>, with an <code>ORDER BY</code> inside the parentheses to fix the order of the pieces. <code>GROUP_CONCAT</code> is not standard SQL, and neither is <code>TOTAL(x)</code>: write <code>SUM(x)</code>, or <code>COALESCE(SUM(x), 0)</code> when an empty group should read 0.</p>
 <pre class="wrong"><code><span class="sql-kw">SELECT</span> <span class="sql-id">category</span>, <span class="sql-fn">GROUP_CONCAT</span>(<span class="sql-id">name</span>)
 <span class="sql-kw">FROM</span> <span class="sql-id">product</span>
 <span class="sql-kw">GROUP</span> <span class="sql-kw">BY</span> <span class="sql-id">category</span>;</code></pre>
@@ -303,6 +303,6 @@
   <span>Help improve the course: allow anonymous usage statistics?</span>
   <span><button id="consent-yes">Yes</button> <button id="consent-no" class="quiet">No</button> <a href="../ritz-affair/privacy.html">Privacy notice</a></span>
 </div>
-<script type="module" src="handbook.js?v=09aa9f9"></script>
+<script type="module" src="handbook.js?v=0d44b6a"></script>
 </body>
 </html>
