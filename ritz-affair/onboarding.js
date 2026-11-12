@@ -1,9 +1,9 @@
 // site/onboarding.js -- a new player's first minutes in learn mode (owner, 2026-10-25): the clerk's first morning (a
 // prologue on a tiny book built in the browser) and chapter I's callouts. state.onboarding walks "prologue" -> "tour"
 // -> "done"; only New investigation (freshState) offers them again. Side-effect free at import.
-import { normalise } from "./shared.js?v=6805035";
-import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=6805035";
-import { esc, PHONE } from "./ui.js?v=6805035";
+import { normalise } from "./shared.js?v=fcaf3f9";
+import { runSql, runHtml, runInfo, wireEditor, terminalDb, columns, EMPTY_RUN } from "./terminal.js?v=fcaf3f9";
+import { esc, PHONE } from "./ui.js?v=fcaf3f9";
 
 const $ = id => document.getElementById(id);
 
@@ -88,5 +88,10 @@ export const CALLOUTS = [
   ["#objective", "The objective says what to find. Your answer goes in the box under the terminal."],
   ["#board", "Every answer you find is pinned to the case board."]];
 // On a phone the page reads objective, schema, terminal, case board (style.css): the tour starts at the top and ends on
-// Run, without the keyboard shortcut a phone has no key for.
-export const tourSteps = narrow => narrow ? [2, 0, 3, 1].map(i => [CALLOUTS[i][0], CALLOUTS[i][1].replace(" (or Ctrl+Enter)", "")]) : CALLOUTS;
+// Run, without the keyboard shortcut a phone has no key for. On a phone (ui.js PHONE) that last box's button reads
+// Run it: it ends the tour (still tour_done) and presses Run (owner, 2026-11-12; showCallouts' third element).
+export const tourSteps = (narrow, phone = false) => {
+  const steps = narrow ? [2, 0, 3, 1].map(i => [CALLOUTS[i][0], CALLOUTS[i][1].replace(" (or Ctrl+Enter)", "")]) : CALLOUTS;
+  const last = steps[steps.length - 1];
+  return phone && last[0] === "#btn-run" ? [...steps.slice(0, -1), [last[0], last[1], "Run it"]] : steps;
+};

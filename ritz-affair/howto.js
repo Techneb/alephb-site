@@ -1,7 +1,7 @@
 // "How it's done" (learn only): a solved chapter's walkthrough, shipped in chapters.json encrypted under its answer
 // (generate_db.howto_box, which documents the construction). Side-effect free: imported by app.js and the node tests.
-import { esc } from "./ui.js?v=6805035";
-import { highlightSql } from "./terminal.js?v=6805035";
+import { esc } from "./ui.js?v=fcaf3f9";
+import { highlightSql } from "./terminal.js?v=fcaf3f9";
 
 const enc = new TextEncoder();
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));

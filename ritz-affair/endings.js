@@ -1,12 +1,12 @@
 // site/endings.js -- the ends of the two parts (learn mode): the extra editions with their films, the Part II ending,
 // the certificate, the share line. Each takes the state and data it shows plus hooks into the game
 // ({ save, chapter, reset }) instead of reading the game's globals. Side-effect free at import.
-import { BADGES, rank } from "./badges.js?v=6805035";
-import { part1Done, partStats } from "./state.js?v=6805035";
-import { portraitSrc } from "./suspects.js?v=6805035";
-import { esc, richText, ICON_ATTRS } from "./ui.js?v=6805035";
-import { useFeature } from "./stats.js?v=6805035";
-import { GAME_URL } from "./shared.js?v=6805035";
+import { BADGES, rank } from "./badges.js?v=fcaf3f9";
+import { part1Done, partStats } from "./state.js?v=fcaf3f9";
+import { portraitSrc } from "./suspects.js?v=fcaf3f9";
+import { esc, richText, ICON_ATTRS } from "./ui.js?v=fcaf3f9";
+import { useFeature } from "./stats.js?v=fcaf3f9";
+import { GAME_URL } from "./shared.js?v=fcaf3f9";
 
 const $ = id => document.getElementById(id);
 
