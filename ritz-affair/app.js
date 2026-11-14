@@ -2,18 +2,18 @@
 // client, boot). Its parts live in their own modules: state.js (the saved state), terminal.js and strict.js (the SQL
 // terminal), badges.js, suspects.js, endings.js, onboarding.js, ui.js, stats.js and shared.js. boot() only runs on
 // the game page.
-import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=0d44b6a";
-import { wireFeedback } from "./feedback.js?v=0d44b6a";
-import { track, trackOnce, useFeature, queryFail, initConsent, initAds, showAd, quietStats } from "./stats.js?v=0d44b6a";
-import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=0d44b6a";
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=0d44b6a";
-import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=0d44b6a";
-import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=0d44b6a";
-import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=0d44b6a";
-import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=0d44b6a";
-import { openHowto, howtoHtml } from "./howto.js?v=0d44b6a";
-import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=0d44b6a";
-import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=0d44b6a";
+import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=5177b50";
+import { wireFeedback } from "./feedback.js?v=5177b50";
+import { track, trackOnce, useFeature, queryFail, initConsent, initAds, showAd, quietStats } from "./stats.js?v=5177b50";
+import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=5177b50";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=5177b50";
+import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=5177b50";
+import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=5177b50";
+import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=5177b50";
+import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=5177b50";
+import { openHowto, howtoHtml } from "./howto.js?v=5177b50";
+import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=5177b50";
+import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=5177b50";
 
 const NAMES_ASK = "Names for the certificate (both of you):";   // #names' label, and prompt()'s where <dialog> cannot open
 export function resetMessage(mode) {   // the New investigation question (#reset, or confirm() as the fallback)
