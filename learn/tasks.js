@@ -3,9 +3,9 @@
 // practises on never loads sql.js. Each task gets the game's terminal under its question (terminal.js runSql and
 // wireEditor), on the bakery database (bakery.js, shared with the exercises page), and a run whose result matches
 // the solution's (sameResult) shows the exercises page's green Solved. Nothing is stored.
-import { wireEditor, runSql, runHtml, runInfo, EMPTY_RUN } from "../ritz-affair/terminal.js?v=1cf8293";
-import { toSqlite } from "../ritz-affair/strict.js?v=1cf8293";
-import { openBakery, sameResult, checkOptions } from "./bakery.js?v=1cf8293";
+import { wireEditor, runSql, runHtml, runInfo, EMPTY_RUN } from "../ritz-affair/terminal.js?v=956a309";
+import { toSqlite } from "../ritz-affair/strict.js?v=956a309";
+import { openBakery, sameResult, checkOptions } from "./bakery.js?v=956a309";
 
 const PLAY = '<svg class="icon play" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 2.5L13 8L4.5 13.5Z"/></svg>';
 
