@@ -1,8 +1,8 @@
 // Usage statistics on every handbook page: the game's consent banner and GA4 (../stats.js, the same ritz.consent
 // answer site-wide) and the reading events, each once per page load. The exercises page adds its own (exercises.js).
 // The ad path (Google's message) applies only where the ad box is, exercises.html; elsewhere the banner asks.
-import { initConsent, useFeature } from "../ritz-affair/stats.js?v=5177b50";
-import { wireFeedback } from "../ritz-affair/feedback.js?v=5177b50";
+import { initConsent, useFeature } from "../ritz-affair/stats.js?v=1cf8293";
+import { wireFeedback } from "../ritz-affair/feedback.js?v=1cf8293";
 
 if (typeof document !== "undefined") {
   initConsent(!!document.getElementById("press-box"));
@@ -36,7 +36,7 @@ if (typeof document !== "undefined") {
     b.onclick = () => {
       useFeature("try_here");
       b.disabled = true;
-      import("./tasks.js?v=5177b50").then(m => m.openTask(task, n), () => { b.disabled = false; b.textContent = "Could not load: try again"; });
+      import("./tasks.js?v=1cf8293").then(m => m.openTask(task, n), () => { b.disabled = false; b.textContent = "Could not load: try again"; });
     };
   });
 }
