@@ -2,18 +2,18 @@
 // client, boot). Its parts live in their own modules: state.js (the saved state), terminal.js and strict.js (the SQL
 // terminal), badges.js, suspects.js, endings.js, onboarding.js, ui.js, stats.js and shared.js. boot() only runs on
 // the game page.
-import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=956a309";
-import { wireFeedback } from "./feedback.js?v=956a309";
-import { track, trackOnce, useFeature, queryFail, initConsent, initAds, showAd, quietStats } from "./stats.js?v=956a309";
-import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=956a309";
-import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=956a309";
-import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=956a309";
-import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=956a309";
-import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=956a309";
-import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=956a309";
-import { openHowto, howtoHtml } from "./howto.js?v=956a309";
-import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=956a309";
-import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=956a309";
+import { normalise, sha256, ADMIN_PASS_SHA256, fmtTime, resultsLink, askDialog } from "./shared.js?v=622beab";
+import { wireFeedback } from "./feedback.js?v=622beab";
+import { track, trackOnce, useFeature, queryFail, initConsent, initAds, showAd, quietStats } from "./stats.js?v=622beab";
+import { freshState, migrateSave, bridgeImport, importWrites, currentChapter, part1Done, awaitingCode, competeDone, storageKey, partStats, visibleTables, unseenBadges, answerVerdict } from "./state.js?v=622beab";
+import { wireEditor, runSql, runHtml, runInfo, columns, openSqlJs, terminalDb, readSchema, pushHistory, ROW_CAP, EMPTY_RUN } from "./terminal.js?v=622beab";
+import { BADGES, eggText, seenFilms, detectBadges, rank } from "./badges.js?v=622beab";
+import { suspectsOn, metSuspects, foundSuspects, suspectCard, cardPicture, portraitSrc, iconSrc, boardSuspects } from "./suspects.js?v=622beab";
+import { showExtra, showExtra2, part2Ending, certificateHtml } from "./endings.js?v=622beab";
+import { prologueOn, tourOn, showPrologue, tourSteps } from "./onboarding.js?v=622beab";
+import { openHowto, howtoHtml } from "./howto.js?v=622beab";
+import { ROMAN, mastheadChapterHtml, crackedHtml, objectiveHtml, stepDoneHtml, currentObjectiveHtml, whereOpened, boardCardsHtml } from "./board.js?v=622beab";
+import { esc, btnLike, erdButtonHtml, themeButtonHtml, setIconButton, showCallouts, richText, NARROW, PHONE, revealOnPhone } from "./ui.js?v=622beab";
 
 const NAMES_ASK = "Names for the certificate (both of you):";   // #names' label, and prompt()'s where <dialog> cannot open
 export function resetMessage(mode) {   // the New investigation question (#reset, or confirm() as the fallback)
@@ -95,6 +95,7 @@ let syncSql = () => {};   // the query box's redraw, once boot has wired it (wir
 function clearTerminal() { $("sql").value = starterSql(state); syncSql(); $("results").innerHTML = ""; $("run-info").textContent = ""; }
 function reviewChapter(n) { reviewing = n; clearTerminal(); renderChapter(); }
 function backToInvestigation() {
+  if (nextPending) $("reply").textContent = "";   // the solved chapter's "Correct" stays behind
   reviewing = null; nextPending = 0; clearTerminal(); renderChapter();
   if (pendingReveal.length) { renderErd(pendingReveal); pendingReveal = []; }
 }
@@ -524,7 +525,7 @@ function afterSolve(ch, event) {
   if (event === "solve" && !ending) { reviewing = nextPending = ch.n; pendingReveal = newTables; }
   else renderErd(newTables);
   renderBoard(); renderChapter();
-  if (nextPending) $("btn-next").scrollIntoView({ block: "nearest" });
+  if (nextPending) { $("reply").textContent += " Press Next chapter below to go on."; $("btn-next").scrollIntoView({ block: "nearest" }); }
   if (event === "solve") {
     award(detectBadges(ctx({ event: "solve", chapter: ch.n }), state.badges));
     if (ch.n === 8 || ch.n === 12) track("game_finish", { part: ch.n === 8 ? 1 : 2, mode: state.mode });
