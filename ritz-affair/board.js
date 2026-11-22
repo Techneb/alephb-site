@@ -1,9 +1,9 @@
 // site/board.js -- the objective box and the case board as HTML (pure, side-effect free): the Hint and its Where to
 // look, chapter I's two steps, the case board's cards, the masthead's chapter line. app.js writes them into the page.
-import { esc } from "./ui.js?v=0236f7d";
-import { stepOn } from "./state.js?v=0236f7d";
-import { cardPicture } from "./suspects.js?v=0236f7d";
-import { highlightSql } from "./terminal.js?v=0236f7d";
+import { esc } from "./ui.js?v=761d2bb";
+import { stepOn } from "./state.js?v=761d2bb";
+import { cardPicture } from "./suspects.js?v=761d2bb";
+import { highlightSql } from "./terminal.js?v=761d2bb";
 
 export const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
 
