@@ -2,12 +2,13 @@
 // browser with sql.js, the game's terminal (terminal.js: the same run pipeline and editor as the game), and a check
 // of the last result against the chosen question's solution, run on the same database. It never loads the game.
 // The page itself stays complete without this script: every question, row count and solution is in the HTML.
-import { wireEditor, runSql, runHtml, runInfo, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=622beab";
-import { toSqlite } from "../ritz-affair/strict.js?v=622beab";
-import { openBakery, sameResult, checkOptions } from "./bakery.js?v=622beab";
-import { btnLike, erdButtonHtml, setIconButton, showCallouts, NARROW } from "../ritz-affair/ui.js?v=622beab";
-import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=622beab";
-import { escapeHtml } from "../ritz-affair/shared.js?v=622beab";
+import { wireEditor, runSql, runHtml, runInfo, pushHistory, EMPTY_RUN } from "../ritz-affair/terminal.js?v=24578d6";
+import { toSqlite } from "../ritz-affair/strict.js?v=24578d6";
+import { openBakery, sameResult, checkOptions } from "./bakery.js?v=24578d6";
+import { btnLike, erdButtonHtml, setIconButton, showCallouts, NARROW } from "../ritz-affair/ui.js?v=24578d6";
+import { initAds, track, trackOnce, useFeature, queryFail } from "../ritz-affair/stats.js?v=24578d6";
+import { escapeHtml } from "../ritz-affair/shared.js?v=24578d6";
+import { startSync, schedulePush } from "../ritz-affair/account.js?v=24578d6";
 
 const STORE = "ritz.exercises";                  // the questions solved
 const HISTORY_STORE = "ritz.exercises.history";   // the queries run (the game keeps its own in ritz.learn)
@@ -43,6 +44,7 @@ function load(key, fallback) { try { return JSON.parse(localStorage.getItem(key)
 function save(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* private window: kept this visit only */ } }
 
 async function boot() {
+  await startSync();   // signed in on the game (account.js): the solved list and history follow, silently
   const $ = id => document.getElementById(id);
   const bench = $("workbench");
   const items = [...document.querySelectorAll("p.exercise")].map(p => {
@@ -149,7 +151,7 @@ async function boot() {
     const hits = items.filter(e => sameResult(res, solutions[e.slug], e.opts));
     hits.forEach(e => { if (!solved.includes(e.slug)) solved.push(e.slug); });
     hits.forEach(e => trackOnce("solve:" + e.slug, "exercise_solve", { exercise: e.slug, level: levelId(e.level), runs: runs[e.slug] || 0 }));
-    if (hits.length) { save(STORE, solved); refreshTicks(); markSolved(); }
+    if (hits.length) { save(STORE, solved); refreshTicks(); markSolved(); schedulePush(); }
     const rows = res ? res.values.length : 0, want = solutions[cur.slug] ? solutions[cur.slug].values.length : 0;
     if (hits.includes(cur)) status("", "");
     else if (hits.length) status("other", "Not this one, but that result answers " + hits.map(e => e.title).join(", ") + ".");
