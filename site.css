@@ -111,3 +111,4 @@ ul.points span .mode{display:inline;font-size:1.05em}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #compromise .slides{filter:brightness(1.1) contrast(1.05) invert(1) hue-rotate(180deg);mix-blend-mode:screen}}
 :root[data-theme="dark"] #compromise .slides{filter:brightness(1.1) contrast(1.05) invert(1) hue-rotate(180deg);mix-blend-mode:screen}
 #compromise .slide video{object-fit:contain}
+.intro-site{max-width:820px;margin:0 0 40px}.intro-site p{margin:0 0 12px}

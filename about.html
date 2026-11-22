@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>About AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Who AlephB is: an independent developer and SQL and Python teacher who builds small apps that keep your data on your device. The projects, how they are made, and how this site is run.">
+<link rel="stylesheet" href="site.css">
+<!-- Cloudflare Web Analytics: page views only, no cookies. Its beacon is copied here (2026.10.1) so the page loads no outside script; ponytail: re-copy it if Cloudflare stops accepting this version. --><script defer src="/cf-beacon.min.js" data-cf-beacon='{"token": "754c71d6bba44b88a12124ea67cec007"}'></script>
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="about.html">About</a></p>
+  <h2 class="page-title">About AlephB</h2>
+  <p class="status">Updated 22 November 2026</p>
+
+  <p>AlephB is one independent developer who also teaches SQL and Python. I build small apps, each meant to do one useful thing, and I try to keep your personal data on your own device. This site lists the projects and publishes long articles on how they were built: the methods, the numbers, the trade-offs and the mistakes.</p>
+
+  <h2>The name</h2>
+  <p>The logo puts two letters side by side: the Hebrew Aleph (א), the first letter of that alphabet, and a Latin B. The line under it on the home page is Hillel's question, "If not now, when?" That is roughly how these projects began: each one started as a small problem I kept running into, and at some point I stopped waiting for someone else to solve it.</p>
+
+  <h2>The projects</h2>
+  <ul class="plain">
+    <li><b><a href="https://compromise.alephb.uk">Compromise</a></b> is a free iPhone app for groups who want to meet up. You and your friends each enter a starting point and how you travel (on foot, by public transport, by bike or by car), and it suggests bars, cafés, restaurants and some thirty other kinds of place that everyone reaches in about the same number of minutes. It covers more than 350 cities and can show which terraces will still be in the sun when you arrive. There is no account and no advertising, and the addresses stay on the phone.</li>
+    <li><b><a href="ritz-affair/">The Ritz Affair</a></b> is a detective game set in Paris in 1912 that you play by writing SQL in your browser. It has twelve chapters, and each one introduces a new piece of the language that you need to find the next clue. I wrote it for my own SQL course. Students play alone or as teams on a live class leaderboard. It is free, and you can play without an account.</li>
+    <li><b><a href="learn/">The Clerk's Handbook</a></b> goes with the game: plain-English lessons on SQL from SELECT and WHERE to joins, GROUP BY and CASE, with examples you can run on the page and graded exercises with solutions. You can use it without playing the game.</li>
+    <li><b><a href="https://whatsmysize.alephb.uk">What's my size?</a></b> is a Chrome extension, not released yet, that recommends your size at a brand by comparing the garment with clothes you already own and know fit you. It finds those clothes in your order emails and keeps your wardrobe in a Google Sheet that belongs to you, with no AlephB account.</li>
+  </ul>
+
+  <h2>How the work is done</h2>
+  <p>When an app needs personal information, such as a home address or an order history, I keep it on your device or in a file you own. Some features do need a server, for example sharing a group link or keeping a class leaderboard, and each project's privacy policy says what that server stores and for how long.</p>
+  <p>Each project has its own automated test suite, run before every release. The game goes further: each build regenerates its database and checks that every puzzle still returns its answer and that the obvious wrong queries still fail.</p>
+  <p>Compromise's places and buildings come largely from OpenStreetMap (© OpenStreetMap contributors, ODbL) and other open datasets, and the articles name the sources they rely on. The game and the handbook came out of a classroom, and anyone can use them for free in a course or at home.</p>
+
+  <h2>The articles</h2>
+  <p>The <a href="articles.html">articles</a> describe how the projects work from the inside: how travel time is turned into a fair ranking, how a worldwide places dataset is built from OpenStreetMap on a small budget, how to tell whether a terrace is in the sun, how clothing sizes can be read from order emails without the emails leaving your computer, and what teaching SQL with a story has shown so far. Every number in them comes from the projects' own notes, tests and measurements. When I don't know something, I leave it out.</p>
+  <p>The articles about The Ritz Affair never give away a clue, an answer or a shortcut through a chapter. The game only works if the reader has to write the query.</p>
+
+  <h2>This site</h2>
+  <p>alephb.uk is a set of plain HTML pages with no build step, served by GitHub Pages. Visits are counted with Cloudflare Web Analytics, which sets no cookies and doesn't follow individual visitors. The site may show Google ads, and the <a href="privacy.html">privacy page</a> explains how those ads work and how to refuse personalised ones.</p>
+
+  <h2>Contact</h2>
+  <p>Questions, corrections and bug reports are welcome at <a href="mailto:contact@alephb.uk">contact@alephb.uk</a>. If you find a mistake in an article, write and I will fix it and note the change on the page.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="learn/">Handbook</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>
