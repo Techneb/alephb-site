@@ -1,6 +1,6 @@
 // The bakery database in the browser, and the check of a result against a solution: shared by the exercises page
 // (exercises.js) and the small tasks inside the lesson pages (tasks.js). Side-effect free at import.
-import { openSqlJs, terminalDb, readSchema, columns } from "../ritz-affair/terminal.js?v=761d2bb";
+import { openSqlJs, terminalDb, readSchema, columns } from "../ritz-affair/terminal.js?v=82f353d";
 
 const VERSION = new URL(import.meta.url).search;
 
