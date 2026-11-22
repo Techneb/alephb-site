@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>Building a worldwide places dataset from OpenStreetMap · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="How a one-person app builds weekly venue tiles for 358 cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.">
+<link rel="stylesheet" href="site.css">
+<!-- Cloudflare Web Analytics: page views only, no cookies. Its beacon is copied here (2026.10.1) so the page loads no outside script; ponytail: re-copy it if Cloudflare stops accepting this version. --><script defer src="/cf-beacon.min.js" data-cf-beacon='{"token": "754c71d6bba44b88a12124ea67cec007"}'></script>
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="articles.html">Articles</a></p>
+  <h2 class="page-title">Building a worldwide places dataset from OpenStreetMap</h2>
+  <p class="status">22 November 2026 · By AlephB · About <a href="https://compromise.alephb.uk">Compromise</a></p>
+
+  <p>Compromise suggests bars, cafés and restaurants where a group can meet fairly. Apple Maps supplies most of the candidates, but one search returns at most 25 places, and the app also needs terraces, which it gets from open data. So it reads venue data of its own: small files covering 358 cities in 456 areas, rebuilt every week. This is how that dataset is made, what it costs to host, and what broke along the way.</p>
+
+  <h2>Choosing the sources by measuring them</h2>
+  <p>Before building anything I counted. In thirteen circles of 500 metres around public squares in eight countries, I compared OpenStreetMap with the places dataset of the Overture Maps Foundation. Foursquare's open places could not be measured directly, because since October 2025 they are served only through a sign-up portal. Overture, which carries part of Foursquare's records, stood in for them.</p>
+  <p>Overture knew 1,432 bars in those circles against OpenStreetMap's 751. About a third of OpenStreetMap's bars had no counterpart in Overture, so neither source contained the other. Only OpenStreetMap had terraces: 162 of its 751 bars carried <code>outdoor_seating=yes</code>, and Overture's schema has no such field. Cafés broke the pattern, with each source knowing 690.</p>
+  <p>A second run on the Mac added Apple. Apple already had 40 % of the bars that only Overture knew, and Overture still added about 29 % on top of Apple and OpenStreetMap together. When I read Overture's extra names, about one in four looked dubious: a film company, a music office and a cyber café, all filed as bars.</p>
+  <p>OpenStreetMap became the base layer, since it is the only open source with terraces, opening hours and a long list of details. Overture is used in Paris and London only, and there it adds facts to venues OpenStreetMap already has. It never creates a venue.</p>
+
+  <h2>What a venue row holds</h2>
+  <p>The builder keeps five OpenStreetMap amenity values: bar, pub, biergarten, cafe and restaurant. Fast food, ice cream and nightclubs are carried as well, so the app can match an Apple result to its OpenStreetMap twin, but they are never listed as spots. A venue drawn as a building outline is placed at the mean vertex of its outer ring.</p>
+  <p>Each row has a name, a point, the amenity and outdoor seating. Optional details are left out when the map has nothing: up to three cuisines, opening hours kept raw for the app to parse, flags such as live music, real ale or Wi-Fi, diet tags, names in the app's four languages where they differ from the main name, and the OpenStreetMap element type and id, so the app can send someone to edit it.</p>
+  <p>A café or restaurant tagged <code>bar=yes</code>, or open past midnight on some day, counts as a bar. The opening-hours reader is strict on purpose. Anything it cannot parse, "sunset" or a typo, counts as not late, because a wrong guess would put a restaurant under Bar.</p>
+  <p>Chains come from the name-suggestion-index, read from one pinned release that a build never updates by itself. A venue matches by its <code>brand:wikidata</code> tag, or by its name when another venue in the same extract carries that brand's id, so a local shop that shares a chain's name stays independent when the chain is nowhere near. A brand counts as a chain only when at least three venues in the extract share it.</p>
+  <p>In Paris and London an Overture place can add a bar style (cocktail bar, wine bar, speakeasy and so on), a chain flag or a permanent closure. It does so only when exactly one OpenStreetMap venue within 60 metres has a matching name, and an open place below Overture's own confidence of 0.6 adds nothing. When two places disagree about one venue, the venue keeps OpenStreetMap's data alone.</p>
+
+  <h2>Cutting the world into tiles</h2>
+  <p>Venues sit on a grid of 1/50 of a degree, about 2 km a side, keyed by <code>int(lat × 50)</code> and <code>int(lon × 50)</code>. Other layers use other grids: about 200 metres for building footprints and terrace permits, about 4 km for neighbourhoods and transit lines. A cell with nothing in it has no file, and the app reads a missing tile as an empty one.</p>
+  <p>Each area in the city list is a box, often clipped to the municipality's boundary, and a build covers only the cells whose centre falls inside. When I planned wider boxes for 38 cities, clipping to boundaries brought the estimate down from 125,005 cells to 63,781.</p>
+  <p>Cities are chosen by counting too. A 200-metre cell is a "going-out" cell when the 400-metre disk around its centre holds at least ten named bars, cafés and restaurants in OpenStreetMap. Candidates come from GeoNames (cities of over 300,000 people in Europe, North America and Oceania) and from every French commune of 50,000 or more. A city someone asks for from the app is added as a small area only if its box holds at least three going-out cells.</p>
+
+  <h2>Format and size</h2>
+  <p>The tiles are plain JSON, gzipped at rest and served with a gzip <code>Content-Encoding</code>, so the phone's networking stack inflates them with no extra code. In the geometry layers, coordinates are integers in steps of 1e-5 degrees, each vertex stored as the difference from the one before, which keeps the numbers short.</p>
+  <p>A venue tile is about 40 KB gzipped and about 289 KB as plain JSON. For Paris, both areas together, the venue layer is under 1 MB in 408 files. The whole Paris set is about 128 MB, of which 107 MB is building footprints for the sunny-terrace filter.</p>
+  <p>Those numbers settled one question. I wondered whether a downloadable city pack, as some transit apps offer, would make searches faster, and measured 27 launches on the Simulator with cold and warm caches. Fetching tiles took about 0 to 3 % of a cold search, because the app downloads them while Apple's own search runs, and Apple's search took most of the time. A pack would have saved about a tenth of a second for a 128 MB download in Paris, so I did not build it.</p>
+
+  <h2>The build and what it costs</h2>
+  <p>A GitHub Actions workflow builds the tiles every Monday, one job per city, in parallel. The repository is public and uses standard runners, so no minutes are billed. OpenStreetMap data comes from Geofabrik's regional extracts, filtered with osmium. Nothing calls an Overpass server, which refused the cloud's traffic anyway, and the phone never calls an OpenStreetMap server.</p>
+  <p>Storage is Cloudflare R2: the first 10 GB a month are free, then 0.015 dollars per GB-month. Tiles are gzipped with the <code>-n</code> flag, which leaves out the file name and time, so an unchanged tile always gives the same bytes. The build compares each file's MD5 with the stored object's ETag and uploads only new and changed tiles. Building footprints are built only for cells a venue or a terrace reaches.</p>
+
+  <h2>Detecting closed places and silent failures</h2>
+  <p>Data goes stale in two ways: a place shuts, or a source quietly stops answering.</p>
+  <p>The build drops a venue that OpenStreetMap marks as closed: opening hours of "off" or "closed", <code>disused=yes</code> or <code>abandoned=yes</code>, or a lifecycle prefix such as <code>disused:</code> or <code>was:</code> on its own amenity or name. A prefix on a different amenity records the past. A café tagged <code>disused:amenity=restaurant</code> is a restaurant that became a café, and it stays. This rule came out of an audit of the Athens data.</p>
+  <p>For sources, a weekly check asks every city feed for one fixed, dense sample cell and compares the answer with last week's and with the published tile. It flags a dead feed, a count that fell by more than half, a share of named entries that halved (a renamed column), a changed licence string, or a tile that no longer credits its source. I wrote it after Barcelona's permit file started returning a bot-check page and nobody noticed.</p>
+  <p>Empty files needed care both ways. A cell that loses its last venue is uploaded as an empty array to replace last week's tile, and the read-back check, which fetches tiles the way the app does, had to learn that an empty tile is valid. Tiles that no area builds any more and that hold only an empty array are found by their size, 22 bytes at rest, and a random sample is fetched to confirm before anything is deleted.</p>
+
+  <h2>Corrections from users</h2>
+  <p>OpenStreetMap is often out of date on small facts, so people can correct them in the app by fixed choices, never free text: terrace or not, opening hours per day, serves food, wrong type, closed for good, or closed until a date. Corrections live in CloudKit's public database, so I run no server for them. You see your own correction at once. Everyone else sees it once two different iCloud accounts agree, and a later agreeing pair can override it.</p>
+  <p>Each account can save 20 contributions a day. A modified app could skip that count, so every phone also ignores an account with more than 140 records on one day. A switch in a small config file turns the whole feature off. An agreed "closed for good" greys the spot for two weeks before it goes, which leaves honest users time to contradict it. Corrections on Apple-only venues stay in the app, because Apple's terms forbid extracting its data and OpenStreetMap forbids copying from proprietary maps.</p>
+  <p>Agreed facts on OpenStreetMap venues are additions to an ODbL database, so they are published every week under the same licence, as a CSV of element, fact, value and date, with no votes or account ids.</p>
+
+  <h2>Tests, and what went wrong</h2>
+  <p>The generator has fourteen plain Python test scripts that use asserts and need no network. They run on every push and before every build, and a failing test stops the run before anything is uploaded. Most of the trouble came from the pipeline around the data:</p>
+  <ul class="plain">
+    <li>A city job used to finish green even when many of its cells had failed or the time limit had cut it short. It now turns red when more than 5 % of a city's cells fail.</li>
+    <li>R2 throttled uploads at 64 in flight, so the build sends 32 and retries the few that still fail one at a time.</li>
+    <li>GitHub expands at most 256 jobs from one matrix, so the city list had to be split in two.</li>
+    <li>Every city job fetched Geofabrik's index on its own, about 357 fetches a run, until Geofabrik began refusing some of GitHub's runners and about 170 city jobs were lost over two days. The index is now fetched once per run, and extracts are copied to the tile store for later jobs to read.</li>
+    <li>Listing 1.7 million stored objects in one stream took 18 minutes. Listing key ranges in parallel replaced it.</li>
+  </ul>
+  <p>The failures that cost me most were the silent ones: a broken feed that still answered, an empty tile read as an error, a green job hiding a failed city.</p>
+
+  <h2>Credits</h2>
+  <p>The venue tiles contain OpenStreetMap data, © OpenStreetMap contributors, available under the Open Database License, so the tile set itself is published under the ODbL. Chain names come from the name-suggestion-index (BSD 3-Clause), and Overture Places is used under CDLA-Permissive 2.0, with its own sources credited in the app.</p>
+  <p>All of this feeds one screen in Compromise, the list of places to meet. There is more about the app on <a href="https://compromise.alephb.uk">compromise.alephb.uk</a>.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="learn/">Handbook</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>

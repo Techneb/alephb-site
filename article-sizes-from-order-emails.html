@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>Your sizes are already in your inbox · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="How a browser extension can read clothing sizes out of online order emails on your own device: finding the orders, reading sizes like 46/M or W32 L34, handling returns, and why Google's Gmail rules shaped the design.">
+<link rel="stylesheet" href="site.css">
+<!-- Cloudflare Web Analytics: page views only, no cookies. Its beacon is copied here (2026.10.1) so the page loads no outside script; ponytail: re-copy it if Cloudflare stops accepting this version. --><script defer src="/cf-beacon.min.js" data-cf-beacon='{"token": "754c71d6bba44b88a12124ea67cec007"}'></script>
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="articles.html">Articles</a></p>
+  <h2 class="page-title">Your sizes are already in your inbox</h2>
+  <p class="status">22 November 2026 · By AlephB · About <a href="https://whatsmysize.alephb.uk">What's my size?</a></p>
+
+  <p>What's my size? is a Chrome extension I am building. On a shop's product page it suggests a size by comparing that garment with clothes you already own and know fit you. For that it needs a list of what you own, with the size printed on each label. Nobody wants to type that list in, and most people already have it without knowing: it sits in their mailbox, one order confirmation at a time.</p>
+  <p>Here is what I learned turning those emails into a wardrobe. The extension is not on the Chrome Web Store yet, so I will say which parts run today and which are built but not yet tried on a real mailbox.</p>
+
+  <h2>Why order emails</h2>
+  <p>A Shopify app sees only its own shop's orders, Shopify's terms and data-protection law forbid pooling one customer's purchases across merchants, and no public API gives a shopper's orders across stores. A size comparison is useful because it crosses shops, so the data has to come from the shopper's side. The one place where every shop writes down what you bought, in which size, is the confirmation email.</p>
+  <p>Those emails are messy. In my first sample two Shopify shops sent clean plain text, and another retailer sent an HTML-only email whose plain-text part held nothing but stylesheet code. They also carry things a size tool has no use for: your full name, home address, phone number, the last digits of a card and tracking links.</p>
+
+  <h2>Two ways into the mailbox</h2>
+  <p>There are two versions of the reader. The first is my own prototype, which runs on my Mac: a Python script that uses the Gmail API to list the messages under a shopping label, strips personal details, sends the cleaned text to a cloud language model and writes the garments into a Google Sheet. It proved the idea works.</p>
+  <p>The public version cannot work that way, for reasons covered further down. It reads Gmail the way you do. When you click "Import from Gmail", the extension opens Gmail in a background tab, runs a Gmail search for order and return subjects (commande, order, receipt, invoice, Bestellung, pedido, return, refund and others) over the last two years, and fetches each message's original, the same raw source Gmail's "Show original" shows you. The email is cleaned in the browser and read by Chrome's built-in model, Gemini Nano, on your computer. A run sends at most 300 emails to the model, waits about a second between fetches, and continues where it stopped the next time. AlephB has no server, and no email text or extracted garment reaches me.</p>
+  <p>That reader is built and covered by tests, but it has not yet run against a real Gmail account. That check, and the upload to the Chrome Web Store, are waiting for a newer test machine.</p>
+
+  <h2>Cheap filters before the model</h2>
+  <p>Most emails in a shopping folder are not orders. Before any model reads anything, simple word lists drop the obvious ones: subjects about shipping or delivery, newsletters, sales, and replies to a shop thread, since a "Re:" quotes the order again. Then a size pre-filter checks that the body contains something that looks like a clothing size: a size word (taille, size, Größe, talla, taglia, maat) followed closely by a size, or a variant line such as "M / Black".</p>
+  <p>These filters are kept deliberately loose. Excluding a real order by mistake loses a purchase for good, while letting a shipping note through only costs one model call. They will never be complete. A brand's monthly style newsletter once got through and was read as if the fabric mills it praised were things I had bought. I deleted that row; no word list will ever be long enough.</p>
+
+  <h2>One model, then plain rules</h2>
+  <p>Every shop's template differs, so I never wrote a parser per store. A language model reads each email with a strict output schema: brand, item, size as written, category from a fixed list, department, colour. The schema has no field where a name or an address could land, which is the real safety net behind the best-effort removal of personal details. The prompt also says that a model name at the start of a line belongs in the item and that a marketplace seller is never the maker.</p>
+  <p>Everything after that is plain code, the same rules for every shop. Letter sizes are normalised (Medium and M are one size, 2XL is XXL), "EU 42" or "42 (IT)" become 42, and every way of writing one-size (TU, T.U., taille unique, one size, OS, OSFA) becomes TU. Waist and length have one spelling, W28 L34, whether the shop wrote 28L34, W28/L34 or 28x34. A bare "34/36" stays a span. A label that names two systems, such as 46/M, is kept whole when that is how the shop sells it.</p>
+  <p>That last rule came from a mistake. A change to the size-chart reader split every slash label into its parts, so a page selling 44/S to 50/XL counted as selling both "46" and "M". A garment owned in 46/M then found no 46 to compare with. Only a screenshot retake caught it; the tests and the site runs had passed. The lesson I kept: the pages of real owned garments belong in the test set, because a check that only counts "chart read" misses a chart read under the wrong labels.</p>
+  <p>Two more rules came from early mistakes. When the maker cannot be known (a multi-brand shop whose email doesn't name it), the line is dropped rather than saved under a placeholder. And a garment whose email gives no size is now kept with an empty size: it shows in the wardrobe but never serves as a reference until you type the size in.</p>
+
+  <h2>One purchase, many emails</h2>
+  <p>A single order can produce an invoice, a confirmation, a shipping notice, "return requested", "return approved" and a refund email, and return emails repeat the item and size. In my prototype's early data, several returned garments had each produced two to four extra rows from their own return correspondence. The original filter only knew "refund" and its French form, so it missed all of it.</p>
+  <p>The fix had two parts. The first is to read an order number when there is one (at least four digits, since one store's emails carried a day number that a looser pattern took for an order number) and deduplicate by order rather than by message. The second is to treat a return as a change of status. The surviving row is marked returned, so it never serves as a fit reference. A payment receipt, from PayPal for example, is a second copy of the order under other names, often with no order number, so a garment already bought the same day is not added again, and emails run oldest first so a return is never read before its order.</p>
+
+  <h2>Auditing the emails that gave nothing</h2>
+  <p>An email that yields no garment leaves no trace in the data. So I audited them read-only, printing no subject or body. Of 323 messages under my clothes labels, 153 had been read and had produced no row. 30 were caught by the return filter and 14 by the shipping and marketing filter, as expected. The other 109 were read again by the model, 126 calls in all, the doubtful ones twice. 96 still gave nothing, mostly receipts and notifications whose garments had come in through another email; the rest gave dropped lines or duplicates of existing rows.</p>
+  <p>The audit found no rule bug, but it did find one garment that had been lost: a jacket whose email named no size, dropped by the rule that a sized garment needs a size. Such garments are now kept without a size. It also found a payment receipt that worded a garment's name differently from the shop's email, so deduplication now compares the set of words in a name.</p>
+
+  <h2>Knowing which shop it came from</h2>
+  <p>The store where you bought a garment is not always its brand. The sender's domain usually names the store, but many shops send through a platform under the platform's own domain. Shopify and Big Cartel shops often set their own address as the Reply-To, so the importer falls back to that, then to a marketplace's own site, and leaves the store empty for payment receipts and mailing services. In my own data, 68 garments had no store, and this filled 57 of them.</p>
+  <p>I checked four of those Reply-To guesses by hand against the shops' public pages. The store was right in all four. The brand was wrong in at least two and probably three: on a single-brand shop the model had taken a product's model name for the maker. A shop's public Shopify catalogue answers that without any AI, since each product lists its vendor, and my prototype now asks it. The public build does not, because it has no access to shop sites by default, so such lines are still dropped there.</p>
+
+  <h2>Why Google's rules shaped all of this</h2>
+  <p>The Gmail API scope for reading mail, gmail.readonly, is on Google's restricted list. That means OAuth verification, which Google quotes at about six weeks for restricted scopes, re-verified every year, and very likely a yearly third-party security assessment (CASA). Google's own pages disagree on whether an app that keeps everything on the device is exempt, and a developer of one local-only app reported being refused that exception in 2026. Published lab prices run from about $540 to several thousand dollars a year. The narrower gmail.metadata scope is restricted too, and it cannot read message bodies, where the sizes are.</p>
+  <p>So the public build never asks for a Gmail scope. It reads the Gmail tab you already have signed in, only after you click, in a visible and throttled way, limited to order emails, and only after a consent screen. Its only Google permission is drive.file, a non-sensitive scope that lets it create and use the one Sheet it keeps your wardrobe in. The price is fragility, because Gmail's page structure changes without notice. The reader leans on its most stable attributes and lives in one small module with its own tests, and I expect to fix it every few months. A Google Takeout export of one label is planned as the fallback.</p>
+  <p>The last open question is the model. On my 2018 Intel laptop, Gemini Nano errored on 44 of 80 test emails, while on the emails it did answer it got 89% of items right. The old machine's graphics may be to blame, so the verdict waits for a rerun on recent hardware.</p>
+
+  <h2>What I would tell someone starting this</h2>
+  <ul class="plain">
+    <li>Never store a placeholder. Drop the record, or flag it for a person. A fake value always comes back downstream.</li>
+    <li>Expect the filters to stay incomplete. Refunds and returns showed up only from real data. Keep the filters loose and the rules after the model strict.</li>
+    <li>Audit what produced nothing. The silent emails are where a garment gets lost.</li>
+    <li>Check a claim against the source before writing a rule. A rule once filed a shop's unnamed lines as its own label, and the shop's own catalogue proved it wrong.</li>
+  </ul>
+  <p>The extension is coming to the Chrome Web Store. More about it is on <a href="https://whatsmysize.alephb.uk">whatsmysize.alephb.uk</a>.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="learn/">Handbook</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>

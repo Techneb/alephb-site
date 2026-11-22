@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-adsense-account" content="ca-pub-9765732642926043">
+<title>Keeping personal data on the device · AlephB</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="How four small projects keep addresses, emails and game saves on the user's device, where a server crept in anyway, and what each choice cost.">
+<link rel="stylesheet" href="site.css">
+<!-- Cloudflare Web Analytics: page views only, no cookies. Its beacon is copied here (2026.10.1) so the page loads no outside script; ponytail: re-copy it if Cloudflare stops accepting this version. --><script defer src="/cf-beacon.min.js" data-cf-beacon='{"token": "754c71d6bba44b88a12124ea67cec007"}'></script>
+</head>
+<body>
+<main>
+  <p><a href="./">AlephB</a> · <a href="articles.html">Articles</a></p>
+  <h2 class="page-title">Keeping personal data on the device</h2>
+  <p class="status">22 November 2026 · By AlephB</p>
+
+  <p>I build small things alone: an iPhone app, a Chrome extension, a browser game and this site. Each of them handles something personal. Compromise needs everyone's starting address to find a fair place to meet. What's my size? reads order emails to learn which clothes you own. The Ritz Affair keeps your notes and SQL queries while you play. A solo developer can't run a server that holds that kind of data and sleep well, so in every project I started from the same rule: the data stays on the device, and I run as little backend as I can.</p>
+  <p>The rule held better in some places than in others. Below is what each project does, where a server crept in anyway, and what the choice cost in features, review work and mistakes.</p>
+
+  <h2>Compromise: addresses that never reach me</h2>
+  <p><a href="https://compromise.alephb.uk">Compromise</a> has no account. The addresses you type stay on the phone that entered them, and the app sends its route questions to Apple's maps service, not to me. The hard part was the group: if four friends want to meet, the organiser's phone needs the other three starting points.</p>
+  <p>The first answer was a link. An invite carries the organiser's first name; the friend's reply carries their way of travelling and their start, either as coordinates rounded to about five metres or as the text they typed. Everything travels after the <code>#</code> in the address. Browsers don't send that part to the web host, so the static page that opens the link never sees the data in it. A results link carries the chosen places and each person's minutes, and never a starting point.</p>
+  <p>A link format you can't update on a server needs strict rules, because old copies of the app will read new links for years. Mine has a version number, and a reader refuses an unknown version instead of guessing. Unknown fields, on the other hand, are ignored, so I can add an optional field without breaking older apps. That rule paid off twice: the iCloud group and the reply relay below each arrived as one new optional field, with no version change. A link that fails any check is dropped entirely, and the screen says only that it can't be read.</p>
+  <p>Links alone made people copy messages back and forth, so groups now sync through iCloud sharing. Each group is one shared zone in the organiser's iCloud, with every personal field end-to-end encrypted; Apple stores ciphertext, and neither I nor the CloudKit console can read it. The storage counts against the organiser's iCloud, a few kilobytes per group, and costs me nothing. I compared this with an iMessage app, which would have left out WhatsApp users, with SharePlay, which only works during a call, and with my own server. The server would have taken two to three weeks plus running a service indefinitely, and it would have seen IP addresses and timing even with encryption.</p>
+  <p>iCloud has its own costs. A friend needs the app and iCloud to join; the App Clip can't join a share, so friends without the app still use the form and a reply link. Background updates are best effort, which means a phone is up to date when you open it, and you may not be pinged when something changes. Members now see each other's rounded starts, which reversed my earlier "first name only" stance. Since the group link is public, anyone it gets forwarded to can join, and nobody can be removed one at a time: the organiser has to end the group and start a new one. Groups also end on their own after two days without a change, so old zones don't pile up.</p>
+
+  <h2>The relay I said I wouldn't build</h2>
+  <p>A friend without the app still had to send a reply link back by hand. In November I gave in and built a small relay on Cloudflare, for that one job. The invite now carries a random mailbox id and a key, both inside the <code>#</code>. The friend's browser or App Clip encrypts the reply with AES-GCM and posts it to the mailbox; only the organiser's phone holds the secret that reads it. A mailbox takes twelve replies at most and deletes itself after seven days. The relay sees mailbox ids, message sizes, timing and the organiser's push token; it never sees names, modes or starts, and it uses IP addresses only in memory, for rate limits. If the post fails, the friend gets the old reply link.</p>
+  <p>I chose a shared key over a public-key scheme because the key-exchange curve I wanted is too recent in the browsers of the older Android phones this page exists for. Anyone holding the invite could in principle read a reply caught in transit, but anyone holding it can already send a fake reply, so I accepted that.</p>
+  <p>The relay broke a sentence on the app's privacy page, "Compromise has no server". It had been true at launch. The lesson for me is to write privacy pages as a list of what goes where, so a new feature changes one line instead of a slogan.</p>
+
+  <h2>Counting use without following anyone</h2>
+  <p>I still want to know whether people come back and where searches fail. Compromise sends its own counts to a write-only endpoint of mine: nine kinds of event, each field a number or a value from a fixed list, with no free text, names, addresses, coordinates or venue names. Each install gets a random id that is replaced after thirteen months. I keep it in the app's ordinary settings storage instead of the Keychain, because the Keychain survives a reinstall and would make the id more of an identifier. The IP address is never stored. Counting is on by default with a switch in Settings; turning it off deletes the waiting events and the id, then sends one anonymous "turned off" signal with no id.</p>
+  <p>The cost was the App Store privacy label. Read strictly, a persistent install id is data linked to you, so the label moved from "Data Not Collected" to "Data Linked to You", while still saying no tracking. I preferred the strict reading to a label I would have to defend. The App Clip sends nothing, because it has no off switch to offer.</p>
+  <p>One mistake: until a build in November, TestFlight copies reported themselves as App Store installs, so a month of daily totals counted my own test phones as users. Those old rows can't be fixed. The in-app feedback form follows the same rules as the counts: the message, an email only if you type one, and app details that never include addresses, names, coordinates or places.</p>
+
+  <h2>What's my size?: reading email without asking for Gmail</h2>
+  <p><a href="https://whatsmysize.alephb.uk">What's my size?</a> is a Chrome extension, not yet in the store, that compares a garment on a shop page with clothes you already own. It learns your wardrobe from order emails, which is about as personal as data gets. The store edition keeps the wardrobe in a Google Sheet in your own Drive, created by the extension; I run no server that sees it.</p>
+  <p>The obvious route was Google's read-only Gmail permission. I researched it and dropped it. That permission is on Google's restricted list even when every email is processed on the device: OAuth verification is certain, and a paid yearly security assessment is likely, because Google's own pages contradict each other on whether local-only apps are exempt. Google's policy also forbids apps that export email once, so a one-off import of past orders would need careful framing. The metadata-only permission is restricted too and can't read message bodies.</p>
+  <p>The extension asks for one permission instead, access to files it creates in Drive, which is non-sensitive and needs only brand verification. To import past orders, you open Gmail yourself and start the import after an explicit consent screen. The extension reads the order emails from the open page, at a calm pace, and a fallback reads a mailbox export you download from Google. The text is processed in the browser by Chrome's built-in model, or, if you add your own Gemini key, sent from your browser straight to Google's API.</p>
+  <p>Reading Gmail's page is fragile, since its markup changes without notice, so I expect a fix every few months. The Chrome Web Store still treats email as personal communications and asks for a prominent disclosure before any email is read. And the built-in model was not reliable on my older Intel Mac: in one test it failed on 44 of 80 emails, and I haven't yet rerun the test on Apple Silicon.</p>
+
+  <h2>The Ritz Affair: play without an account</h2>
+  <p><a href="ritz-affair/">The Ritz Affair</a> is a detective game that teaches SQL, and the whole game, database included, runs in the browser. Progress, notes and queries stay in local storage. When the game moved to this domain, the old address handed each player's saves to the new one inside the <code>#</code> of a redirect, so even the move went through no server.</p>
+  <p>There are three places where data leaves the browser, and each is opt-in or plainly stated. Signing in, with Google or with an email and password, is optional and only carries learning progress between devices. The backend is a Google Apps Script writing to a Sheet. It keeps a keyed hash of your Google id and never your email or name. With a password, the browser sends only a derived verifier, so the password itself never leaves the page. A Delete button removes the saved row at once. When a teacher runs a class competition, the leaderboard receives a pseudonym and solve times; answers are checked in the browser and never sent, and the game asks players to pick a pseudonym that isn't their full name. The game also shows ads and loads Google Analytics, which in Europe waits for consent. The page can't see your country, so it uses your time zone as a stand-in, an imperfect test I chose over loading anything early.</p>
+
+  <h2>This site</h2>
+  <p>These pages set no cookies. Visits are counted with Cloudflare's cookie-free page-view analytics, and I copied its small script onto this site so the pages load nothing from elsewhere. The price is upkeep: if Cloudflare stops accepting that version, I have to copy it again. The host, GitHub Pages, still receives your IP address when it serves a page, as any web host does.</p>
+
+  <h2>What I would tell myself at the start</h2>
+  <ul class="plain">
+    <li><b>Put data in the URL fragment.</b> It is the cheapest private channel there is: static hosts never receive it, and it needs no server at all.</li>
+    <li><b>Version your formats on day one.</b> Refuse unknown versions, ignore unknown fields, and test the reader against links from old builds.</li>
+    <li><b>Use the user's own storage.</b> Their iCloud, their Drive or their browser costs you nothing and keeps you out of the data.</li>
+    <li><b>Check permission tiers before writing code.</b> On Google, the restricted tier decided the whole design of the email import.</li>
+    <li><b>Expect the server to come back.</b> When it does, make it blind with end-to-end encryption and short lifetimes, and update the privacy page in the same release.</li>
+  </ul>
+  <p>Every one of these projects talks to some server. Each also has a short written list of what leaves the device, and keeping that list current is part of every release.</p>
+  <footer>
+    <nav><a href="./">Home</a><a href="articles.html">Articles</a><a href="learn/">Handbook</a><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
+    <p>Contact: <a href="mailto:contact@alephb.uk">contact@alephb.uk</a></p>
+  </footer>
+</main>
+</body>
+</html>
