@@ -4,9 +4,9 @@
 // with its own session token (ritz.account); every later call carries that. What syncs is SYNC_KEYS only, merged by
 // state.js importWrites (the bridge's rule: the save further along wins, lists are a union): never compete, consent or
 // the desk. Side-effect free at import: startSync() and wireAccount() run a page.
-import { importWrites } from "./state.js?v=98bed58";
-import { askDialog } from "./shared.js?v=98bed58";
-import { useFeature } from "./stats.js?v=98bed58";
+import { importWrites } from "./state.js?v=efe01f0";
+import { askDialog } from "./shared.js?v=efe01f0";
+import { useFeature } from "./stats.js?v=efe01f0";
 
 // The OAuth client (Web application) and the accounts script's /exec URL: both public by design, empty until the owner
 // creates them. Pasting both is the whole switch-on.
