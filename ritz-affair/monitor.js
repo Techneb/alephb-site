@@ -7,10 +7,10 @@
 // opens GA. This module is the GA model (the Count metrics, the request builders, PANELS) and the views; the charts
 // themselves are figures.js (Plotly figures, drawn by drawPlots below). Pure parts are exported for test_desk.mjs; the page wiring runs only in a browser.
 // The board URL comes from ?board=, localStorage ritz.admin.board or, after the gate, BOARD_SEALED, as on admin.html; the passphrase stays in sessionStorage for the tab (shared.js deskPassphrase).
-import { wireFeedback } from "./feedback.js?v=24578d6";
-import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=24578d6";
+import { wireFeedback } from "./feedback.js?v=6d22681";
+import { DIMENSIONS, deskBoard, deskBoardOpened, deskLinks, deskPassphrase, downloadText, escapeHtml as esc, gaText, reportUrl } from "./shared.js?v=6d22681";
 import { ROMAN, STAGES, barTable, chapterBarsFig, chapterLineFig, compact, donutHtml, fold, funnelFig, groupFig, hbarFig, legend, legendKeys, legendOf,
-  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=24578d6";
+  lineFig, mapHtml, multiLineFig, pct, pctOf, plotHtml, r1, raw, retention, roman, shown, solveRateFig, tableCsv, tableHtml, themed } from "./figures.js?v=6d22681";
 const hbar = (...a) => plotHtml(hbarFig(...a));
 
 export const DAYS = [7, 30, 90];
@@ -37,7 +37,7 @@ export const daysFrom = res => (res.rows || []).map(([date, users]) => ({ date, 
 // counts twice: a ranking, not a head count), in --c1..--c5, over the page's own users-per-day total as a neutral line.
 export const TOP = 5;
 // A GA value as a label; page titles lose the site's own suffix.
-export const pageName = v => gaText(v).replace(/ -- The Ritz Affair$/, "");
+export const pageName = v => gaText(v).replace(/ -- (The Ritz Affair|AlephB)$/, "");
 // The dimensions that make sense per day (names from shared.js DIMENSIONS), and the plural the note uses.
 export const BREAKDOWNS = { country: "countries", deviceCategory: "devices", sessionDefaultChannelGroup: "channels", sessionSource: "sources",
   operatingSystem: "operating systems", browser: "browsers", language: "languages", newVsReturning: "values", "customEvent:mode": "modes", pageTitle: "pages" };
