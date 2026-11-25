@@ -8,14 +8,14 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="description" content="How a one-person app builds weekly venue tiles for 358 cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.">
+<meta name="description" content="How a one-person app builds weekly venue tiles for 460+ cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.">
 <link rel="canonical" href="https://alephb.uk/article-places-from-openstreetmap.html">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Building a worldwide places dataset from OpenStreetMap · AlephB">
-<meta property="og:description" content="How a one-person app builds weekly venue tiles for 358 cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.">
+<meta property="og:description" content="How a one-person app builds weekly venue tiles for 460+ cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.">
 <meta property="og:url" content="https://alephb.uk/article-places-from-openstreetmap.html">
 <meta property="og:image" content="https://alephb.uk/img/compromise-1.jpg">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Building a worldwide places dataset from OpenStreetMap", "description": "How a one-person app builds weekly venue tiles for 358 cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.", "datePublished": "2026-11-22", "author": {"@type": "Organization", "name": "AlephB", "url": "https://alephb.uk/"}, "publisher": {"@type": "Organization", "name": "AlephB", "url": "https://alephb.uk/", "logo": {"@type": "ImageObject", "url": "https://alephb.uk/logo.png"}}, "mainEntityOfPage": "https://alephb.uk/article-places-from-openstreetmap.html", "image": "https://alephb.uk/img/compromise-1.jpg"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Building a worldwide places dataset from OpenStreetMap", "description": "How a one-person app builds weekly venue tiles for 460+ cities from OpenStreetMap and other open data: sources, grid, file sizes, closed places, crowd corrections and hosting costs.", "datePublished": "2026-11-22", "author": {"@type": "Organization", "name": "AlephB", "url": "https://alephb.uk/"}, "publisher": {"@type": "Organization", "name": "AlephB", "url": "https://alephb.uk/", "logo": {"@type": "ImageObject", "url": "https://alephb.uk/logo.png"}}, "mainEntityOfPage": "https://alephb.uk/article-places-from-openstreetmap.html", "image": "https://alephb.uk/img/compromise-1.jpg"}</script>
 <link rel="stylesheet" href="site.css">
 <!-- Cloudflare Web Analytics: page views only, no cookies. Its beacon is copied here (2026.10.1) so the page loads no outside script; ponytail: re-copy it if Cloudflare stops accepting this version. --><script defer src="/cf-beacon.min.js" data-cf-beacon='{"token": "754c71d6bba44b88a12124ea67cec007"}'></script>
 </head>
@@ -25,7 +25,7 @@
   <h2 class="page-title">Building a worldwide places dataset from OpenStreetMap</h2>
   <p class="status">By AlephB · About <a href="https://compromise.alephb.uk">Compromise</a></p>
 
-  <p>Compromise suggests bars, cafés and restaurants where a group can meet fairly. Apple Maps supplies most of the candidates, but one search returns at most 25 places, and the app also needs terraces, which it gets from open data. So it also reads venue data of its own: small files covering 358 cities in 456 areas, rebuilt every week. Below is how I build that dataset, what hosting it costs, and the failures I had to fix.</p>
+  <p>Compromise suggests bars, cafés and restaurants where a group can meet fairly. Apple Maps supplies most of the candidates, but one search returns at most 25 places, and the app also needs terraces, which it gets from open data. So it also reads venue data of its own: small files covering 460+ cities, rebuilt every week. Below is how I build that dataset, what hosting it costs, and the failures I had to fix.</p>
 
   <h2>Choosing the sources by measuring them</h2>
   <p>Before building anything I counted. In thirteen circles of 500 metres around public squares in eight countries, I compared OpenStreetMap with the places dataset of the Overture Maps Foundation. Foursquare's open places could not be measured directly, because since October 2025 they are served only through a sign-up portal. Overture, which carries part of Foursquare's records, stood in for them.</p>
